@@ -1,3 +1,8 @@
-.bodypara {
-    background-color: darkgrey;
+.appbody {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }

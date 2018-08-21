@@ -1,3 +1,7 @@
-.headerpara {
-    background-color: lightslategrey;
+.header {
+    padding: 10px;
+}
+
+.headertext {
+    padding: 20px;
 }
