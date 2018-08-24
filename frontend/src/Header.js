@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import './Header.css';
+import './styles/Header.css';
 
 class Header extends Component {
 
     constructor() {
         super();
         this.state = {
-            showLogin: false
+            login: false
         }
-        this.toggleShowLogin = this.toggleShowLogin.bind(this);
+        this.togglelogin = this.togglelogin.bind(this);
     }
 
-    toggleShowLogin() {
+    // toggle the login state
+    togglelogin() {
         this.setState(prevState => ({
-            showLogin: !prevState.showLogin
+            login: !prevState.login
         }));
     }
 
     loginForm() {
         return (
-            <form className="loginform">
+            <form>
                 <input type="text" placeholder="username"/>
                 <input type="password" placeholder="password"/>
                 <button>-></button>
@@ -32,9 +33,10 @@ class Header extends Component {
             <div className="header">
                 <span className="headertext">Off With His Read</span>
                 <span>
-                    <button className="loginButton" onClick={this.toggleShowLogin}>Login</button>
+                    <button onClick={this.togglelogin}>Login</button>
                 </span>
-                {this.state.showLogin ? this.loginForm() : ''}
+                {this.state.login ? this.loginForm() : ''}
+                <hr></hr>
             </div>
         )
     }
