@@ -5,15 +5,15 @@ import Body from './Body.js';
 import Footer from './Footer.js';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <Body />
-        <Footer />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className="app">
+                <Header />
+                <Body />
+                <Footer />
+            </div>
+        );
+    }
 }
 
 export default App;

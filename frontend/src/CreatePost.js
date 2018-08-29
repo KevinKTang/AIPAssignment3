@@ -7,9 +7,9 @@ class CreatePost extends Component {
             <div>
                 <p>New Blog Post</p>
                 <form>
-                    <input className="createpostinput" placeholder="title"></input>
-                    <input className="createpostinput" placeholder="blog post content"></input>
-                    <button className="createpostinput">Post</button>
+                    <input className="create-post-input" placeholder="title"></input>
+                    <input className="create-post-input" placeholder="blog post content"></input>
+                    <button className="create-post-input">Post</button>
                 </form>
             </div>
         )

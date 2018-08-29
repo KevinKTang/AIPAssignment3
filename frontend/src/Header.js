@@ -11,7 +11,6 @@ class Header extends Component {
         this.togglelogin = this.togglelogin.bind(this);
     }
 
-    // toggle the login state
     togglelogin() {
         this.setState(prevState => ({
             login: !prevState.login
@@ -31,7 +30,7 @@ class Header extends Component {
     render() {
         return(
             <div className="header">
-                <span className="headertext">Off With His Read</span>
+                <span className="header-text">Off With His Read</span>
                 <span>
                     <button onClick={this.togglelogin}>Login</button>
                 </span>

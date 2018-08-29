@@ -13,7 +13,6 @@ class Body extends Component {
         this.togglecreatePost = this.togglecreatePost.bind(this);
     }
 
-    //toggle the createPost state
     togglecreatePost() {
         this.setState(prevState => ({
             createPost: !prevState.createPost,
@@ -22,7 +21,7 @@ class Body extends Component {
 
     showBlogPosts() {
         return (
-            <div className="appbody">
+            <div className="app-body">
                 <BlogPosts />
                 <button onClick={this.togglecreatePost}>Create a new Blog Post</button>
             </div>
@@ -31,7 +30,7 @@ class Body extends Component {
 
     showCreatePost() {
         return (
-            <div className="appbody">
+            <div className="app-body">
                 <CreatePost />
                 <br></br>
                 <br></br>

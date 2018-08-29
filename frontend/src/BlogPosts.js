@@ -5,7 +5,7 @@ import BlogPost from './BlogPost.js';
 class BlogPosts extends Component {
     render() {
         return (
-            <div className="blogpostsflex">
+            <div className="blog-posts-flex">
                 <BlogPost />
                 <BlogPost />
                 <BlogPost />

@@ -4,7 +4,7 @@ import './styles/BlogPost.css';
 class BlogPost extends Component {
     render() {
         return (
-            <div className="blogpost">
+            <div className="blog-post">
                 Blog Post
                 <br></br>
                 <br></br>
