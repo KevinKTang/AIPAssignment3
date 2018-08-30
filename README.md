@@ -16,12 +16,19 @@ The following coding conventions have been used to provide consistency and impro
 9.	Comments start one space after the comment delimiter and start with a capital letter. They do not need a period at the end of the sentence unless there are multiple sentences. For example:
     - // Comment
     - // One sentence. Another sentence.
-10.	Break down large items into smaller ones – this goes for modularising components and splitting large functions into smaller ones.
-11.	Code indentation is made up of four spaces.
-12.	Use a semicolon after every statement in JavaScript.
-13.	JSX statements use double quotes for attributes and all other JavaScript use single quotes.
-14.	Self-closing tags use a single space. For example:
+10. Components have a description of their purpose above the class definition. They use the following format:
+```
+/*  
+    This component has purpose...
+    This component does...
+*/
+```
+11.	Break down large items into smaller ones – this goes for modularising components and splitting large functions into smaller ones.
+12.	Code indentation is made up of four spaces.
+13.	Use a semicolon after every statement in JavaScript.
+14.	JSX statements use double quotes for attributes and all other JavaScript use single quotes.
+15.	Self-closing tags use a single space. For example:
     - \<Component />
-15.	Keep code as simple as possible. For example, use the conditional (ternary) operator instead of an if statement if the whole statement can be expressed on one line, and do not compare x == true.
-16.	Each component in React should have its own css file in the styles folder for its own HTML classes.
-17.	A single blank line should be used to separate code segments.
+16.	Keep code as simple as possible. For example, use the conditional (ternary) operator instead of an if statement if the whole statement can be expressed on one line, and do not compare x == true.
+17.	Each component in React should have its own css file in the styles folder for its own HTML classes.
+18.	A single blank line should be used to separate code segments.
