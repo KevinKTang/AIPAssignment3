@@ -23,7 +23,7 @@ class Body extends Component {
         return (
             <div className="app-body">
                 <BlogPosts />
-                <button onClick={this.togglecreatePost}>Create a new Blog Post</button>
+                <button onClick={this.togglecreatePost}>Create Blog Post</button>
             </div>
         )
     }

@@ -10,13 +10,13 @@ class Header extends Component {
         }
         this.togglelogin = this.togglelogin.bind(this);
     }
-
+    // Hides or shows the loginForm when the Login button is clicked
     togglelogin() {
         this.setState(prevState => ({
             login: !prevState.login
         }));
     }
-
+    // Simple login form using username & password with a submit button
     loginForm() {
         return (
             <form>

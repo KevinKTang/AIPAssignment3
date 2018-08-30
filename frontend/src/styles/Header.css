@@ -1,3 +1,4 @@
+
 .header {
     height:100px;
     background:#F0F0F0;
@@ -5,9 +6,11 @@
     position: relative;
 }
 
+/* Three fonts are given for redundancy in case some users don't have the correct fonts*/
+/* Be sure to add necessary fonts to the fonts folder */
 .header-text {
     color: black;
-    font-family: 'Audrey';
+    font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
     padding: 1 1rem;
     position: absolute;
     top: 1rem; 
