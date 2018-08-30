@@ -2,6 +2,17 @@
 
 A web application for bloggers and writers to share and view content.
 
+## Getting Started
+This web application is currently under development, currently you can only view the mockup of our front end. To do so, install the files and execute the following command:
+```
+npm install
+```
+This will install all the dependencies. To start the application run:
+```
+npm start
+```
+This will start the application at http://localhost:3000/
+
 ## Key Principles of Code Style and Design
 The following coding conventions have been used to provide consistency and improve readability of code.
 
