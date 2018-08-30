@@ -3,6 +3,14 @@ import './styles/Body.css';
 import BlogPosts from './body-components/BlogPosts.js';
 import CreatePost from './body-components/CreatePost.js';
 
+/* 
+    The body component is responsible for displaying all the content of
+    our website, it starts off displaying the cardview of recently added
+    or most popular blogs and will change to display a user's blogs when
+    interacting with the 'Your Posts' navigation link in the header.
+*/
+
+
 class Body extends Component {
 
     constructor() {

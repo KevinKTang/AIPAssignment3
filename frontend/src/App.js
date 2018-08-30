@@ -4,6 +4,11 @@ import Header from './Header.js';
 import Body from './Body.js';
 import Footer from './Footer.js';
 
+/* 
+    This is the parent component, for now it simply renders
+    the header, body and footer.
+*/
+
 class App extends Component {
     render() {
         return (

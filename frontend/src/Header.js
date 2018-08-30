@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './styles/Header.css';
 
+/*
+    This header component simply displays our website name
+    and contains a login button and once logged in will contain
+    navigation to Account Settings, Your Posts and Logout
+*/ 
+
 class Header extends Component {
 
     constructor() {
@@ -10,17 +16,16 @@ class Header extends Component {
         }
         this.togglelogin = this.togglelogin.bind(this);
     }
-    // Hides or shows the loginForm when the Login button is clicked
     togglelogin() {
         this.setState(prevState => ({
             login: !prevState.login
         }));
     }
-    // Simple login form using username & password with a submit button
+
     loginForm() {
         return (
             <form>
-                <input className="username" type="text" placeholder="Username"/>
+                <input className="email" type="text" placeholder="E-mail"/>
                 <input className="password" type="password" placeholder="Password"/>
                 <button className="submit-button">Submit</button>
             </form>

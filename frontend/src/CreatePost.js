@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import './styles/CreatePost.css';
 
+/* 
+    The CreatePost component is available through the 'Your Posts' view, 
+    it will consist of input fields for Title, and for content, a rich
+    text editor will be provided through an framework such as Draft.js, Slate.js.
+*/
+
 class CreatePost extends Component {
     render() {
         return (
