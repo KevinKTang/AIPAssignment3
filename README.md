@@ -8,7 +8,7 @@ The following coding conventions have been used to provide consistency and impro
 1.	Variable names and function names use lower camel case.
 2.	Constants should be written entirely in uppercase.
 3.	File names and class names use upper camel case.
-4.	Directory names use lower case.
+4.	Directory names use lower case with words separated by a hyphen.
 5.	HTML class names use lower case with words separated by a hyphen.
 6.	The names of the above items should provide intrinsic documentation – they should be concise and descriptive.
 7.	Comments should be meaningful and placed where helpful. If it isn’t immediately obvious what a function or section of code does, a comment should be provided.
