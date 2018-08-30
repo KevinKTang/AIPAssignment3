@@ -1,7 +1,31 @@
 .header {
-    padding: 10px;
+    height:100px;
+    background:#F0F0F0;
+    margin:0px auto;
+    position: relative;
 }
 
 .header-text {
-    padding: 20px;
+    color: black;
+    font-family: 'Audrey';
+    padding: 1 1rem;
+    position: absolute;
+    top: 1rem; 
+    left: 2rem;
+    font-size: 50px;
+
+}
+
+.login-button {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 2rem;
 }

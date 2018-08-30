@@ -20,9 +20,9 @@ class Header extends Component {
     loginForm() {
         return (
             <form>
-                <input type="text" placeholder="username"/>
-                <input type="password" placeholder="password"/>
-                <button>-></button>
+                <input className="username" type="text" placeholder="Username"/>
+                <input className="password" type="password" placeholder="Password"/>
+                <button className="submit-button">Submit</button>
             </form>
         )
     }
@@ -32,10 +32,9 @@ class Header extends Component {
             <div className="header">
                 <span className="header-text">Off With His Read</span>
                 <span>
-                    <button onClick={this.togglelogin}>Login</button>
+                    <button className="login-button" onClick={this.togglelogin}>Login</button>
+                    {this.state.login ? this.loginForm() : ''}
                 </span>
-                {this.state.login ? this.loginForm() : ''}
-                <hr></hr>
             </div>
         )
     }
