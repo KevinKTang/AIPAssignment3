@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './styles/Body.css';
-import BlogPosts from './BlogPosts.js';
-import CreatePost from './CreatePost.js';
+import BlogPosts from './body-components/BlogPosts.js';
+import CreatePost from './body-components/CreatePost.js';
 
 class Body extends Component {
 
