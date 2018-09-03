@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import '../styles/CreatePost.css';
 
+/*
+    This component contains the form used to create
+    a blog post
+*/
+
 class CreatePost extends Component {
     render() {
         return (

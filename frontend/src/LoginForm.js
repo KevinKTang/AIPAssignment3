@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import './styles/LoginForm.css';
 
+/*
+    This component contains the login form used to
+    log in to the website
+*/
+
 class LoginForm extends Component {
 
     render() {
