@@ -10,6 +10,13 @@ import Footer from './Footer.js';
 */
 
 class App extends Component {
+
+    componentDidMount() {
+        fetch('/ping')
+            .then(res => res.json())
+            .then(response => console.log(response));
+    }
+
     render() {
         return (
             <div className="app">
