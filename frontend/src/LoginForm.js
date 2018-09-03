@@ -10,10 +10,10 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <form>
-                <input type="text" placeholder="E-mail"/>
-                <input type="password" placeholder="Password"/>
-                <button>Submit</button>
+            <form className="login-form">
+                <input className="login-input" type="text" placeholder="E-mail"/>
+                <input className="login-input" type="password" placeholder="Password"/>
+                <button className="submit-button">Submit</button>
             </form>
         );
     }

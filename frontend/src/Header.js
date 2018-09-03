@@ -23,14 +23,24 @@ class Header extends Component {
         }));
     }
 
+    loginButton() {
+        return <button className="login-button" onClick={this.togglelogin}>Login</button>
+    }
+
     render() {
         return(
             <div className="header">
-                <span className="header-text">Off With His Read</span>
-                <span>
-                    <button className="login-button" onClick={this.togglelogin}>Login</button>
-                    {this.state.login ? <LoginForm /> : ''}
-                </span>
+                <div className="header-text">Off With His Read</div>
+                <div className="login-section">
+                    {this.state.login ? (
+                        <div>
+                            <LoginForm />
+                            {this.loginButton()}
+                        </div>
+                    ) : (
+                            this.loginButton()
+                    )}
+                </div>
             </div>
         )
     }
