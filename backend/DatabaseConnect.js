@@ -9,12 +9,14 @@ const sequelize = new Sequelize('database', 'username', 'password', {
     storage: 'mydb.db' //specify location
 });
 
+// User model
 const User = sequelize.define('user', {
     firstname: Sequelize.STRING,
     lastname: Sequelize.STRING,
     email: Sequelize.STRING
 });
 
+// Blog model
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
     body: Sequelize.STRING
@@ -33,7 +35,7 @@ sequelize
 // Set up the tables
 sequelize
     // Force the database tables to be set up from scratch
-    .sync({force: true})
+    .sync({force: true}) // Drop table if exists
     .then(() => {
         User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com'});
         User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com'});
@@ -60,7 +62,7 @@ app.use('/blogs', (req, res) => {
         .then(rows => res.json(rows));
 });
 
-// GET /find?name=<Name>
+// GET /finduser?name=<Name>
 // Retrieve all records that match a user's firstname
 app.use('/finduser', (req, res) => {
     User
