@@ -74,7 +74,7 @@ app.get('/blogs', (req, res) => {
 app.get('/finduser', (req, res) => {
     User
         .findOne({where: {email: req.query.email}}) // Check findOne syntax later
-        .then(rows => res.json(rows));
+        .then(data => res.json(data));
 });
 
 // GET /find?title=<Title>

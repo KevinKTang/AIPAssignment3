@@ -31,7 +31,7 @@ class Header extends Component {
 
     // Change if the login button shows the form or not
     toggleLogin() {
-        if (this.state.display == 'login')
+        if (this.state.display === 'login')
             this.setState({display: ''})
         else 
             this.setState({display: 'login'})
@@ -39,7 +39,7 @@ class Header extends Component {
 
     // Change if the register button shows the form or not
     toggleRegister() {
-        if (this.state.display == 'register')
+        if (this.state.display === 'register')
             this.setState({display: ''})
         else 
             this.setState({display: 'register'})
@@ -50,20 +50,20 @@ class Header extends Component {
             <div className="header">
                 <div className="header-text">Off With His Read</div>
                 <div className="login-section">
-                    {this.state.display == '' ? (
+                    {this.state.display === '' ? (
                         <div>
                             {this.loginButton()}
                             {this.registerButton()}
                         </div>
                     ) : ''}
-                    {this.state.display == 'login' ? (
+                    {this.state.display === 'login' ? (
                         <div>
                             <LoginForm />
                             {this.loginButton()}
                             {this.registerButton()}
                         </div>
                     ) : ''}
-                    {this.state.display == 'register' ? (
+                    {this.state.display === 'register' ? (
                         <div>
                             <RegisterForm />
                             {this.loginButton()}

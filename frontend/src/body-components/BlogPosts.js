@@ -47,7 +47,6 @@ class BlogPosts extends Component {
             })
         }).then(res => res.json())
             .then(data => {
-                console.log(data);
                 this.setState({
                     blogs: [
                         ...this.state.blogs,
@@ -65,7 +64,6 @@ class BlogPosts extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="blog-posts-flex">
                 {this.state.blogs.map(blog => this.eachBlog(blog))}

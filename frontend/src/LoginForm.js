@@ -16,14 +16,14 @@ class LoginForm extends Component {
         fetch(`http://localhost:3000/finduser?email=${this._inputEmail.value}`)
         .then(res => res.json())
         .then(res => {
-            if (res == '') {
+            if (res == null) {
                 // If no user with that email found
                 console.log('Username or password incorrect');
                 this._inputPassword.value = '';
             }
             // If username and password correct
-            else if (res[0].password === this._inputPassword.value) { // Check [0] syntax later
-                console.log('Login successful')
+            else if (res.password === this._inputPassword.value) { // Check [0] syntax later
+                console.log('Login successful');
             }
             // If password incorrect
             else {

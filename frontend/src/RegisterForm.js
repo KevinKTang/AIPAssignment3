@@ -7,9 +7,6 @@ import './styles/RegisterForm.css';
 */
 
 class RegisterForm extends Component {
-    constructor() {
-        super();
-    }
 
     render() {
         return (
