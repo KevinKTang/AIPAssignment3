@@ -13,7 +13,7 @@ class BlogPost extends Component {
         super();
         this.state = {
             title: props.title,
-            body: props.body
+            content: props.content
         }
     }
 
@@ -23,7 +23,7 @@ class BlogPost extends Component {
                 {this.state.title}
                 <br></br>
                 <br></br>
-                {this.state.body}
+                {this.state.content}
             </div>
         )
     }
