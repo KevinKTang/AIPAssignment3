@@ -41,10 +41,15 @@ sequelize
         User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com'});
         User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com'});
 
-        Blog.create({title: 'Cats', body: 'I like cats'});
-        Blog.create({title: 'Dogs', body: 'I like dogs'});
-        Blog.create({title: 'Sequelize', body: 'Sequelize is an object relational mapper'});
+        Blog.create({title: 'Cats', body: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', body: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', body: 'Sequelize is an object relational mapper. It has been used in this project!'});
     });
+
+    // To test connection with frontend
+    app.get('/ping', (req, res) => {
+        res.json({response: 'pong'});
+    })
 
 // GET / users:
 // Retrieve a list of all users in the database
@@ -78,6 +83,6 @@ app.use('/findblog', (req, res) => {
         .then(rows => res.json(rows));
 });
 
-server = app.listen(3000, () => {
-    console.log('Running on http://localhost:3000/');
+server = app.listen(5000, () => {
+    console.log('Running on http://localhost:5000/');
 });

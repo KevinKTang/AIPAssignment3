@@ -9,11 +9,11 @@ import '../styles/BlogPost.css';
 
 class BlogPost extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            title: 'Blog Post',
-            body: 'This is some sample blog post body content. It will display the first few sentences of the post.'
+            title: props.title,
+            body: props.body
         }
     }
 
