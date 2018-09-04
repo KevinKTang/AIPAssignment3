@@ -103,6 +103,18 @@ app.post('/createBlog', (req, res) => {
     })
 });
 
+app.post('/createUser', (req, res) => {
+    User.create({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password
+    })
+    .then(newUser => {
+        res.send(newUser);
+    })
+});
+
 server = app.listen(5000, () => {
     console.log('Running on http://localhost:5000/');
 });
