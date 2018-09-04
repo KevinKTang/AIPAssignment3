@@ -15,61 +15,63 @@ class Header extends Component {
     constructor() {
         super();
         this.state = {
-            login: false,
-            register: false
+            display: ''
         }
-        this.togglelogin = this.togglelogin.bind(this);
-        this.toggleregister = this.toggleregister.bind(this);
+        this.toggleLogin = this.toggleLogin.bind(this);
+        this.toggleRegister = this.toggleRegister.bind(this);
     }
 
     loginButton() {
-        return <button className="login-button" onClick={this.togglelogin}>Login</button>
+        return <button className="login-button" onClick={this.toggleLogin}>Login</button>
     }
 
     registerButton() {
-        return <button className="register-button" onClick={this.toggleregister}>Register</button>
+        return <button className="register-button" onClick={this.toggleRegister}>Register</button>
     }
+
     // Change if the login button shows the form or not
-    togglelogin() {
-        this.setState(prevState => ({
-            login: !prevState.login
-        }));
+    toggleLogin() {
+        if (this.state.display == 'login')
+            this.setState({display: ''})
+        else 
+            this.setState({display: 'login'})
     }
+
     // Change if the register button shows the form or not
-    toggleregister() {
-        this.setState(prevState => ({
-            register: !prevState.register
-        }));
+    toggleRegister() {
+        if (this.state.display == 'register')
+            this.setState({display: ''})
+        else 
+            this.setState({display: 'register'})
     }
 
     render() {
-
         return (
             <div className="header">
                 <div className="header-text">Off With His Read</div>
                 <div className="login-section">
-
-
-                    {this.state.login ? (
+                    {this.state.display == '' ? (
+                        <div>
+                            {this.loginButton()}
+                            {this.registerButton()}
+                        </div>
+                    ) : ''}
+                    {this.state.display == 'login' ? (
                         <div>
                             <LoginForm />
                             {this.loginButton()}
                             {this.registerButton()}
                         </div>
-                    ) : (<div>
-                        {this.loginButton()}
-                        {this.registerButton()}
-                    </div>
-                        )}
-
-                    {this.state.register ? (
-                        <RegisterForm />
-                    ) : (''
-                        )}
-
+                    ) : ''}
+                    {this.state.display == 'register' ? (
+                        <div>
+                            <RegisterForm />
+                            {this.loginButton()}
+                            {this.registerButton()}
+                        </div>
+                    ) : ''}
                 </div>
             </div>
-
         )
     }
 }

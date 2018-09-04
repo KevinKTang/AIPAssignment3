@@ -39,7 +39,7 @@ class LoginForm extends Component {
             <form onSubmit={this.checkLogin} name="loginForm" className="login-form">
                 <input className="login-input" ref={input => this._inputEmail = input} type="text" placeholder="E-mail" required/>
                 <input className="login-input" ref={input => this._inputPassword = input} type="password" placeholder="Password" required/>
-                <button className="submit-button">Submit</button>
+                <button className="login-submit-button">Submit</button>
             </form>
         );
     }

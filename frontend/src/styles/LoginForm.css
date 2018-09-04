@@ -2,8 +2,8 @@
     display: inline-block;
 }
 
-.submit-button {
-    background-color: green;
+.login-submit-button {
+    background-color: slategrey;
     border: none;
     color: white;
     font-size: 1rem;
@@ -15,4 +15,5 @@
     height: 1.8rem;
     font-size: 1rem;
     margin-right: 0.5rem;
+    background-color: rgb(158, 211, 158);
 }

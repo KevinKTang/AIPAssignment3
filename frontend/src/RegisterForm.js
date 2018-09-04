@@ -18,7 +18,7 @@ class RegisterForm extends Component {
                 <input className="register-input" type="text" placeholder="Last Name" required/> 
                 <input className="register-input" type="text" placeholder="E-mail" required/>
                 <input className="register-input" type="password" placeholder="Password" required/>
-                <button className="submit-button">Submit</button>
+                <button className="register-submit-button">Submit</button>
             </form>
         );
     }
