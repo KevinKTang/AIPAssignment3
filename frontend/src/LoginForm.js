@@ -24,6 +24,7 @@ class LoginForm extends Component {
             // If username and password correct
             else if (res.password === this._inputPassword.value) { // Check [0] syntax later
                 console.log('Login successful');
+                this._inputPassword.value = '';
             }
             // If password incorrect
             else {

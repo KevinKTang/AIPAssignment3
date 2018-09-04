@@ -14,9 +14,8 @@ class BlogPosts extends Component {
         super();
         this.state = {
             blogs: []
-        };
+        }
         this.eachBlog = this.eachBlog.bind(this);
-        this.testPost = this.testPost.bind(this);
     }
 
     // Get blog posts from database on start
@@ -37,26 +36,7 @@ class BlogPosts extends Component {
         )
     }
 
-    testPost() {
-        fetch('http://localhost:5000/createBlog', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                title: 'This is a title',
-                content: 'This is a body of a blog post'
-            })
-        }).then(res => res.json())
-            .then(data => {
-                this.setState({
-                    blogs: [
-                        ...this.state.blogs,
-                        data
-                    ]
-                });
-            })
-    }
-
-    // Function to update blogs after we add one
+    // Function to update blogs - currently not used
     updateBlogs() {
         fetch('http://localhost:5000/blogs')
             .then(res => res.json())
@@ -67,7 +47,6 @@ class BlogPosts extends Component {
         return (
             <div className="blog-posts-flex">
                 {this.state.blogs.map(blog => this.eachBlog(blog))}
-                <button onClick={() => this.testPost()}>Test Add Post</button>
             </div>
         )
     }
