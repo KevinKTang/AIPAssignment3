@@ -35,7 +35,7 @@ class Body extends Component {
             </div>
         )
     }
-
+    
     showCreatePost() {
         return (
             <div className="app-body">
