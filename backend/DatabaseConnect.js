@@ -13,7 +13,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const User = sequelize.define('user', {
     firstname: Sequelize.STRING,
     lastname: Sequelize.STRING,
-    email: Sequelize.STRING
+    email: Sequelize.STRING,
+    password: Sequelize.STRING // Change later
 });
 
 // Blog model
@@ -37,9 +38,9 @@ sequelize
     // Force the database tables to be set up from scratch
     .sync({force: true}) // Drop table if exists
     .then(() => {
-        User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com'});
-        User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com'});
-        User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com'});
+        User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com', password: 'Bloggs'});
+        User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com', password: 'Smith'});
+        User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com', password: 'North'});
 
         Blog.create({title: 'Cats', body: 'I like cats. They are great to have as a pet.'});
         Blog.create({title: 'Dogs', body: 'I like dogs. They are fun and like to run around at the park.'});
@@ -67,11 +68,11 @@ app.use('/blogs', (req, res) => {
         .then(rows => res.json(rows));
 });
 
-// GET /finduser?name=<Name>
+// GET /finduser?email=<email>
 // Retrieve all records that match a user's firstname
 app.use('/finduser', (req, res) => {
     User
-        .findAll({where: {firstname: req.query.firstname}})
+        .findAll({where: {email: req.query.email}})
         .then(rows => res.json(rows));
 });
 
