@@ -19,6 +19,8 @@ class Body extends Component {
             createPost: false
         }
         this.togglecreatePost = this.togglecreatePost.bind(this);
+        this.createSession = this.createSession.bind(this);
+        this.checkSession = this.checkSession.bind(this);
     }
 
     togglecreatePost() {
@@ -47,9 +49,25 @@ class Body extends Component {
         )
     }
 
+    createSession() {
+        fetch('/createSession', {
+            credentials: 'include'
+        });
+    }
+
+    checkSession() {
+        fetch('/checkSession', {
+            credentials: 'include'
+        });
+    }
+
     render() {
         return(
-            this.state.createPost ? this.showCreatePost() : this.showBlogPosts()
+            <div>
+            <button onClick={this.createSession}>create session</button>
+            <button onClick={this.checkSession}>check session</button>
+            {this.state.createPost ? this.showCreatePost() : this.showBlogPosts()}
+            </div>
         )
     }
 }

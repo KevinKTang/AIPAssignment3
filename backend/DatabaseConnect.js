@@ -2,6 +2,8 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const session = require('express-session');
+const uuidv4 = require('uuid/v4');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -9,6 +11,24 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(session({
+
+    secret: 'super secret'
+
+    /*genid: function(req) {
+        return uuidv4(); // Use UUIDs for session IDs
+    },
+    // In production, change to randomly generated string from an environment variable
+    secret: 'super secret',
+     resave: true // Come back to this when sorted out store
+     app.set('trust proxy', 1) // Come back to this
+    secure: true // For https enabled websites
+    // can declare session attributes for production environment so you can still test in dev
+    saveUninitialized: true, // Check later
+    resave: true, // If session store doesn't implement touch command
+    cookie: { maxAge: 60000} // Check later*/
+}));
 
 // Set up the database connection
 const sequelize = new Sequelize('database', 'username', 'password', {
@@ -129,28 +149,31 @@ app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
         if (!user) {
-            res.send(false)
+            //res.send(false)
+            console.log('user doesnt exist')
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
-                res.send(result);
+                if (!result) {
+                    //res.send(false);
+                    console.log('username or password incorrect');
+                } else {
+                    console.log('login successful');
+                    //res.send(true);
+                }
             });
         }
     });
 });
 
-// REMOVE LATER
-app.get('/testHash', (req, res) => {
-    let password = 'Ubuntu';
-    bcrypt.hash(password, saltRounds, function(err, hash) {
-        res.send(hash);
-    });
+app.get('/createSession', (req, res) => {
+    req.session.word = 'dog';
+    req.session.save();
+    console.log(req.session);
 });
 
-// REMOVE LATER
-app.get('/mash', (req, res) => {
-    bcrypt.compare('Ubuntu', '$2b$10$qMU4PmCCePtdPZj7n.op..gVINgbTnk.BuyzEOh.ha9FpevMz8wQi', function(err, result) {
-        res.send(result);
-    });
+app.get('/checkSession', (req, res) => {
+    console.log(req.session);
+    req.session.save();
 });
 
 server = app.listen(5000, () => {

@@ -15,7 +15,7 @@ class LoginForm extends Component {
     // Send username and password to server, check if login successful
     checkLogin(event) {
         event.preventDefault();
-        fetch(`http://localhost:5000/login`, {
+        fetch('/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

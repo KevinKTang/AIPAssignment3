@@ -12,7 +12,9 @@ import Footer from './Footer.js';
 class App extends Component {
 
     componentDidMount() {
-        fetch('http://localhost:5000/ping')
+        fetch('/ping', {
+            credentials: 'include' // temp
+        })
             .then(res => res.json())
             .then(data => console.log(data));
     }

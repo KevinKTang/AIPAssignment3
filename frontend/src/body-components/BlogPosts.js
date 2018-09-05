@@ -20,7 +20,7 @@ class BlogPosts extends Component {
 
     // Get blog posts from database on start
     componentWillMount() {
-        fetch('http://localhost:5000/blogs')
+        fetch('/blogs')
             .then(res => res.json())
             .then(data => this.setState({blogs: data}));
     }
@@ -38,7 +38,9 @@ class BlogPosts extends Component {
 
     // Function to update blogs - currently not used
     updateBlogs() {
-        fetch('http://localhost:5000/blogs')
+        fetch('/blogs', {
+            credentials: 'include' //temp
+        })
             .then(res => res.json())
             .then(data => this.setState({ blogs: data }));
     }
