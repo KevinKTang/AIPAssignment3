@@ -12,27 +12,26 @@ class LoginForm extends Component {
         this.checkLogin = this.checkLogin.bind(this);
     }
 
+    // Send username and password to server, check if login successful
     checkLogin(event) {
-        fetch(`http://localhost:3000/finduser?email=${this._inputEmail.value}`)
+        event.preventDefault();
+        fetch(`http://localhost:5000/login`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: this._inputEmail.value,
+                password: this._inputPassword.value
+            })
+        })
         .then(res => res.json())
         .then(res => {
-            if (res == null) {
-                // If no user with that email found
-                console.log('Username or password incorrect');
-                this._inputPassword.value = '';
+            if (res) {
+                // Create session
+                console.log('Logged in successfuly');
+            } else {
+                console.log('Incorrect username or password');
             }
-            // If username and password correct
-            else if (res.password === this._inputPassword.value) { // Check [0] syntax later
-                console.log('Login successful');
-                this._inputPassword.value = '';
-            }
-            // If password incorrect
-            else {
-                this._inputPassword.value = '';
-                console.log('Username or password incorrect');
-            }
-        }); 
-        event.preventDefault();
+        });
     }
 
     render() {

@@ -2,6 +2,8 @@ const express = require('express');
 const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -21,6 +23,13 @@ const User = sequelize.define('user', {
     lastname: Sequelize.STRING,
     email: Sequelize.STRING,
     password: Sequelize.STRING // Change later
+});
+
+// Hash password before create a new user
+User.beforeCreate((user, options) => {
+    return bcrypt.hash(user.password, saltRounds)
+        .then(hash => user.password = hash)
+        .catch(err => console.log(err));
 });
 
 // Blog model
@@ -113,6 +122,35 @@ app.post('/createUser', (req, res) => {
     .then(newUser => {
         res.send(newUser);
     })
+});
+
+// Return true if correct login, otherwise false
+app.post('/login', (req, res) => {
+    User.findOne({where: {email: req.body.email}})
+    .then(user => {
+        if (!user) {
+            res.send(false)
+        } else {
+            bcrypt.compare(req.body.password, user.password, function (err, result) {
+                res.send(result);
+            });
+        }
+    });
+});
+
+// REMOVE LATER
+app.get('/testHash', (req, res) => {
+    let password = 'Ubuntu';
+    bcrypt.hash(password, saltRounds, function(err, hash) {
+        res.send(hash);
+    });
+});
+
+// REMOVE LATER
+app.get('/mash', (req, res) => {
+    bcrypt.compare('Ubuntu', '$2b$10$qMU4PmCCePtdPZj7n.op..gVINgbTnk.BuyzEOh.ha9FpevMz8wQi', function(err, result) {
+        res.send(result);
+    });
 });
 
 server = app.listen(5000, () => {
