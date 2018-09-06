@@ -133,6 +133,7 @@ app.post('/createBlog', (req, res) => {
 });
 
 app.post('/createUser', (req, res) => {
+    console.log('create user')
     User.create({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -149,18 +150,18 @@ app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
         if (!user) {
-            res.send(JSON.stringify({'result': false}));
+            res.json(false);
             console.log('user doesnt exist');
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (!result) {
-                    res.send(JSON.stringify({'result': false}));
+                    res.json(false);
                     console.log('username or password incorrect');
                 } else {
                     req.session.firstname = user.firstname;
                     console.log('session firstname is  ' + req.session.firstname);
                     console.log('login successful');
-                    res.send(JSON.stringify({'result': true}));
+                    res.json(true);
                 }
             });
         }
@@ -176,9 +177,9 @@ app.get('/createSession', (req, res) => {
 
 app.get('/getFirstname', (req, res) => {
     if (req.session.firstname)
-        res.send(JSON.stringify(req.session.firstname));
+        res.json(req.session.firstname);
     else
-        res.send(JSON.stringify('[no user logged in]'));
+        res.json('[no user logged in]');
 })
 
 app.get('/checkSession', (req, res) => {
@@ -187,7 +188,7 @@ app.get('/checkSession', (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
-    console.log(req.session);
+    console.log('Session is ' + req.session);
 })
 
 server = app.listen(5000, () => {
