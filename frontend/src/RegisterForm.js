@@ -9,7 +9,14 @@ import './styles/RegisterForm.css';
 class RegisterForm extends Component {
     constructor() {
         super();
+        this.state = {
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: ''
+        }
         this.registerUser = this.registerUser.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     registerUser(event) {
@@ -18,21 +25,30 @@ class RegisterForm extends Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                firstname: this._inputFirstname.value,
-                lastname: this._inputLastname.value,
-                email: this._inputEmail.value,
-                password: this._inputPassword.value
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password
             })
         }).then(document.getElementById('registerForm').submit());
+    }
+
+    // Update the state to reflect user input
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: target.value
+        });
     }
 
     render() {
         return (
             <form onSubmit={this.registerUser} id="registerForm" className="register-form">
-                <input className="register-input" ref={input => this._inputFirstname = input} type="text" placeholder="First Name" required/>
-                <input className="register-input" ref={input => this._inputLastname = input} type="text" placeholder="Last Name" required/> 
-                <input className="register-input" ref={input => this._inputEmail = input} type="text" placeholder="E-mail" required/>
-                <input className="register-input" ref={input => this._inputPassword = input} type="password" placeholder="Password" required/>
+                <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required/>
+                <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required/> 
+                <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required/>
+                <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required/>
                 <button className="register-submit-button">Submit</button>
             </form>
         );

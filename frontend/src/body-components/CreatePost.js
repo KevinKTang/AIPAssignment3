@@ -9,7 +9,12 @@ import '../styles/CreatePost.css';
 class CreatePost extends Component {
     constructor() {
         super();
+        this.state = {
+            title: '',
+            content: ''
+        }
         this.newPost = this.newPost.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     newPost(event) {
@@ -18,10 +23,18 @@ class CreatePost extends Component {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                title: this._inputTitle.value,
-                content: this._inputContent.value
+                title: this.state.title,
+                content: this.state.content
             })
         }).then(document.getElementById('createBlogForm').submit());
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: target.value
+        });
     }
 
     render() {
@@ -29,8 +42,8 @@ class CreatePost extends Component {
             <div>
                 <p>New Blog Post</p>
                 <form id="createBlogForm" onSubmit={this.newPost}>
-                    <input className="create-post-input" type="text" ref={input => this._inputTitle = input} placeholder="Title" required></input>
-                    <textarea rows="10" cols="50" className="create-post-input" ref={input => this._inputContent = input} placeholder="Blog post content" required></textarea>
+                    <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text"  placeholder="Title" required></input>
+                    <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input"  placeholder="Blog post content" required></textarea>
                     <button className="create-post-input">Post</button>
                 </form>
             </div>

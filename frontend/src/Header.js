@@ -16,7 +16,9 @@ class Header extends Component {
         super();
         this.state = {
             display: '',
-            username: ''
+            user: {
+                firstname: ''
+            }
         }
         this.toggleLogin = this.toggleLogin.bind(this);
         this.toggleRegister = this.toggleRegister.bind(this);
@@ -47,13 +49,17 @@ class Header extends Component {
     }
 
     // Set the username if a user is logged in
-    componentWillMount() {
+    componentWillUpdate() {
         fetch('/getFirstname', {
             credentials: 'include'
         })
         .then(res => res.json())
         .then(result => {
-            this.setState({username: result})
+            this.setState({
+                user: {
+                    firstname: result
+                }
+            });
         });
     }
 
@@ -62,7 +68,7 @@ class Header extends Component {
             <div className="header">
                 <div className="header-text">
                 <div>Off With His Read</div>
-                <div>Welcome {this.state.username}</div>
+                <div>Welcome {this.state.user.firstname}</div>
                 </div>
                 <div className="login-section">
                     {this.state.display === '' ? (
