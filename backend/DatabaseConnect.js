@@ -167,13 +167,13 @@ app.post('/login', (req, res) => {
 
 app.get('/createSession', (req, res) => {
     req.session.word = 'dog';
-    req.session.save();
-    console.log(req.session);
+    res.send(req.session); // Gives cookie
+    console.log(req.session.word);
 });
 
 app.get('/checkSession', (req, res) => {
-    console.log(req.session);
-    req.session.save();
+    res.send(req.session); // Gives cookie
+    console.log(req.session.word);
 });
 
 server = app.listen(5000, () => {
