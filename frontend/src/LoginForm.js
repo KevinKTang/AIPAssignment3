@@ -25,8 +25,7 @@ class LoginForm extends Component {
         })
         .then(res => res.json())
         .then(res => {
-            if (res) {
-                // Create session
+            if (res.result) {
                 console.log('Logged in successfuly');
             } else {
                 console.log('Incorrect username or password');

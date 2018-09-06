@@ -149,32 +149,46 @@ app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
         if (!user) {
-            //res.send(false)
-            console.log('user doesnt exist')
+            res.send(JSON.stringify({'result': false}));
+            console.log('user doesnt exist');
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (!result) {
-                    //res.send(false);
+                    res.send(JSON.stringify({'result': false}));
                     console.log('username or password incorrect');
                 } else {
+                    req.session.firstname = user.firstname;
+                    console.log('session firstname is  ' + req.session.firstname);
                     console.log('login successful');
-                    //res.send(true);
+                    res.send(JSON.stringify({'result': true}));
                 }
             });
         }
     });
 });
 
+// For testing purposes
 app.get('/createSession', (req, res) => {
     req.session.word = 'dog';
     res.send(req.session); // Gives cookie
-    console.log(req.session.word);
+    console.log('word from session is ' + req.session.word);
 });
 
+app.get('/getFirstname', (req, res) => {
+    if (req.session.firstname)
+        res.send(JSON.stringify(req.session.firstname));
+    else
+        res.send(JSON.stringify('[no user logged in]'));
+})
+
 app.get('/checkSession', (req, res) => {
-    res.send(req.session); // Gives cookie
-    console.log(req.session.word);
+    console.log('word from session is ' + req.session.word);
 });
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    console.log(req.session);
+})
 
 server = app.listen(5000, () => {
     console.log('Running on http://localhost:5000/');

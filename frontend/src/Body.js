@@ -21,6 +21,7 @@ class Body extends Component {
         this.togglecreatePost = this.togglecreatePost.bind(this);
         this.createSession = this.createSession.bind(this);
         this.checkSession = this.checkSession.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
     togglecreatePost() {
@@ -61,11 +62,18 @@ class Body extends Component {
         });
     }
 
+    logout() {
+        fetch('/logout', {
+            credentials: 'include'
+        });
+    }
+
     render() {
         return(
             <div>
             <button onClick={this.createSession}>create session</button>
             <button onClick={this.checkSession}>check session</button>
+            <button onClick={this.logout}>logout</button>
             {this.state.createPost ? this.showCreatePost() : this.showBlogPosts()}
             </div>
         )
