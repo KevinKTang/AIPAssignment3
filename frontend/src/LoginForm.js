@@ -7,7 +7,7 @@ import './styles/LoginForm.css';
 */
 
 class LoginForm extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             email: '',
@@ -29,13 +29,18 @@ class LoginForm extends Component {
             })
         })
         .then(res => res.json())
-        .then(res => {
-            if (res) {
-                console.log('Logged in successfuly');
+        .then(userFirstname => {
+            if (userFirstname) {
+                console.log('Logged in successfully');
+                this.props.updateLogin(userFirstname);
             } else {
                 console.log('Incorrect username or password');
+                this.setState({
+                    password: ''
+                });
             }
         });
+        // Close login form
     }
 
     // Update the state to reflect user input
@@ -48,14 +53,20 @@ class LoginForm extends Component {
     }
 
     render() {
-        return (
-            <form onSubmit={this.login} name="loginForm" className="login-form">
-                <input className="login-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required/>
-                <input className="login-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required/>
-                <button className="login-submit-button">Submit</button>
-            </form>
-        );
+        if (this.props.show) {
+            return (
+                <form onSubmit={this.login} name="loginForm" className="login-form">
+                Login:
+                    <input className="login-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
+                    <input className="login-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                    <button className="login-submit-button">Submit</button>
+                </form>
+            );
+        } else {
+            return null;
+        }
     }
+
 }
 
 export default LoginForm;

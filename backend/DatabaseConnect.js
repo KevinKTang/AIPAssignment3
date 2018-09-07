@@ -132,8 +132,7 @@ app.post('/createBlog', (req, res) => {
     })
 });
 
-app.post('/createUser', (req, res) => {
-    console.log('create user')
+app.post('/newUser', (req, res) => {
     User.create({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -141,8 +140,10 @@ app.post('/createUser', (req, res) => {
         password: req.body.password
     })
     .then(newUser => {
-        res.send(newUser);
-    })
+        req.session.firstname = newUser.firstname;
+        res.json(newUser.firstname);
+        console.log('New user ' + newUser.firstname + ' created')
+    });
 });
 
 // Return true if correct login, otherwise false
@@ -150,46 +151,35 @@ app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
         if (!user) {
-            res.json(false);
-            console.log('user doesnt exist');
+            res.json(null);
+            console.log('User does not exist');
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (!result) {
-                    res.json(false);
-                    console.log('username or password incorrect');
+                    res.json(null);
+                    console.log('Username or password incorrect');
                 } else {
                     req.session.firstname = user.firstname;
-                    console.log('session firstname is  ' + req.session.firstname);
-                    console.log('login successful');
-                    res.json(true);
+                    console.log(user.firstname + ' has logged in successfully');
+                    res.json(user.firstname);
                 }
             });
         }
     });
 });
 
-// For testing purposes
-app.get('/createSession', (req, res) => {
-    req.session.word = 'dog';
-    res.send(req.session); // Gives cookie
-    console.log('word from session is ' + req.session.word);
+app.get('/logout', (req, res) => {
+    console.log(req.session.firstname + ' has logged out successfully')
+    req.session.destroy();
+    res.json(req.session);
 });
 
-app.get('/getFirstname', (req, res) => {
+app.get('/checkLogin', (req, res) => {
     if (req.session.firstname)
         res.json(req.session.firstname);
     else
-        res.json('[no user logged in]');
-})
-
-app.get('/checkSession', (req, res) => {
-    console.log('word from session is ' + req.session.word);
+        res.json(false);
 });
-
-app.get('/logout', (req, res) => {
-    req.session.destroy();
-    console.log('Session is ' + req.session);
-})
 
 server = app.listen(5000, () => {
     console.log('Running on http://localhost:5000/');

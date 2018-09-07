@@ -7,7 +7,7 @@ import './styles/RegisterForm.css';
 */
 
 class RegisterForm extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             firstname: '',
@@ -15,13 +15,13 @@ class RegisterForm extends Component {
             email: '',
             password: ''
         }
-        this.registerUser = this.registerUser.bind(this);
+        this.register = this.register.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    registerUser(event) {
+    register(event) {
         event.preventDefault();
-        fetch('/createUser', {
+        fetch('/newUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -30,7 +30,12 @@ class RegisterForm extends Component {
                 email: this.state.email,
                 password: this.state.password
             })
-        }).then(document.getElementById('registerForm').submit());
+        })
+        .then(res => res.json())
+        .then(userFirstname => {
+            this.props.updateLogin(userFirstname);
+            console.log('Registered successfully');
+        });
     }
 
     // Update the state to reflect user input
@@ -43,15 +48,20 @@ class RegisterForm extends Component {
     }
 
     render() {
-        return (
-            <form onSubmit={this.registerUser} id="registerForm" className="register-form">
-                <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required/>
-                <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required/> 
-                <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required/>
-                <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required/>
-                <button className="register-submit-button">Submit</button>
-            </form>
-        );
+        if (this.props.show) {
+            return (
+                <form onSubmit={this.register} id="registerForm" className="register-form">
+                Register:
+                    <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
+                    <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
+                    <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
+                    <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                    <button className="register-submit-button">Submit</button>
+                </form>
+            );
+        } else {
+            return null;
+        }
     }
 }
 

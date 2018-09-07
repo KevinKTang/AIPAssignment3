@@ -3,7 +3,6 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import './styles/Header.css';
 
-
 /*
     This header component simply displays our website name
     and contains a login button. Once logged in will contain
@@ -15,83 +14,113 @@ class Header extends Component {
     constructor() {
         super();
         this.state = {
-            display: '',
+            isLoginForm: false,
+            isRegisterForm: false,
+            isLoggedIn: false,
             user: {
                 firstname: ''
             }
         }
-        this.toggleLogin = this.toggleLogin.bind(this);
-        this.toggleRegister = this.toggleRegister.bind(this);
+        this.logout = this.logout.bind(this);
+        this.loginSection = this.loginSection.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
 
-    loginButton() {
-        return <button className="login-button" onClick={this.toggleLogin}>Login</button>
-    }
-
-    registerButton() {
-        return <button className="register-button" onClick={this.toggleRegister}>Register</button>
-    }
-
-    // Change if the login button shows the form or not
-    toggleLogin() {
-        if (this.state.display === 'login')
-            this.setState({display: ''})
-        else 
-            this.setState({display: 'login'})
-    }
-
-    // Change if the register button shows the form or not
-    toggleRegister() {
-        if (this.state.display === 'register')
-            this.setState({display: ''})
-        else 
-            this.setState({display: 'register'})
-    }
-
-    // Set the username if a user is logged in
-    componentWillUpdate() {
-        fetch('/getFirstname', {
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(result => {
-            this.setState({
-                user: {
-                    firstname: result
+    // If the user is still logged in, populate user state
+    componentDidMount() {
+        fetch('/checkLogin')
+            .then(res => res.json())
+            .then(result => {
+                if (result) {
+                    this.setState({
+                        // User object as may need to add more states of a user in future
+                        user: {
+                            firstname: result
+                        },
+                        isLoggedIn: true
+                    });
                 }
             });
+    }
+
+    logout() {
+        fetch('/logout')
+            .then((res) => {
+                this.setState({
+                    isLoggedIn: false,
+                    user: {
+                        firstname: ''
+                    }
+                });
+                console.log('Logged out successfully')
+            });
+    }
+
+    updateUser(userFirstname) {
+        this.setState({
+            isLoginForm: false,
+            isRegisterForm: false,
+            isLoggedIn: true,
+            user: {
+                firstname: userFirstname
+            }
         });
+    }
+
+    // Show selected form, allow toggle of form and close other form if open
+    handleClick(event) {
+        const name = event.target.name;
+        let other;
+        if (name === 'isLoginForm') {
+            other = 'isRegisterForm';
+        }
+        else {
+            other='isLoginForm';
+        }
+
+        if (this.state[name]) {
+            this.setState({
+                [name]: false
+            });
+        } else {
+            this.setState({
+                [name]: true,
+                [other]: false
+            });
+        }
+    }
+
+    // Display login information depending on whether a user is logged in or not
+    loginSection() {
+        if (this.state.isLoggedIn) {
+            return (
+                <div className="login-section">
+                    <button className="logout-button" onClick={this.logout}>Logout</button>
+                </div>
+            )
+        } else {
+            return (
+                <div className="login-section">
+                    <button className="login-button" name="isLoginForm" onClick={this.handleClick}>Login</button>
+                    <button className="register-button" name="isRegisterForm" onClick={this.handleClick}>Register</button>
+                    <LoginForm show={this.state.isLoginForm} updateLogin={this.updateUser} />
+                    <RegisterForm show={this.state.isRegisterForm} updateLogin={this.updateUser}/>
+                </div>
+            )
+        }
     }
 
     render() {
         return (
             <div className="header">
+
                 <div className="header-text">
-                <div>Off With His Read</div>
-                <div>Welcome {this.state.user.firstname}</div>
+                    <div>Off With His Read</div>
+                    {this.state.isLoggedIn ? (<div className="welcome-text">Welcome {this.state.user.firstname}</div>) : ('')}
                 </div>
-                <div className="login-section">
-                    {this.state.display === '' ? (
-                        <div>
-                            {this.loginButton()}
-                            {this.registerButton()}
-                        </div>
-                    ) : ''}
-                    {this.state.display === 'login' ? (
-                        <div>
-                            <LoginForm />
-                            {this.loginButton()}
-                            {this.registerButton()}
-                        </div>
-                    ) : ''}
-                    {this.state.display === 'register' ? (
-                        <div>
-                            <RegisterForm />
-                            {this.loginButton()}
-                            {this.registerButton()}
-                        </div>
-                    ) : ''}
-                </div>
+
+                {this.loginSection()}
             </div>
         )
     }
