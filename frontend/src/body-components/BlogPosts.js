@@ -19,10 +19,15 @@ class BlogPosts extends Component {
     }
 
     // Get blog posts from database on start
-    componentWillMount() {
+    componentDidMount() {
         fetch('/blogs')
-            .then(res => res.json())
-            .then(data => this.setState({blogs: data}));
+            .then(res => {
+                if (res.status === 200) {
+                    res.json()
+                        .then(res => this.setState({blogs: res}))
+                }
+            })
+            .catch(err => console.log('An error occurred: ' + err));
     }
 
     // Create blog post from data from database
@@ -34,15 +39,6 @@ class BlogPosts extends Component {
                 content={blog.content}>
             </BlogPost>
         )
-    }
-
-    // Function to update blogs - currently not used
-    updateBlogs() {
-        fetch('/blogs', {
-            credentials: 'include' //temp
-        })
-            .then(res => res.json())
-            .then(data => this.setState({ blogs: data }));
     }
 
     render() {

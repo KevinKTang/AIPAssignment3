@@ -31,11 +31,17 @@ class RegisterForm extends Component {
                 password: this.state.password
             })
         })
-        .then(res => res.json())
-        .then(userFirstname => {
-            this.props.updateLogin(userFirstname);
-            console.log('Registered successfully');
-        });
+        .then(res => {
+            if (res.status === 200) {
+                res.json().then(res => {
+                    this.props.updateLogin(res);
+                    console.log('Registered successfully');
+                });
+            } else {
+                console.log('Error registering new user');
+            }
+        })
+        .catch(err => console.log('An error occurred: ' + err));
     }
 
     // Update the state to reflect user input

@@ -26,9 +26,14 @@ class CreatePost extends Component {
                 title: this.state.title,
                 content: this.state.content
             })
-        }).then(document.getElementById('createBlogForm').submit());
+        }).then(res => {
+            if (res.status === 200) {
+                res.json().then(document.getElementById('createBlogForm').submit()); // Handle manually
+            } else {
+                console.log('Error creating new blog post');
+            }
+        });
     }
-
     handleInputChange(event) {
         const target = event.target;
         const name = target.name;

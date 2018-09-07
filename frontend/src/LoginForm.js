@@ -28,19 +28,18 @@ class LoginForm extends Component {
                 password: this.state.password
             })
         })
-        .then(res => res.json())
-        .then(userFirstname => {
-            if (userFirstname) {
-                console.log('Logged in successfully');
-                this.props.updateLogin(userFirstname);
+        .then(res => {
+            if (res.status === 200) {
+                res.json().then(res => {this.props.updateLogin(res.firstname)});
+                console.log('Login successful')
             } else {
                 console.log('Incorrect username or password');
                 this.setState({
                     password: ''
                 });
             }
-        });
-        // Close login form
+        })
+        .catch(err => console.log('An error occured: ' + err));
     }
 
     // Update the state to reflect user input

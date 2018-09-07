@@ -13,21 +13,20 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use(session({
-
-    secret: 'super secret'
-
-    /*genid: function(req) {
-        return uuidv4(); // Use UUIDs for session IDs
-    },
-    // In production, change to randomly generated string from an environment variable
+    // In production, change secret randomly generated string from an environment variable
     secret: 'super secret',
-     resave: true // Come back to this when sorted out store
-     app.set('trust proxy', 1) // Come back to this
+    genid: function(req) {
+        // Use UUIDs for session IDs
+        return uuidv4();
+    },
+    saveUninitialized: false,
+    // 10 minutes expiration
+    cookie: { maxAge: 600000}
+    /*
+    resave: true // Come back to this when sorted out store
+    app.set('trust proxy', 1) // Come back to this
     secure: true // For https enabled websites
-    // can declare session attributes for production environment so you can still test in dev
-    saveUninitialized: true, // Check later
-    resave: true, // If session store doesn't implement touch command
-    cookie: { maxAge: 60000} // Check later*/
+    resave: true, // If session store doesn't implement touch command */
 }));
 
 // Set up the database connection
@@ -91,7 +90,7 @@ app.get('/users', (req, res) => {
 });
 
 // GET / blogs:
-// Retrieve a list of all users in the database
+// Retrieve a list of all blogs in the database
 app.get('/blogs', (req, res) => {
     Blog
         .findAll()
@@ -99,7 +98,7 @@ app.get('/blogs', (req, res) => {
 });
 
 // GET /finduser?email=<email>
-// Retrieve all records that match a user's firstname
+// Retrieve all records that match a user's email
 app.get('/finduser', (req, res) => {
     User
         .findOne({where: {email: req.query.email}}) // Check findOne syntax later
@@ -114,21 +113,13 @@ app.get('/findblog', (req, res) => {
         .then(rows => res.json(rows));
 });
 
-// To test connection with frontend
-app.get('/ping', (req, res) => {
-    res.status(200);
-    res.send({'data': {
-        'answer': 'pong'
-    }});
-})
-
 app.post('/createBlog', (req, res) => {
     Blog.create({
         title: req.body.title,
         content: req.body.content
     })
     .then(newBlog => {
-        res.send(newBlog);
+        res.status(200).send(newBlog);
     })
 });
 
@@ -141,7 +132,7 @@ app.post('/newUser', (req, res) => {
     })
     .then(newUser => {
         req.session.firstname = newUser.firstname;
-        res.json(newUser.firstname);
+        res.status(200).json(newUser.firstname);
         console.log('New user ' + newUser.firstname + ' created')
     });
 });
@@ -151,17 +142,17 @@ app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
         if (!user) {
-            res.json(null);
+            res.status(401).send();
             console.log('User does not exist');
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (!result) {
-                    res.json(null);
+                    res.status(401).send();
                     console.log('Username or password incorrect');
                 } else {
                     req.session.firstname = user.firstname;
                     console.log(user.firstname + ' has logged in successfully');
-                    res.json(user.firstname);
+                    res.status(200).json(user.firstname);
                 }
             });
         }
@@ -174,11 +165,11 @@ app.get('/logout', (req, res) => {
     res.json(req.session);
 });
 
-app.get('/checkLogin', (req, res) => {
+app.get('/checkSession', (req, res) => {
     if (req.session.firstname)
-        res.json(req.session.firstname);
+        res.status(200).json(req.session.firstname);
     else
-        res.json(false);
+        res.status(404).send();
 });
 
 server = app.listen(5000, () => {

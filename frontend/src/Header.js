@@ -17,6 +17,7 @@ class Header extends Component {
             isLoginForm: false,
             isRegisterForm: false,
             isLoggedIn: false,
+            // User object as may need to add more states of a user in future
             user: {
                 firstname: ''
             }
@@ -27,21 +28,22 @@ class Header extends Component {
         this.updateUser = this.updateUser.bind(this);
     }
 
-    // If the user is still logged in, populate user state
+    // If there is still a user session, populate the user state
+    // This function produces a console 404 error if there is no current session. This may be confusing
     componentDidMount() {
-        fetch('/checkLogin')
-            .then(res => res.json())
-            .then(result => {
-                if (result) {
+        fetch('/checkSession')
+            .then(res => {
+                if (res.status === 200) {
+                    res.json();
                     this.setState({
-                        // User object as may need to add more states of a user in future
                         user: {
-                            firstname: result
+                            firstname: 'test'
                         },
                         isLoggedIn: true
                     });
                 }
-            });
+            })
+            .catch(err => console.log('An error occurred: ' + err));
     }
 
     logout() {
@@ -114,12 +116,10 @@ class Header extends Component {
     render() {
         return (
             <div className="header">
-
                 <div className="header-text">
                     <div>Off With His Read</div>
                     {this.state.isLoggedIn ? (<div className="welcome-text">Welcome {this.state.user.firstname}</div>) : ('')}
                 </div>
-
                 {this.loginSection()}
             </div>
         )

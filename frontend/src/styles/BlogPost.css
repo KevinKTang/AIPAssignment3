@@ -5,6 +5,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: lightgrey;
+    border-radius: 0.5rem;
     max-width: 200px;
     box-shadow: 5px 5px 5px lightgrey;
 }
