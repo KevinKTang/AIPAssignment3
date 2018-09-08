@@ -55,7 +55,9 @@ User.beforeCreate((user, options) => {
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
     content: Sequelize.STRING
-})
+});
+
+User.hasMany(Blog);
 
 // Test the connection
 sequelize
@@ -114,13 +116,26 @@ app.get('/findblog', (req, res) => {
 });
 
 app.post('/createBlog', (req, res) => {
-    Blog.create({
-        title: req.body.title,
-        content: req.body.content
-    })
-    .then(newBlog => {
-        res.status(200).send(newBlog);
-    })
+    if (req.session.userId) {
+        User.findOne({where: id = req.session.userId})
+        .then(user => {
+            if (user) {
+                Blog.create({
+                    title: req.body.title,
+                    content: req.body.content,
+                    userId: req.session.userId
+                })
+                .then(newBlog => {
+                    res.status(201).send(newBlog);
+                });
+                console.log(user.firstname + ' has created a blog post');
+            } else {
+                res.status(403).send();
+            }
+        })
+    } else {
+        res.status(403).send();
+    }
 });
 
 app.post('/newUser', (req, res) => {
@@ -131,10 +146,15 @@ app.post('/newUser', (req, res) => {
         password: req.body.password
     })
     .then(newUser => {
-        req.session.firstname = newUser.firstname;
-        res.status(200).json(newUser.firstname);
-        console.log('New user ' + newUser.firstname + ' created')
-    });
+        if (newUser) {
+            req.session.userId = newUser.id;
+            res.status(200).json(newUser.firstname);
+            console.log('New user ' + newUser.firstname + ' created')
+        } else {
+            res.status().send();
+        }
+    }
+    )
 });
 
 // Return true if correct login, otherwise false
@@ -150,7 +170,7 @@ app.post('/login', (req, res) => {
                     res.status(401).send();
                     console.log('Username or password incorrect');
                 } else {
-                    req.session.firstname = user.firstname;
+                    req.session.userId = user.id;
                     console.log(user.firstname + ' has logged in successfully');
                     res.status(200).json(user.firstname);
                 }
@@ -160,16 +180,25 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-    console.log(req.session.firstname + ' has logged out successfully')
+    console.log('User has logged out successfully')
     req.session.destroy();
     res.json(req.session);
 });
 
 app.get('/checkSession', (req, res) => {
-    if (req.session.firstname)
-        res.status(200).json(req.session.firstname);
-    else
+    if (req.session.userId) {
+        User.findOne({where: id = req.session.userId})
+            .then(user => {
+                if (user) {
+                    res.status(200).json(user.firstname)
+                } else {
+                    res.status(404).send();
+                }
+            });
+    }
+    else {
         res.status(404).send();
+    }
 });
 
 server = app.listen(5000, () => {

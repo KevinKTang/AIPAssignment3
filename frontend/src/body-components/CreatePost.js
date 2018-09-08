@@ -27,12 +27,15 @@ class CreatePost extends Component {
                 content: this.state.content
             })
         }).then(res => {
-            if (res.status === 200) {
+            if (res.status === 201) {
                 res.json().then(document.getElementById('createBlogForm').submit()); // Handle manually
+            } else if (res.status === 403) {
+                console.log('Error creating new blog post. Access denied')
             } else {
                 console.log('Error creating new blog post');
             }
-        });
+        })
+        .catch(err => console.log('An error occurred: ' + err));
     }
     handleInputChange(event) {
         const target = event.target;

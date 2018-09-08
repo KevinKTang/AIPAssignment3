@@ -32,11 +32,13 @@ class LoginForm extends Component {
             if (res.status === 200) {
                 res.json().then(res => {this.props.updateLogin(res.firstname)});
                 console.log('Login successful')
-            } else {
+            } else  if (res.status === 401) {
                 console.log('Incorrect username or password');
                 this.setState({
                     password: ''
                 });
+            } else {
+                console.log('Error logging in');
             }
         })
         .catch(err => console.log('An error occured: ' + err));
