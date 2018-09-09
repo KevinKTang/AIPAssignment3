@@ -13,20 +13,20 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            bodyContent: 'blogs'
+            bodyView: ''
         }
-        this.updateBodyContent = this.updateBodyContent.bind(this);
+        this.updateBodyView = this.updateBodyView.bind(this);
     }
 
-    updateBodyContent(view) {
-        this.setState({bodyContent: view});
+    updateBodyView(view) {
+        this.setState({bodyView: view});
     }
 
     render() {
         return (
             <div className="app">
-                <Header updateBody={this.updateBodyContent}/>
-                <Body bodyContent={this.state.bodyContent}/>
+                <Header updateBody={this.updateBodyView}/>
+                <Body bodyView={this.state.bodyView}/>
                 <Footer />
             </div>
         );

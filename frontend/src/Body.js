@@ -18,24 +18,37 @@ class Body extends Component {
         this.bodyView = this.bodyView.bind(this);
     }
 
+    // Update what the body shows based on user selection
+    // Show blog posts by default
     bodyView() {
-        switch (this.props.bodyContent) {
+        switch (this.props.bodyView) {
             case 'blogs':
                 return (
-                    <BlogPosts />
-                );
+                    <div className="app-body">
+                        <BlogPosts show={true} />
+                        <CreateBlog show={false} />
+                    </div>
+                )
             case 'createBlog':
                 return (
-                    <CreateBlog />
-                );
+                    <div className="app-body">
+                        <BlogPosts show={false} />
+                        <CreateBlog show={true} />
+                    </div>
+                )
+            default:
+                return (
+                    <div className="app-body">
+                        <BlogPosts show={true} />
+                        <CreateBlog show={false} />
+                    </div>
+                )
         }
     }
 
     render() {
         return(
-            <div className="app-body">
-                {this.bodyView()}
-            </div>
+            this.bodyView()
         )
     }
 }

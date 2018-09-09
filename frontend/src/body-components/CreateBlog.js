@@ -7,7 +7,7 @@ import '../styles/CreatePost.css';
 */
 
 class CreatePost extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             title: '',
@@ -46,16 +46,20 @@ class CreatePost extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <p>New Blog Post</p>
-                <form id="createBlogForm" onSubmit={this.newPost}>
-                    <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text"  placeholder="Title" required></input>
-                    <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input"  placeholder="Blog post content" required></textarea>
-                    <button className="create-post-input">Post</button>
-                </form>
-            </div>
-        )
+        if (this.props.show) {
+            return (
+                <div>
+                    <p>New Blog Post</p>
+                    <form id="createBlogForm" onSubmit={this.newPost}>
+                        <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                        <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input" placeholder="Blog post content" required></textarea>
+                        <button className="create-post-input">Post</button>
+                    </form>
+                </div>
+            )
+        } else {
+            return null;
+        }
     }
 }
 

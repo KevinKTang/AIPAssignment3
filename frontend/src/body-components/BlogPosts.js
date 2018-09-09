@@ -10,7 +10,7 @@ import BlogPost from './BlogPost.js';
 
 class BlogPosts extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             blogs: []
@@ -42,11 +42,15 @@ class BlogPosts extends Component {
     }
 
     render() {
-        return (
-            <div className="blog-posts-flex">
-                {this.state.blogs.map(blog => this.eachBlog(blog))}
-            </div>
-        )
+        if (this.props.show) {
+            return (
+                <div className="blog-posts-flex">
+                    {this.state.blogs.map(blog => this.eachBlog(blog))}
+                </div>
+            )
+        } else {
+            return null;
+        }
     }
 }
 
