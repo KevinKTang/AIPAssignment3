@@ -115,6 +115,7 @@ app.get('/findblog', (req, res) => {
         .then(rows => res.json(rows));
 });
 
+// Create a new blog and return it
 app.post('/createBlog', (req, res) => {
     if (req.session.userId) {
         User.findOne({where: id = req.session.userId})
@@ -138,6 +139,7 @@ app.post('/createBlog', (req, res) => {
     }
 });
 
+// Create a new user, create the session and return the user's firstname
 app.post('/newUser', (req, res) => {
     User.create({
         firstname: req.body.firstname,
@@ -157,7 +159,7 @@ app.post('/newUser', (req, res) => {
     )
 });
 
-// Return true if correct login, otherwise false
+// If user login successful, create the session and return the user's firstname
 app.post('/login', (req, res) => {
     User.findOne({where: {email: req.body.email}})
     .then(user => {
@@ -179,12 +181,14 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Destroy the session on logout
 app.get('/logout', (req, res) => {
     console.log('User has logged out successfully')
     req.session.destroy();
     res.json(req.session);
 });
 
+// Returns the user firstname if there is a session
 app.get('/checkSession', (req, res) => {
     if (req.session.userId) {
         User.findOne({where: id = req.session.userId})

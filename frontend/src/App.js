@@ -10,12 +10,23 @@ import Footer from './Footer.js';
 */
 
 class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            bodyContent: 'blogs'
+        }
+        this.updateBodyContent = this.updateBodyContent.bind(this);
+    }
+
+    updateBodyContent(view) {
+        this.setState({bodyContent: view});
+    }
 
     render() {
         return (
             <div className="app">
-                <Header />
-                <Body />
+                <Header updateBody={this.updateBodyContent}/>
+                <Body bodyContent={this.state.bodyContent}/>
                 <Footer />
             </div>
         );

@@ -11,7 +11,7 @@ import './styles/Header.css';
 
 class Header extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
             isLoginForm: false,
@@ -23,7 +23,7 @@ class Header extends Component {
             }
         }
         this.logout = this.logout.bind(this);
-        this.loginSection = this.loginSection.bind(this);
+        this.userOptions = this.userOptions.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.updateUser = this.updateUser.bind(this);
     }
@@ -34,13 +34,14 @@ class Header extends Component {
         fetch('/checkSession')
             .then(res => {
                 if (res.status === 200) {
-                    res.json();
-                    this.setState({
-                        user: {
-                            firstname: 'test'
-                        },
-                        isLoggedIn: true
-                    });
+                    res.json().then(res => {
+                        this.setState({
+                            user: {
+                                firstname: res
+                            },
+                            isLoggedIn: true
+                        });
+                    })                    
                 }
             })
             .catch(err => console.log('An error occurred: ' + err));
@@ -59,6 +60,8 @@ class Header extends Component {
             });
     }
 
+    // This function is called when a user logs in or registers
+    // and populates the state with the user information
     updateUser(userFirstname) {
         this.setState({
             isLoginForm: false,
@@ -93,11 +96,13 @@ class Header extends Component {
         }
     }
 
-    // Display login information depending on whether a user is logged in or not
-    loginSection() {
+    // Display user options depending on if a user is logged in or not
+    userOptions() {
         if (this.state.isLoggedIn) {
             return (
                 <div className="login-section">
+                    <button className="view-blogs-button" onClick={() => this.props.updateBody('blogs')}>View Posts</button>
+                    <button className="create-blog-button" onClick={() => this.props.updateBody('createBlog')}>New Post</button>
                     <button className="logout-button" onClick={this.logout}>Logout</button>
                 </div>
             )
@@ -120,7 +125,7 @@ class Header extends Component {
                     <div>Off With His Read</div>
                     {this.state.isLoggedIn ? (<div className="welcome-text">Welcome {this.state.user.firstname}</div>) : ('')}
                 </div>
-                {this.loginSection()}
+                {this.userOptions()}
             </div>
         )
     }
