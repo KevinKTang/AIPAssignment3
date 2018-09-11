@@ -21,6 +21,18 @@ class MyBlogs extends Component {
         })
     }
 
+    // If there is a new blog to add, add it to the state
+    componentDidUpdate(prevProps) {
+        if ((this.props.blogToAdd !== prevProps.blogToAdd) && this.props.blogToAdd !== '') {
+            this.setState({
+                blogs: [
+                    ...this.state.blogs,
+                    this.props.blogToAdd
+                ]
+            });
+        }
+    }
+
     // Create blog post from data from database
     eachBlog(blog) {
         return(

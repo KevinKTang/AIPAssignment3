@@ -32,7 +32,7 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <Header updateBody={this.updateBodyView} updateLogin={this.updateLogin} isLoggedIn={this.state.isLoggedIn} />
+                <Header updateBodyView={this.updateBodyView} updateLogin={this.updateLogin} isLoggedIn={this.state.isLoggedIn} />
                 <Body bodyView={this.state.bodyView} />
                 <Footer />
             </div>

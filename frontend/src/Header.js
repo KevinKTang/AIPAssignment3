@@ -56,6 +56,7 @@ class Header extends Component {
                 });
                 this.props.updateLogin(false);
                 console.log('Log out successful')
+                this.props.updateBodyView('blogs');
             });
     }
 
@@ -100,9 +101,9 @@ class Header extends Component {
         if (this.props.isLoggedIn) {
             return (
                 <div className="login-section">
-                    <button className="view-blogs-button" onClick={() => this.props.updateBody('blogs')}>View Posts</button>
-                    <button className="my-blogs-button" onClick={() => this.props.updateBody('myblogs')}>My Posts</button>
-                    <button className="create-blog-button" onClick={() => this.props.updateBody('createBlog')}>New Post</button>
+                    <button className="view-blogs-button" onClick={() => this.props.updateBodyView('blogs')}>View Blogs</button>
+                    <button className="my-blogs-button" onClick={() => this.props.updateBodyView('myblogs')}>My Blogs</button>
+                    <button className="create-blog-button" onClick={() => this.props.updateBodyView('createBlog')}>New Blog</button>
                     <button className="logout-button" onClick={this.logout}>Logout</button>
                 </div>
             )

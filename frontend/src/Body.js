@@ -15,7 +15,16 @@ class Body extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            blogToAdd: ''
+        }
         this.bodyView = this.bodyView.bind(this);
+        this.updateBlogs = this.updateBlogs.bind(this);
+    }
+
+    // Function to update components with the newly added blog
+    updateBlogs(blog) {
+        this.setState({blogToAdd: blog});
     }
 
     // Update what the body shows based on user selection
@@ -25,25 +34,25 @@ class Body extends Component {
             case 'blogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={true} />
-                        <MyBlogs show={false} />
-                        <CreateBlog show={false} />
+                        <BlogPosts show={true} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} />
+                        <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>
                 )
             case 'createBlog':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} />
-                        <MyBlogs show={false} />
-                        <CreateBlog show={true} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} />
+                        <CreateBlog show={true} updateBlogs={this.updateBlogs} />
                     </div>
                 )
             case 'myblogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} />
-                        <MyBlogs show={true} />
-                        <CreateBlog show={false} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={true} blogToAdd={this.state.blogToAdd} />
+                        <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>
 
                 )

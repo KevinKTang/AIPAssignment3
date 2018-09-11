@@ -28,7 +28,8 @@ class CreatePost extends Component {
             })
         }).then(res => {
             if (res.status === 201) {
-                res.json().then(document.getElementById('createBlogForm').submit()); // Handle manually
+                //res.json().then(document.getElementById('createBlogForm').submit()); // Handle manually
+                res.json().then(blog => this.props.updateBlogs(blog));
             } else if (res.status === 403) {
                 console.log('Error creating new blog post. Access denied')
             } else {
