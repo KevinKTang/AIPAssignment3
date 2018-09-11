@@ -48,7 +48,7 @@ const User = sequelize.define('user', {
 User.beforeCreate((user, options) => {
     return bcrypt.hash(user.password, saltRounds)
         .then(hash => user.password = hash)
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 });
 
 // Blog model

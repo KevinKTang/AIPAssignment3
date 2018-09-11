@@ -27,7 +27,7 @@ class BlogPosts extends Component {
                         .then(res => this.setState({blogs: res}))
                 }
             })
-            .catch(err => console.log('An error occurred: ' + err));
+            .catch(err => console.error('An error occurred: ' + err));
     }
 
     // Create blog post from data from database

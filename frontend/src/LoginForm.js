@@ -41,7 +41,7 @@ class LoginForm extends Component {
                 console.log('Error logging in');
             }
         })
-        .catch(err => console.log('An error occured: ' + err));
+        .catch(err => console.error('An error occured: ' + err));
     }
 
     // Update the state to reflect user input

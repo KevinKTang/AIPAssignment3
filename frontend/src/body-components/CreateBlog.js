@@ -35,7 +35,7 @@ class CreatePost extends Component {
                 console.log('Error creating new blog post');
             }
         })
-        .catch(err => console.log('An error occurred: ' + err));
+        .catch(err => console.error('An error occurred: ' + err));
     }
     handleInputChange(event) {
         const target = event.target;

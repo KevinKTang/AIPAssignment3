@@ -44,7 +44,7 @@ class Header extends Component {
                     })                    
                 }
             })
-            .catch(err => console.log('An error occurred: ' + err));
+            .catch(err => console.error('An error occurred: ' + err));
     }
 
     logout() {

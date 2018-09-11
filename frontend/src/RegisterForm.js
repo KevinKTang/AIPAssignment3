@@ -41,7 +41,7 @@ class RegisterForm extends Component {
                 console.log('Error registering new user');
             }
         })
-        .catch(err => console.log('An error occurred: ' + err));
+        .catch(err => console.error('An error occurred: ' + err));
     }
 
     // Update the state to reflect user input
