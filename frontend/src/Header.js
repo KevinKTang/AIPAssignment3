@@ -16,7 +16,6 @@ class Header extends Component {
         this.state = {
             isLoginForm: false,
             isRegisterForm: false,
-            isLoggedIn: false,
             // User object as may need to add more states of a user in future
             user: {
                 firstname: ''
@@ -39,8 +38,8 @@ class Header extends Component {
                             user: {
                                 firstname: res
                             },
-                            isLoggedIn: true
                         });
+                        this.props.updateLogin(true);
                     })                    
                 }
             })
@@ -51,12 +50,12 @@ class Header extends Component {
         fetch('/logout')
             .then((res) => {
                 this.setState({
-                    isLoggedIn: false,
                     user: {
                         firstname: ''
                     }
                 });
-                console.log('Logged out successfully')
+                this.props.updateLogin(false);
+                console.log('Log out successful')
             });
     }
 
@@ -66,11 +65,11 @@ class Header extends Component {
         this.setState({
             isLoginForm: false,
             isRegisterForm: false,
-            isLoggedIn: true,
             user: {
                 firstname: userFirstname
             }
         });
+        this.props.updateLogin(true);
     }
 
     // Show selected form, allow toggle of form and close other form if open
@@ -98,7 +97,7 @@ class Header extends Component {
 
     // Display user options depending on if a user is logged in or not
     userOptions() {
-        if (this.state.isLoggedIn) {
+        if (this.props.isLoggedIn) {
             return (
                 <div className="login-section">
                     <button className="view-blogs-button" onClick={() => this.props.updateBody('blogs')}>View Posts</button>
@@ -124,7 +123,7 @@ class Header extends Component {
             <div className="header">
                 <div className="header-text">
                     <div>Off With His Read</div>
-                    {this.state.isLoggedIn ? (<div className="welcome-text">Welcome, {this.state.user.firstname}.</div>) : ('')}
+                    {this.props.isLoggedIn ? (<div className="welcome-text">Welcome, {this.state.user.firstname}.</div>) : ('')}
                 </div>
                 {this.userOptions()}
             </div>
