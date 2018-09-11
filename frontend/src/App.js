@@ -33,7 +33,7 @@ class App extends Component {
         return (
             <div className="app">
                 <Header updateBodyView={this.updateBodyView} updateLogin={this.updateLogin} isLoggedIn={this.state.isLoggedIn} />
-                <Body bodyView={this.state.bodyView} />
+                <Body bodyView={this.state.bodyView} updateBodyView={this.updateBodyView} isLoggedIn={this.state.isLoggedIn} />
                 <Footer />
             </div>
         );

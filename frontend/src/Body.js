@@ -25,6 +25,7 @@ class Body extends Component {
     // Function to update components with the newly added blog
     updateBlogs(blog) {
         this.setState({blogToAdd: blog});
+        this.props.updateBodyView('blogs');
     }
 
     // Update what the body shows based on user selection
@@ -35,7 +36,7 @@ class Body extends Component {
                 return (
                     <div className="app-body">
                         <BlogPosts show={true} blogToAdd={this.state.blogToAdd} />
-                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>
                 )
@@ -43,7 +44,7 @@ class Body extends Component {
                 return (
                     <div className="app-body">
                         <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
-                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={true} updateBlogs={this.updateBlogs} />
                     </div>
                 )
@@ -51,7 +52,7 @@ class Body extends Component {
                 return (
                     <div className="app-body">
                         <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
-                        <MyBlogs show={true} blogToAdd={this.state.blogToAdd} />
+                        <MyBlogs show={true} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>
 
