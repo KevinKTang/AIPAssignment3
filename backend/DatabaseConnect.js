@@ -57,8 +57,7 @@ const Blog = sequelize.define('blog', {
     content: Sequelize.STRING
 });
 
-User.hasMany(Blog);
-Blog.belongsTo(User);
+User.hasMany(Blog, {foreignKey: 'userId'});
 
 // Test the connection
 sequelize
@@ -118,12 +117,9 @@ app.get('/findblog', (req, res) => {
 
 // Returns all the blogs belonging to a certain user
 app.get('/myblogs', (req, res) => {
-    if(req.session.userId) {
-    Blog   
+    Blog
         .findAll({where: {userId: req.session.userId}})
-        .then (rows => res.json(rows));
-            
-    }
+        .then(blogs => res.json(blogs));
 });
 
 // Create a new blog and return it
