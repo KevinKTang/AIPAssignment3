@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import '../styles/BlogPosts.css';
-import BlogPost from './BlogPost.js';
+import '../styles/MyBlogs.css';
+import BlogPost from './BlogPost';
 
-/*
-    BlogPosts component is simply a container holding
-    the individual BlogPost(s) and divides them up into a card view
-    for the main page of our website.
-*/
-
-class BlogPosts extends Component {
-
+class MyBlogs extends Component {
     constructor(props) {
         super();
         this.state = {
@@ -17,17 +10,15 @@ class BlogPosts extends Component {
         }
         this.eachBlog = this.eachBlog.bind(this);
     }
-
-    // Get blog posts from database on start
+    
     componentDidMount() {
-        fetch('/blogs')
-            .then(res => {
-                if (res.status === 200) {
-                    res.json()
-                        .then(res => this.setState({blogs: res}))
-                }
-            })
-            .catch(err => console.error('An error occurred: ' + err));
+        fetch('/myblogs')
+        .then(res => {
+            if (res.status === 200) {
+                res.json()
+                    .then (res => this.setState({blogs: res}))
+            }
+        })
     }
 
     // Create blog post from data from database
@@ -52,6 +43,8 @@ class BlogPosts extends Component {
             return null;
         }
     }
+    
+
 }
 
-export default BlogPosts;
+export default MyBlogs;

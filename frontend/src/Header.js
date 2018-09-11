@@ -102,6 +102,7 @@ class Header extends Component {
             return (
                 <div className="login-section">
                     <button className="view-blogs-button" onClick={() => this.props.updateBody('blogs')}>View Posts</button>
+                    <button className="my-blogs-button" onClick={() => this.props.updateBody('myblogs')}>My Posts</button>
                     <button className="create-blog-button" onClick={() => this.props.updateBody('createBlog')}>New Post</button>
                     <button className="logout-button" onClick={this.logout}>Logout</button>
                 </div>
@@ -117,13 +118,13 @@ class Header extends Component {
             )
         }
     }
-
+    
     render() {
         return (
             <div className="header">
                 <div className="header-text">
                     <div>Off With His Read</div>
-                    {this.state.isLoggedIn ? (<div className="welcome-text">Welcome {this.state.user.firstname}</div>) : ('')}
+                    {this.state.isLoggedIn ? (<div className="welcome-text">Welcome, {this.state.user.firstname}.</div>) : ('')}
                 </div>
                 {this.userOptions()}
             </div>

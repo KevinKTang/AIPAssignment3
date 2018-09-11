@@ -58,6 +58,7 @@ const Blog = sequelize.define('blog', {
 });
 
 User.hasMany(Blog);
+Blog.belongsTo(User);
 
 // Test the connection
 sequelize
@@ -88,7 +89,7 @@ sequelize
 app.get('/users', (req, res) => {
     User
         .findAll()
-        .then(rows => res.json(rows));
+        .then(users => res.json(users));
 });
 
 // GET / blogs:
@@ -96,7 +97,7 @@ app.get('/users', (req, res) => {
 app.get('/blogs', (req, res) => {
     Blog
         .findAll()
-        .then(rows => res.json(rows));
+        .then(blogs => res.json(blogs));
 });
 
 // GET /finduser?email=<email>
@@ -112,13 +113,23 @@ app.get('/finduser', (req, res) => {
 app.get('/findblog', (req, res) => {
     Blog
         .findAll({where: {title: req.query.title}})
-        .then(rows => res.json(rows));
+        .then(blogs => res.json(blogs));
+});
+
+// Returns all the blogs belonging to a certain user
+app.get('/myblogs', (req, res) => {
+    if(req.session.userId) {
+    Blog   
+        .findAll({where: {userId: req.session.userId}})
+        .then (rows => res.json(rows));
+            
+    }
 });
 
 // Create a new blog and return it
 app.post('/createBlog', (req, res) => {
     if (req.session.userId) {
-        User.findOne({where: id = req.session.userId})
+        User.findOne({where: {id: req.session.userId}})
         .then(user => {
             if (user) {
                 Blog.create({
@@ -191,13 +202,14 @@ app.get('/logout', (req, res) => {
 // Returns the user firstname if there is a session
 app.get('/checkSession', (req, res) => {
     if (req.session.userId) {
-        User.findOne({where: id = req.session.userId})
+        User
+            .findOne({where: id = req.session.userId})
             .then(user => {
                 if (user) {
                     res.status(200).json(user.firstname)
                 } else {
                     res.status(404).send();
-                }
+                } 
             });
     }
     else {

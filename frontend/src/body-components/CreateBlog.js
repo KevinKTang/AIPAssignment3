@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/CreatePost.css';
+import '../styles/CreateBlog.css';
 
 /*
     This component contains the form used to create
@@ -16,7 +16,7 @@ class CreatePost extends Component {
         this.newPost = this.newPost.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
-
+    
     newPost(event) {
         event.preventDefault();
         fetch('/createBlog', {
@@ -49,7 +49,7 @@ class CreatePost extends Component {
         if (this.props.show) {
             return (
                 <div>
-                    <p>New Blog Post</p>
+                    <h1>New Blog Post</h1>
                     <form id="createBlogForm" onSubmit={this.newPost}>
                         <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
                         <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input" placeholder="Blog post content" required></textarea>
