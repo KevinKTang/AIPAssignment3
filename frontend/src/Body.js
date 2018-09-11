@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './styles/Body.css';
 import BlogPosts from './body-components/BlogPosts.js';
-import CreateBlog from './body-components/CreateBlog';
+import CreateBlog from './body-components/CreateBlog.js';
+import MyBlogs from './body-components/MyBlogs.js';
 
 /* 
     The body component is responsible for displaying all the content of
@@ -9,7 +10,6 @@ import CreateBlog from './body-components/CreateBlog';
     or most popular blogs and will change to display a user's blogs when
     interacting with the 'Your Posts' navigation link in the header.
 */
-
 
 class Body extends Component {
 
@@ -26,6 +26,7 @@ class Body extends Component {
                 return (
                     <div className="app-body">
                         <BlogPosts show={true} />
+                        <MyBlogs show={false} />
                         <CreateBlog show={false} />
                     </div>
                 )
@@ -33,13 +34,25 @@ class Body extends Component {
                 return (
                     <div className="app-body">
                         <BlogPosts show={false} />
+                        <MyBlogs show={false} />
                         <CreateBlog show={true} />
                     </div>
                 )
+            case 'myblogs':
+                return (
+                    <div className="app-body">
+                        <BlogPosts show={false} />
+                        <MyBlogs show={true} />
+                        <CreateBlog show={false} />
+                    </div>
+
+                )
+        
             default:
                 return (
                     <div className="app-body">
                         <BlogPosts show={true} />
+                        <MyBlogs show={false} />
                         <CreateBlog show={false} />
                     </div>
                 )
