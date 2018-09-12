@@ -30,6 +30,18 @@ class BlogPosts extends Component {
             .catch(err => console.error('An error occurred: ' + err));
     }
 
+    updateBlogs() {
+        console.log('updating blogs...')
+        fetch('/blogs')
+        .then(res => {
+            if (res.status === 200) {
+                res.json()
+                    .then (res => this.setState({blogs: res}))
+            }
+        })
+        .catch(err => console.error('An error occurred: ' + err));
+    }
+
     // If there is a new blog to add, add it to the state
     componentDidUpdate(prevProps) {
         if ((this.props.blogToAdd !== prevProps.blogToAdd) && this.props.blogToAdd !== '') {
@@ -39,6 +51,11 @@ class BlogPosts extends Component {
                     this.props.blogToAdd
                 ]
             });
+        }
+        // If a user has logged in or out, populate the blogs
+        if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
+            console.log('login change for main page')
+            this.updateBlogs();
         }
     }
 

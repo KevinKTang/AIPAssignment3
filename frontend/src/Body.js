@@ -35,7 +35,7 @@ class Body extends Component {
             case 'blogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={true} blogToAdd={this.state.blogToAdd} />
+                        <BlogPosts show={true} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
                         <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>
@@ -43,15 +43,15 @@ class Body extends Component {
             case 'createBlog':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
-                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={true} updateBlogs={this.updateBlogs} />
                     </div>
                 )
             case 'myblogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
                         <MyBlogs show={true} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} />
                         <CreateBlog show={false} updateBlogs={this.updateBlogs} />
                     </div>

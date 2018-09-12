@@ -117,9 +117,11 @@ app.get('/findblog', (req, res) => {
 
 // Returns all the blogs belonging to a certain user
 app.get('/myblogs', (req, res) => {
-    Blog
-        .findAll({where: {userId: req.session.userId}})
-        .then(blogs => res.json(blogs));
+    if (req.session.id) {
+        Blog
+            .findAll({ where: { userId: req.session.userId } })
+            .then(blogs => res.status(200).json(blogs));
+    }
 });
 
 // Create a new blog and return it
