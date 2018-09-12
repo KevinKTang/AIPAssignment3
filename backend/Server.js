@@ -83,35 +83,11 @@ sequelize
         Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
     });
 
-// GET / users:
-// Retrieve a list of all users in the database
-app.get('/users', (req, res) => {
-    User
-        .findAll()
-        .then(users => res.json(users));
-});
-
 // GET / blogs:
 // Retrieve a list of all blogs in the database
 app.get('/blogs', (req, res) => {
     Blog
         .findAll()
-        .then(blogs => res.json(blogs));
-});
-
-// GET /finduser?email=<email>
-// Retrieve all records that match a user's email
-app.get('/finduser', (req, res) => {
-    User
-        .findOne({where: {email: req.query.email}}) // Check findOne syntax later
-        .then(data => res.json(data));
-});
-
-// GET /find?title=<Title>
-// Retrieve all records that match a blog's title
-app.get('/findblog', (req, res) => {
-    Blog
-        .findAll({where: {title: req.query.title}})
         .then(blogs => res.json(blogs));
 });
 
