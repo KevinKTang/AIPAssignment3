@@ -67,9 +67,8 @@ class MyBlogs extends Component {
             })
         }).then(res => {
             if (res.status === 200) {
-                // Remove from this state
-                // Remove from main page state
                 this.deleteBlogState(id);
+                this.props.removeBlog(id);
             } else if (res.status === 403) {
                 console.log('Access denied to delete this blog');
             } else {console.log('Error deleting blog');}

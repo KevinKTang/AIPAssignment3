@@ -16,16 +16,23 @@ class Body extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogToAdd: ''
+            blogToAdd: '',
+            blogIdToDelete: ''
         }
         this.bodyView = this.bodyView.bind(this);
-        this.updateBlogs = this.updateBlogs.bind(this);
+        this.addBlog = this.addBlog.bind(this);
+        this.removeBlog = this.removeBlog.bind(this);
     }
 
     // Function to update components with the newly added blog
-    updateBlogs(blog) {
+    addBlog(blog) {
         this.setState({blogToAdd: blog});
         this.props.updateBodyView('blogs');
+    }
+
+    // Function to remove blog from main page
+    removeBlog(blogId) {
+        this.setState({blogIdToDelete: blogId});
     }
 
     // Update what the body shows based on user selection
@@ -35,25 +42,25 @@ class Body extends Component {
             case 'blogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={true} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
-                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
-                        <CreateBlog show={false} updateBlogs={this.updateBlogs} />
+                        <BlogPosts show={true} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} blogIdToDelete={this.state.blogIdToDelete} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} removeBlog={this.removeBlog} />
+                        <CreateBlog show={false} addBlog={this.addBlog} />
                     </div>
                 )
             case 'createBlog':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
-                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
-                        <CreateBlog show={true} updateBlogs={this.updateBlogs} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} blogIdToDelete={this.state.blogIdToDelete} />
+                        <MyBlogs show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} removeBlog={this.removeBlog} />
+                        <CreateBlog show={true} addBlog={this.addBlog} />
                     </div>
                 )
             case 'myblogs':
                 return (
                     <div className="app-body">
-                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} />
-                        <MyBlogs show={true} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} />
-                        <CreateBlog show={false} updateBlogs={this.updateBlogs} />
+                        <BlogPosts show={false} blogToAdd={this.state.blogToAdd} isLoggedIn={this.props.isLoggedIn} blogIdToDelete={this.state.blogIdToDelete} />
+                        <MyBlogs show={true} blogToAdd={this.state.blogToAdd}  isLoggedIn={this.props.isLoggedIn} removeBlog={this.removeBlog} />
+                        <CreateBlog show={false} addBlog={this.addBlog} />
                     </div>
 
                 )

@@ -16,6 +16,7 @@ class BlogPosts extends Component {
             blogs: []
         }
         this.eachBlog = this.eachBlog.bind(this);
+        this.deleteBlogState = this.deleteBlogState.bind(this);
     }
 
     // Get blog posts from database on start
@@ -55,6 +56,17 @@ class BlogPosts extends Component {
         if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
             this.updateBlogs();
         }
+        // If there is a blog to delete, delete it
+        if (this.props.blogIdToDelete !== prevProps.blogIdToDelete) {
+            this.deleteBlogState(this.props.blogIdToDelete);
+        }
+    }
+
+    // Deletes the selected blog from the state
+    deleteBlogState(blogId) {
+        this.setState({
+            blogs: this.state.blogs.filter(blog => blog.id !== blogId)
+        });
     }
 
     // Create blog post from data from database
@@ -62,6 +74,7 @@ class BlogPosts extends Component {
         return(
             <BlogPost
                 key={blog.id}
+                id={blog.id}
                 title={blog.title}
                 content={blog.content}>
             </BlogPost>

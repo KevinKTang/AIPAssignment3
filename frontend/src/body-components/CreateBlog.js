@@ -28,7 +28,7 @@ class CreatePost extends Component {
             })
         }).then(res => {
             if (res.status === 201) {
-                res.json().then(blog => this.props.updateBlogs(blog));
+                res.json().then(blog => this.props.addBlog(blog));
                 this.setState({
                     title: '',
                     content: ''
