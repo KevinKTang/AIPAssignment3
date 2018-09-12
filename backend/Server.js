@@ -148,6 +148,30 @@ app.post('/createBlog', (req, res) => {
     }
 });
 
+// Delete a blog using its id
+// If there is no user logged in or the user did not create the blog, return forbidden status
+app.delete('/deleteBlog', (req, res) => {
+    if (req.session.userId) {
+        Blog.findOne({where: {id: req.body.blogId}})
+        .then(blog => {
+            console.log('blog found, userid for this blog is: ' + blog.userId)
+            // Check the user is the one who created this blog
+            if (blog.userId === req.session.userId) {
+                Blog.destroy({where: {id: req.body.blogId}})
+                    .then(affectedRows => {
+                        if (affectedRows === 1) {
+                            res.status(200).send();
+                        }
+                    });
+            } else {
+                res.status(403).send();
+            }
+        })
+    } else {
+        res.status(403).send();
+    }
+});
+
 // Create a new user, create the session and return the user's firstname
 app.post('/newUser', (req, res) => {
     User.create({

@@ -17,13 +17,19 @@ class BlogPost extends Component {
         }
     }
 
+    // Blog posts that are displayed in the user's blog section can be deleted
     render() {
         return (
             <div className="blog-post">
                 {this.state.title}
-                <br></br>
-                <br></br>
+                <hr></hr>
                 {this.state.content}
+                {this.props.canDelete ? (
+                    <div>
+                        <br></br>
+                    <button className="delete-blog-button" onClick={() => this.props.deleteBlog(this.props.id)}>Delete</button>
+                    </div>
+                ) : ('')}
             </div>
         )
     }

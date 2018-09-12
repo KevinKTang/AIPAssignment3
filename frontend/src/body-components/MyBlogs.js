@@ -10,6 +10,8 @@ class MyBlogs extends Component {
         }
         this.eachBlog = this.eachBlog.bind(this);
         this.updateBlogs = this.updateBlogs.bind(this);
+        this.deleteBlog = this.deleteBlog.bind(this);
+        this.deleteBlogState = this.deleteBlogState.bind(this);
     }
     
     componentDidMount() {
@@ -56,13 +58,42 @@ class MyBlogs extends Component {
         }
     }
 
+    deleteBlog(id) {
+        fetch('/deleteBlog', {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                blogId: id
+            })
+        }).then(res => {
+            if (res.status === 200) {
+                // Remove from this state
+                // Remove from main page state
+                this.deleteBlogState(id);
+            } else if (res.status === 403) {
+                console.log('Access denied to delete this blog');
+            } else {console.log('Error deleting blog');}
+        })
+        .catch();
+    }
+
+    // Deletes the selected blog from the state
+    deleteBlogState(blogId) {
+        this.setState({
+            blogs: this.state.blogs.filter(blog => blog.id !== blogId)
+        });
+    }
+
     // Create blog post from data from database
     eachBlog(blog) {
         return(
             <BlogPost
                 key={blog.id}
+                id={blog.id}
                 title={blog.title}
-                content={blog.content}>
+                content={blog.content}
+                canDelete={true}
+                deleteBlog={this.deleteBlog}>
             </BlogPost>
         );
     }
