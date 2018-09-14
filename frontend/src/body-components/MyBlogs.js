@@ -83,7 +83,7 @@ class MyBlogs extends Component {
         });
     }
 
-    // Create blog post from data from database
+    // Function to loop through and render the blogs
     eachBlog(blog) {
         return(
             <BlogPost
@@ -98,17 +98,12 @@ class MyBlogs extends Component {
     }
 
     render() {
-        if (this.props.show) {
-            return (
-                <div className="blog-posts-flex">
-                    {this.state.blogs.map(blog => this.eachBlog(blog))}
-                </div>
-            )
-        } else {
-            return null;
-        }
+        return (
+            <div className="blog-posts-flex">
+                {this.state.blogs.map(blog => this.eachBlog(blog))}
+            </div>
+        )
     }
-    
 
 }
 

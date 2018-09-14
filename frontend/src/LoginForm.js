@@ -30,8 +30,9 @@ class LoginForm extends Component {
         })
         .then(res => {
             if (res.status === 200) {
-                res.json().then(res => {this.props.updateLogin(res)});
-                console.log('Login successful')
+                res.json().then(userFirstname => {this.props.updateLogin(true, userFirstname)});
+                console.log('Login successful');
+                this.props.history.push('/');
             } else  if (res.status === 401) {
                 console.log('Incorrect username or password');
                 this.setState({
@@ -54,18 +55,14 @@ class LoginForm extends Component {
     }
 
     render() {
-        if (this.props.show) {
-            return (
-                <form onSubmit={this.login} name="loginForm" className="login-form">
+        return (
+            <form onSubmit={this.login} name="loginForm" className="login-form">
                 Login:
                     <input className="login-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
-                    <input className="login-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                    <button className="login-submit-button">Submit</button>
-                </form>
-            );
-        } else {
-            return null;
-        }
+                <input className="login-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                <button className="login-submit-button">Submit</button>
+            </form>
+        );
     }
 
 }

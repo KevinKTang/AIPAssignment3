@@ -8,7 +8,18 @@
     align-items: center;
 }
 
-.login-button {
+.home-link {
+    background-color: rgb(62, 173, 62);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    text-decoration: none;
+}
+
+.login-link {
     background-color: green;
     border: none;
     border-radius: 0.5rem;
@@ -16,9 +27,10 @@
     font-size: 1rem;
     padding: 0.5rem;
     margin-right: 1rem;
+    text-decoration: none;
 }
 
-.create-blog-button, .view-blogs-button, .my-blogs-button {
+.createblog-link, .myblogs-link {
     background-color: green;
     border: none;
     border-radius: 0.5rem;
@@ -26,9 +38,10 @@
     font-size: 1rem;
     padding: 0.5rem;
     margin-right: 1rem;
+    text-decoration: none;
 }
 
-.register-button {
+.register-link {
     background-color:blue;
     border: none;
     border-radius: 0.5rem;
@@ -36,6 +49,7 @@
     font-size: 1rem;
     padding: 0.5rem;
     margin-right: 1rem;
+    text-decoration: none;
 }
 
 .logout-button {
@@ -46,10 +60,6 @@
     font-size: 1rem;
     padding: 0.5rem;
     margin-right: 1rem;
-}
-
-.login-section {
-    float:right;
 }
 
 @font-face {

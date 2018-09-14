@@ -33,7 +33,7 @@ class BlogPost extends Component {
             </div>
         )
     }
-}
 
+}
 
 export default BlogPost;

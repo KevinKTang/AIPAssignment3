@@ -1,20 +1,16 @@
 .register-form {
-    display: block;
-    position: absolute;
-    right: 1rem;
-    border-style: solid;
+    display: inline-block;
+    margin: 1rem;
+    padding: 1rem;
     border-width: 1px;
     border-color: grey;
     border-radius: 0.5rem;
-    box-shadow: 5px 5px 5px lightgrey;
     background-color: rgb(144, 200, 214);
-    padding: 0.5rem;
-    margin-top: 0.2rem;
 }
 
 .register-submit-button {
-    width: 100%;
     padding: 0.5rem;
+    width: 100%;
     background-color: slategrey;
     border: none;
     color: white;

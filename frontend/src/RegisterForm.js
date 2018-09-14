@@ -33,9 +33,10 @@ class RegisterForm extends Component {
         })
         .then(res => {
             if (res.status === 200) {
-                res.json().then(res => {
-                    this.props.updateLogin(res);
+                res.json().then(userFirstname => {
+                    this.props.updateLogin(true, userFirstname);
                     console.log('Registered successfully');
+                    this.props.history.push('/');
                 });
             } else {
                 console.log('Error registering new user');
@@ -54,21 +55,18 @@ class RegisterForm extends Component {
     }
 
     render() {
-        if (this.props.show) {
-            return (
-                <form onSubmit={this.register} id="registerForm" className="register-form">
+        return (
+            <form onSubmit={this.register} id="registerForm" className="register-form">
                 Register:
                     <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
-                    <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
-                    <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
-                    <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                    <button className="register-submit-button">Submit</button>
-                </form>
-            );
-        } else {
-            return null;
-        }
+                <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
+                <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
+                <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                <button className="register-submit-button">Submit</button>
+            </form>
+        );
     }
+
 }
 
 export default RegisterForm;
