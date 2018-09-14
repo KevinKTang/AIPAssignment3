@@ -33,23 +33,23 @@ class Header extends Component {
         return (
             <div className="header">
                 <div className="header-text">
-                    <div>Off With His Read</div>
+                    <Link className="title-link" to="/">Off With His Read</Link>
                     {this.props.isLoggedIn ? (<div className="welcome-text">Welcome, {this.props.userFirstname}.</div>) : ('')}
                 </div>
 
                 {this.props.isLoggedIn ? (
-                    <div>
+                    <nav>
                         <Link className="home-link" to="/">Home</Link>
                         <Link className="myblogs-link" to="/myblogs">My Blogs</Link>
                         <Link className="createblog-link" to="/createblog">Create Blog</Link>
                         <button className="logout-button" onClick={this.logout}>Logout</button>
-                    </div>
+                    </nav>
                 ) : (
-                        <div>
+                        <nav>
                             <Link className="home-link" to="/">Home</Link>
                             <Link className="login-link" to="/login">Login</Link>
                             <Link className="register-link" to="/register">Register</Link>
-                        </div>
+                        </nav>
                     )}
             </div>
         )

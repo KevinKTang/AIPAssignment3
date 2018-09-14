@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './styles/RegisterForm.css';
+import '../styles/RegisterForm.css';
 
 /*
     This component contains the register form used to

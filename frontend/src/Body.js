@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import {Switch, Route } from 'react-router-dom';
-import LoginForm from './LoginForm';
-import RegisterForm from './RegisterForm';
+import LoginForm from './body-components/LoginForm';
+import RegisterForm from './body-components/RegisterForm';
 import BlogPosts from './body-components/BlogPosts.js';
 import CreateBlog from './body-components/CreateBlog.js';
 import MyBlogs from './body-components/MyBlogs.js';
