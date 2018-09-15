@@ -9,10 +9,9 @@ import './styles/Footer.css';
 class Footer extends Component {
     render() {
         return(
-            <div className="footer">
-                <hr></hr>
+            <footer className="footer">
                 Footer
-            </div>
+            </footer>
         )
     }
     

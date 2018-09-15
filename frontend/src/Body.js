@@ -40,7 +40,7 @@ class Body extends Component {
     render() {
         return(
             // Update what the body shows based on user selection from the header
-            <div className="app-body">
+            <main className="app-body">
                 <Switch>
                     <Route exact path="/" component={BlogPosts} />
                     <Route
@@ -56,7 +56,7 @@ class Body extends Component {
                         exact path="/createblog"
                         render={(props) => <CreateBlog {...props} addBlog={this.addBlog} />} />
                 </Switch>
-            </div>
+            </main>
         )
     }
 
