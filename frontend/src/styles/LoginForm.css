@@ -32,7 +32,7 @@
     font-weight: bolder;
 }
 
-.login-form button:hover,.form button:active,.form button:focus {
+.login-form button:hover,.login-form button:active,.login-form button:focus {
     background: #43A047;
   }
 

@@ -32,8 +32,8 @@
     font-weight: bolder;
 }
 
-.register-form button:hover,.form button:active,.form button:focus {
-    background: #43A047;
+.register-form button:hover,.register-form button:active,.register-form button:focus {
+    background: cadetblue;
   }
 
 .register-input {
