@@ -57,7 +57,7 @@ class RegisterForm extends Component {
     render() {
         return (
             <form onSubmit={this.register} id="registerForm" className="register-form">
-                Register:
+                <h2 className="register-title">Register</h2>
                     <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
                 <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
                 <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
