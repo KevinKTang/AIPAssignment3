@@ -40,21 +40,23 @@ class Body extends Component {
     render() {
         return(
             // Update what the body shows based on user selection from the header
-            <Switch>
-                <Route exact path="/" component={BlogPosts} />
-                <Route
-                    exact path="/login"
-                    render={(props) => <LoginForm {...props} updateLogin={this.props.updateLogin} />} />
-                <Route
-                    exact path="/register"
-                    render={(props) => <RegisterForm {...props} updateLogin={this.props.updateLogin} />} />
-                <Route
-                    exact path="/myblogs"
-                    render={(props) => <MyBlogs {...props} removeBlog={this.removeBlog} />} />
-                <Route
-                    exact path="/createblog"
-                    render={(props) => <CreateBlog {...props} addBlog={this.addBlog} />} />
-            </Switch>
+            <div className="app-body">
+                <Switch>
+                    <Route exact path="/" component={BlogPosts} />
+                    <Route
+                        exact path="/login"
+                        render={(props) => <LoginForm {...props} updateLogin={this.props.updateLogin} />} />
+                    <Route
+                        exact path="/register"
+                        render={(props) => <RegisterForm {...props} updateLogin={this.props.updateLogin} />} />
+                    <Route
+                        exact path="/myblogs"
+                        render={(props) => <MyBlogs {...props} removeBlog={this.removeBlog} />} />
+                    <Route
+                        exact path="/createblog"
+                        render={(props) => <CreateBlog {...props} addBlog={this.addBlog} />} />
+                </Switch>
+            </div>
         )
     }
 

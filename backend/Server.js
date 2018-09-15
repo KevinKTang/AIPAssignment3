@@ -84,7 +84,7 @@ sequelize
     });
 
 // Simulate delay
-app.use((req, res, next) => setTimeout(() => next(), 1000));
+//app.use((req, res, next) => setTimeout(() => next(), 1000));
 
 // GET / blogs:
 // Retrieve a list of all blogs in the database

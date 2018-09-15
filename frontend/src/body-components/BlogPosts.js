@@ -25,7 +25,6 @@ class BlogPosts extends Component {
     }
 
     startLoading() {
-        console.log('start loading')
         if (this.state.isLoading) {
             this.setState({showLoading: true});
         }

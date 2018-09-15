@@ -31,27 +31,27 @@ class Header extends Component {
     
     render() {
         return (
-            <div className="header">
-                <div className="header-text">
-                    <Link className="title-link" to="/">Off With His Read</Link>
-                    {this.props.isLoggedIn ? (<div className="welcome-text">Welcome, {this.props.userFirstname}.</div>) : ('')}
-                </div>
+            <nav className="navbar navbar-expand-sm fixed-top bg-dark d-print">
+            <div>
+                <Link className="navbar-brand" to="/">Off With His Read</Link>
+                {/*this.props.isLoggedIn ? (<div className="welcome-text">Welcome, {this.props.userFirstname}.</div>) : ('')*/}
+            </div>
 
                 {this.props.isLoggedIn ? (
-                    <nav>
-                        <Link className="home-link" to="/">Home</Link>
-                        <Link className="myblogs-link" to="/myblogs">My Blogs</Link>
-                        <Link className="createblog-link" to="/createblog">Create Blog</Link>
-                        <button className="logout-button" onClick={this.logout}>Logout</button>
-                    </nav>
+                    <div className="navbar-nav ml-auto">
+                        <Link className="btn btn-secondary" to="/">Home</Link>
+                        <Link className="btn btn-secondary" to="/myblogs">My Blogs</Link>
+                        <Link className="btn btn-secondary" to="/createblog">Create Blog</Link>
+                        <button className="btn btn-secondary" onClick={this.logout}>Logout</button>
+                    </div>
                 ) : (
-                        <nav>
-                            <Link className="home-link" to="/">Home</Link>
-                            <Link className="login-link" to="/login">Login</Link>
-                            <Link className="register-link" to="/register">Register</Link>
-                        </nav>
+                        <div className="navbar-nav ml-auto">
+                            <Link className="btn btn-secondary" to="/">Home</Link>
+                            <Link className="btn btn-secondary" to="/login">Login</Link>
+                            <Link className="btn btn-secondary" to="/register">Register</Link>
+                        </div>
                     )}
-            </div>
+            </nav>
         )
     }
 }

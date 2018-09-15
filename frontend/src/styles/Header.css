@@ -71,19 +71,27 @@
 /* Three fonts are given for redundancy in case some users don't have the correct fonts*/
 /* Be sure to add necessary fonts to the fonts folder */
 .header-text {
-    font-size: 2rem;
     font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
     color: black;
-    padding: 1rem;
     text-decoration: none;
 }
 
 .welcome-text {
+    color: white;
     font-size: 1.5rem;
     font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
 }
 
-.title-link {
-    text-decoration: none;
-    color: black;
+.navbar-brand {
+    color: white;
+    font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar-brand:hover {
+    color: grey;
+}
+
+
+.btn {
+    margin-left: 0.5rem;
 }
