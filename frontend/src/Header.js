@@ -34,7 +34,7 @@ class Header extends Component {
             <nav className="navbar navbar-expand-sm fixed-top bg-dark d-print">
             <div>
                 <Link className="navbar-brand" to="/">Off With His Read</Link>
-                {/*this.props.isLoggedIn ? (<div className="welcome-text">Welcome, {this.props.userFirstname}.</div>) : ('')*/}
+                {this.props.isLoggedIn ? (<div className="navbar-text mx-auto"> Welcome, {this.props.userFirstname}</div>) : ('')}
             </div>
 
                 {this.props.isLoggedIn ? (
