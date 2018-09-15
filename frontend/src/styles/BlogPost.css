@@ -10,12 +10,3 @@
     box-shadow: 5px 5px 5px lightgrey;
     white-space: pre-wrap;
 }
-
-.delete-blog-button {
-    background-color: rgb(216, 78, 78);
-    border: none;
-    border-radius: 0.5rem;
-    color: white;
-    font-size: 1rem;
-    padding: 0.3rem;
-}

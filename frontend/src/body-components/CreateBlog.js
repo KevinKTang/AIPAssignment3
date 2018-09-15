@@ -54,10 +54,10 @@ class CreatePost extends Component {
         return (
             <div>
                 <h1>New Blog Post</h1>
-                <form id="createBlogForm" onSubmit={this.newBlog}>
+                <form onSubmit={this.newBlog}>
                     <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
                     <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input" placeholder="Blog post content" required></textarea>
-                    <button className="create-post-input">Post</button>
+                    <button className="btn btn-primary">Post</button>
                 </form>
             </div>
         )

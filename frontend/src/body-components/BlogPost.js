@@ -27,7 +27,7 @@ class BlogPost extends Component {
                 {this.props.canDelete ? (
                     <div>
                         <br></br>
-                    <button className="delete-blog-button" onClick={() => this.props.deleteBlog(this.props.id)}>Delete</button>
+                    <button className="btn btn-danger" onClick={() => this.props.deleteBlog(this.props.id)}>Delete</button>
                     </div>
                 ) : ('')}
             </div>
