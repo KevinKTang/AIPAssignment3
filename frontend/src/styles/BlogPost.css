@@ -1,12 +1,8 @@
-.blog-post {
-    padding: 10px;
-    margin: 30px;
-    text-align: center;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgrey;
-    border-radius: 0.5rem;
-    max-width: 200px;
-    box-shadow: 5px 5px 5px lightgrey;
-    white-space: pre-wrap;
+.card {
+    margin: 1.5rem;
+    width: 200px;
+}
+
+.delete-blog-button {
+    margin-top: 1rem;
 }

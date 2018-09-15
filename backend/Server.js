@@ -81,6 +81,24 @@ sequelize
         Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
         Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
         Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
     });
 
 // Simulate delay

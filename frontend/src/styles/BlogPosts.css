@@ -1,5 +1,4 @@
 .blog-posts-flex {
-    padding: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
