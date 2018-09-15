@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import '../styles/MyBlogs.css';
 import BlogPost from './BlogPost';
+import Loading from '../Loading.js';
+import '../styles/MyBlogs.css';
 
 class MyBlogs extends Component {
     constructor(props) {
         super();
         this.state = {
+            isLoading: true,
+            showLoading: '',
             blogs: []
         }
         this.eachBlog = this.eachBlog.bind(this);
         this.updateBlogs = this.updateBlogs.bind(this);
         this.deleteBlog = this.deleteBlog.bind(this);
         this.deleteBlogState = this.deleteBlogState.bind(this);
+        this.startLoading = this.startLoading.bind(this);
+        this.timer = setInterval(this.startLoading, 500);
+    }
+
+    startLoading() {
+        if (this.state.isLoading) {
+            this.setState({showLoading: true});
+        }
+        clearInterval(this.timer);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timer);
     }
     
     componentDidMount() {
+        this.setState({isLoading: true});
+        this.timer = setInterval(this.startLoading, 500);
         fetch('/myblogs')
         .then(res => {
             if (res.status === 200) {
                 res.json()
-                    .then (res => this.setState({blogs: res}))
+                    .then (res => this.setState({
+                        blogs: res,
+                        isLoading: false,
+                        showLoading: false
+                    }));
             }
         })
         .catch(err => console.error('An error occurred: ' + err));
@@ -99,9 +121,17 @@ class MyBlogs extends Component {
 
     render() {
         return (
-            <div className="blog-posts-flex">
-                {this.state.blogs.map(blog => this.eachBlog(blog))}
-            </div>
+            this.state.showLoading ? (
+                <Loading />
+            ) : (
+                    this.state.blogs.length === 0 && this.state.isLoading === false ? (
+                        <p>You haven't created any blogs yet!</p>
+                    ) : (
+                            <div className="blog-posts-flex">
+                                {this.state.blogs.map(blog => this.eachBlog(blog))}
+                            </div>
+                        )
+                )
         )
     }
 
