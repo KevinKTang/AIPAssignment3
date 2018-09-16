@@ -20,7 +20,7 @@ class BlogPost extends Component {
     // Blog posts that are displayed in the user's blog section can be deleted
     render() {
         return (
-            <div className="card">
+            <div className="card shadow">
                 <div className="card-body">
                     <h5 className="card-title">{this.state.title}</h5>
                     <div className="card-text">{this.state.content}</div>

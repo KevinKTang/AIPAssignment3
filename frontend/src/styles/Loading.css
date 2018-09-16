@@ -1,12 +1,22 @@
-.loading-icon {
+.loading-outer {
     display: inline-block;
-    margin: 2rem;
-    width: 2rem;
-    height: 2rem;
-    border: 8px solid rgb(200, 208, 216);
     border-radius: 50%;
-    border-top: 8px solid blue;
+    margin: 2rem;
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgb(255, 255, 255);
+    border-top: 8px solid rgb(52, 58, 64);
     animation: spin 2s ease-in-out infinite;
+}
+
+.loading-inner {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 8px solid rgb(108, 117, 125);
+    top: 3%;
+    left: 3%;
 }
 
 @keyframes spin {
