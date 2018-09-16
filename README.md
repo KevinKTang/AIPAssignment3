@@ -9,9 +9,9 @@ npm install
 ```
 This will install all the dependencies. To start the backend database run:
 ```
-node DatabaseConnect.js
+node Server.js
 ```
-in the backend folder. This will start the database at http://localhost:5000/
+in the backend folder. This will start the server at http://localhost:5000/
 To start the front end, run:
 ```
 npm start
