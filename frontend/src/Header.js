@@ -39,16 +39,16 @@ class Header extends Component {
 
                 {this.props.isLoggedIn ? (
                     <div className="navbar-nav ml-auto">
-                        <Link className="btn btn-secondary header-btn" to="/">Home</Link>
+                        <Link className="btn btn-outline-primary header-btn" to="/">Home</Link>
                         <Link className="btn btn-secondary header-btn" to="/myblogs">My Blogs</Link>
                         <Link className="btn btn-secondary header-btn" to="/createblog">Create Blog</Link>
                         <button className="btn btn-secondary header-btn" onClick={this.logout}>Logout</button>
                     </div>
                 ) : (
                         <div className="navbar-nav ml-auto">
-                            <Link className="btn btn-secondary header-btn" to="/">Home</Link>
-                            <Link className="btn btn-secondary header-btn" to="/login">Login</Link>
-                            <Link className="btn btn-secondary header-btn" to="/register">Register</Link>
+                            <Link className="btn btn-outline-primary header-btn" to="/">Home</Link>
+                            <Link className="btn btn-outline-primary header-btn" to="/login">Login</Link>
+                            <Link className="btn btn-outline-primary header-btn" to="/register">Register</Link>
                         </div>
                     )}
             </header>

@@ -56,13 +56,17 @@ class RegisterForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.register} id="registerForm" className="register-form">
-                <h2 className="register-title">Register</h2>
-                    <input className="register-input" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
-                <input className="register-input" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
-                <input className="register-input" name="email" value={this.state.email} onChange={this.handleInputChange} type="text" placeholder="E-mail" required />
-                <input className="register-input" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                <button className="register-submit-button">Submit</button>
+            <form onSubmit={this.register} id="registerForm">
+                <div className="container">
+                 <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                  <h3 className="register-title">Register</h3>
+                    <input className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
+                    <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
+                    <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
+                    <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                 </div>
+                </div>
             </form>
         );
     }

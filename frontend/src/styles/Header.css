@@ -16,11 +16,12 @@
 }
 
 .navbar-brand:hover {
-    color: grey;
+    color: slategrey;
 }
 
 .header-btn {
     margin-left: 0.5rem;
+    color: white;
 }
 
 .navbar-text {
