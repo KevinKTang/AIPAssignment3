@@ -42,7 +42,8 @@ class Body extends Component {
             // Update what the body shows based on user selection from the header
             <main className="app-body">
                 <Switch>
-                    <Route exact path="/" component={BlogPosts} />
+                    <Route exact path="/"
+                    render={(props) => <BlogPosts {...props} isLoggedIn={this.props.isLoggedIn} />} />
                     <Route
                         exact path="/login"
                         render={(props) => <LoginForm {...props} updateLogin={this.props.updateLogin} />} />

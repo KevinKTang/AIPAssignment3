@@ -109,7 +109,7 @@ class BlogPosts extends Component {
         return (
             this.state.showLoading ? (
                 <div>
-                    <Welcome />
+                    {this.props.isLoggedIn ? '' : <Welcome />}
                     <Loading />
                 </div>
             ) : (
@@ -117,7 +117,7 @@ class BlogPosts extends Component {
                         <p>There are no blogs to display!</p>
                     ) : (
                             <div>
-                                <Welcome />
+                                {this.props.isLoggedIn ? '' : <Welcome />}
                                 <div className="blog-posts-flex">
                                     {this.state.blogs.map(blog => this.eachBlog(blog))}
                                 </div>
