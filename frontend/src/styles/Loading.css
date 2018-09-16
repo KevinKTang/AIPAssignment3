@@ -5,7 +5,7 @@
     width: 80px;
     height: 80px;
     border: 8px solid rgb(255, 255, 255);
-    border-top: 8px solid rgb(52, 58, 64);
+    border-top: 8px solid rgb(0, 123, 255);
     animation: spin 2s ease-in-out infinite;
 }
 
@@ -14,7 +14,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    border: 8px solid rgb(108, 117, 125);
+    border: 8px solid rgb(52, 58, 64);
     top: 3%;
     left: 3%;
 }

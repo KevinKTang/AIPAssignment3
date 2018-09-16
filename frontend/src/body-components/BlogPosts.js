@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BlogPost from './BlogPost.js';
 import Loading from '../Loading.js';
+import Welcome from './Welcome.js'
 import '../styles/BlogPosts.css';
 
 /*
@@ -24,6 +25,8 @@ class BlogPosts extends Component {
         this.timer = setInterval(this.startLoading, 500);
     }
 
+    // Loading icon will only show after half a second
+    // This avoids it flashing on screen briefly before content loads
     startLoading() {
         if (this.state.isLoading) {
             this.setState({showLoading: true});
@@ -105,13 +108,19 @@ class BlogPosts extends Component {
     render() {
         return (
             this.state.showLoading ? (
-                <Loading />
+                <div>
+                    <Welcome />
+                    <Loading />
+                </div>
             ) : (
                     this.state.blogs.length === 0 && this.state.isLoading === false ? (
                         <p>There are no blogs to display!</p>
                     ) : (
-                            <div className="blog-posts-flex">
-                                {this.state.blogs.map(blog => this.eachBlog(blog))}
+                            <div>
+                                <Welcome />
+                                <div className="blog-posts-flex">
+                                    {this.state.blogs.map(blog => this.eachBlog(blog))}
+                                </div>
                             </div>
                         )
                 )

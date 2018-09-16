@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './styles/Loading.css';
 
+/*
+    An animated loading icon
+*/
+
 class Loading extends Component {
     render() {
         return (

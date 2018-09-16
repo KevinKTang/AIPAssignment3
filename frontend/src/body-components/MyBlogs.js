@@ -19,6 +19,8 @@ class MyBlogs extends Component {
         this.timer = setInterval(this.startLoading, 500);
     }
 
+    // Loading icon will only show after half a second
+    // This avoids it flashing on screen briefly before content loads
     startLoading() {
         if (this.state.isLoading) {
             this.setState({showLoading: true});
