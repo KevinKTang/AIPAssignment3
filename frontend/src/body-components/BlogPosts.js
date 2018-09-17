@@ -20,7 +20,6 @@ class BlogPosts extends Component {
             blogs: []
         }
         this.eachBlog = this.eachBlog.bind(this);
-        this.deleteBlogState = this.deleteBlogState.bind(this);
         this.startLoading = this.startLoading.bind(this);
         this.timer = setInterval(this.startLoading, 500);
     }
@@ -55,6 +54,7 @@ class BlogPosts extends Component {
             .catch(err => console.error('An error occurred: ' + err));
     }
 
+    // Currently unused
     updateBlogs() {
         fetch('/blogs')
         .then(res => {
@@ -64,33 +64,6 @@ class BlogPosts extends Component {
             }
         })
         .catch(err => console.error('An error occurred: ' + err));
-    }
-
-    // If there is a new blog to add, add it to the state
-    componentDidUpdate(prevProps) {
-        if ((this.props.blogToAdd !== prevProps.blogToAdd) && this.props.blogToAdd !== '') {
-            this.setState({
-                blogs: [
-                    ...this.state.blogs,
-                    this.props.blogToAdd
-                ]
-            });
-        }
-        // If a user has logged in or out, populate the blogs
-        if (this.props.isLoggedIn !== prevProps.isLoggedIn) {
-            this.updateBlogs();
-        }
-        // If there is a blog to delete, delete it
-        if (this.props.blogIdToDelete !== prevProps.blogIdToDelete) {
-            this.deleteBlogState(this.props.blogIdToDelete);
-        }
-    }
-
-    // Deletes the selected blog from the state
-    deleteBlogState(blogId) {
-        this.setState({
-            blogs: this.state.blogs.filter(blog => blog.id !== blogId)
-        });
     }
 
     // Function to loop through and render the blogs

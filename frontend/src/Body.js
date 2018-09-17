@@ -22,19 +22,6 @@ class Body extends Component {
             blogToAdd: '',
             blogIdToDelete: ''
         }
-        this.addBlog = this.addBlog.bind(this);
-        this.removeBlog = this.removeBlog.bind(this);
-    }
-
-    // Function to update components with the newly added blog
-    addBlog(blog) {
-        this.setState({blogToAdd: blog});
-        this.props.history.push('/myblogs');
-    }
-
-    // Function to remove blog from main page
-    removeBlog(blogId) {
-        this.setState({blogIdToDelete: blogId});
     }
 
     render() {

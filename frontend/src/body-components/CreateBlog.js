@@ -28,12 +28,11 @@ class CreatePost extends Component {
             })
         }).then(res => {
             if (res.status === 201) {
-                res.json().then(blog => this.props.addBlog(blog));
                 this.setState({
                     title: '',
                     content: ''
                 });
-                // View is updated in the parent function addBlog
+                this.props.history.push("/myBlogs");
             } else if (res.status === 403) {
                 console.log('Error creating new blog post. Access denied')
             } else {
