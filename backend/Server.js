@@ -115,7 +115,9 @@ app.post('/createBlog', (req, res) => {
                     userId: req.session.userId
                 })
                 .then(newBlog => {
-                    res.status(201).send(newBlog);
+                    if (newBlog) {
+                        res.status(201).send();
+                    }
                 });
                 console.log(user.firstname + ' has created a blog post');
             } else {
