@@ -48,7 +48,7 @@ class App extends Component {
             this.setState({isLoggedIn: newIsLoggedIn});
         }
     }
-
+    // Simply renders the header, body and footer
     render() {
         return (
             <div className="app">
