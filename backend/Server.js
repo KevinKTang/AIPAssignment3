@@ -34,6 +34,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
     host: 'localhost',
     dialect: 'sqlite',
     storage: 'mydb.db' //specify location
+    //logging: false
 });
 
 // User model
@@ -74,13 +75,15 @@ sequelize
     // Force the database tables to be set up from scratch
     .sync({force: true}) // Drop table if exists
     .then(() => {
-        User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com', password: 'Bloggs'});
+        
+     /* User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com', password: 'Bloggs'});
         User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com', password: 'Smith'});
         User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com', password: 'North'});
 
         Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
         Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
-        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'}); */
+
     });
 
 // Simulate delay
@@ -95,7 +98,7 @@ app.get('/blogs', (req, res) => {
 });
 
 // Returns all the blogs belonging to a certain user
-app.get('/myblogs', (req, res) => {
+app.get('/myBlogs', (req, res) => {
     if (req.session.id) {
         Blog
             .findAll({ where: { userId: req.session.userId } })
@@ -135,19 +138,23 @@ app.delete('/deleteBlog', (req, res) => {
     if (req.session.userId) {
         Blog.findOne({where: {id: req.body.blogId}})
         .then(blog => {
-            console.log('blog found, userid for this blog is: ' + blog.userId)
-            // Check the user is the one who created this blog
-            if (blog.userId === req.session.userId) {
-                Blog.destroy({where: {id: req.body.blogId}})
-                    .then(affectedRows => {
-                        if (affectedRows === 1) {
-                            res.status(200).send();
-                        }
-                    });
+            if (blog) {
+                console.log('blog found, userid for this blog is: ' + blog.userId)
+                // Check the user is the one who created this blog
+                if (blog.userId === req.session.userId) {
+                    Blog.destroy({ where: { id: req.body.blogId } })
+                        .then(affectedRows => {
+                            if (affectedRows === 1) {
+                                res.status(200).send();
+                            }
+                        });
+                } else {
+                    res.status(403).send();
+                }
             } else {
-                res.status(403).send();
+                res.status(404).send();
             }
-        })
+        });
     } else {
         res.status(403).send();
     }
@@ -165,9 +172,9 @@ app.post('/newUser', (req, res) => {
         if (newUser) {
             req.session.userId = newUser.id;
             res.status(200).json(newUser.firstname);
-            console.log('New user ' + newUser.firstname + ' created')
+            console.log('New user ' + newUser.firstname + ' created');
         } else {
-            res.status().send();
+            res.status(500).send();
         }
     }
     )
@@ -197,9 +204,9 @@ app.post('/login', (req, res) => {
 
 // Destroy the session on logout
 app.get('/logout', (req, res) => {
+    req.session.destroy()
     console.log('User has logged out successfully')
-    req.session.destroy();
-    res.json(req.session);
+    res.status(200).send();
 });
 
 // Returns the user firstname if there is a session
@@ -223,3 +230,6 @@ app.get('/checkSession', (req, res) => {
 server = app.listen(5000, () => {
     console.log('Running on http://localhost:5000/');
 });
+
+// For unit testing
+module.exports = server;

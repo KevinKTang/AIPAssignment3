@@ -34,7 +34,7 @@ class MyBlogs extends Component {
     componentDidMount() {
         this.setState({isLoading: true});
         this.timer = setInterval(this.startLoading, 500);
-        fetch('/myblogs')
+        fetch('/myBlogs')
         .then(res => {
             if (res.status === 200) {
                 res.json()
