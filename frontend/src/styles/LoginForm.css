@@ -22,3 +22,9 @@
   border: 0 none;
   font-weight: 700;
 }
+
+.alert {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}

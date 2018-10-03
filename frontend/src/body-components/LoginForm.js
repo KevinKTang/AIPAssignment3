@@ -11,10 +11,12 @@ class LoginForm extends Component {
         super();
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            alert: ''
         }
         this.login = this.login.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.dismissAlert = this.dismissAlert.bind(this);
     }
 
     // Send username and password to server, check if login successful
@@ -34,15 +36,23 @@ class LoginForm extends Component {
                 console.log('Login successful');
                 this.props.history.push('/');
             } else  if (res.status === 401) {
-                console.log('Incorrect username or password');
                 this.setState({
-                    password: ''
+                    password: '',
+                    alert: 'Incorrect username or password'
                 });
             } else {
-                console.log('Error logging in');
+                this.setState({
+                    alert: 'Error logging in'
+                });
             }
         })
         .catch(err => console.error('An error occured: ' + err));
+    }
+
+    dismissAlert() {
+        this.setState({
+            alert: ''
+        });
     }
 
     // Update the state to reflect user input
@@ -50,23 +60,35 @@ class LoginForm extends Component {
         const target = event.target;
         const name = target.name;
         this.setState({
-            [name]: target.value
+            [name]: target.value,
+            // Hide alert when user changes input
+            alert: ''
         });
     }
 
     render() {
         return (
-            <form onSubmit={this.login}>
-              <div className="container">
-                <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                 <h3 className="login-title">Login</h3>
-                    <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
-                    <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                    <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                </div>
-              </div>
-            </form>
-
+            <div>
+                {/* Alert for incorrect login */}
+                {this.state.alert ? (
+                    <div className="alert alert-danger alert-dismissible">
+                        {this.state.alert}
+                        <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
+                    </div>
+                ) : ('')}
+                
+                {/* Login form */}
+                <form onSubmit={this.login}>
+                    <div className="container">
+                        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                            <h3 className="login-title">Login</h3>
+                            <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
+                            <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                            <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         );
     }
 
