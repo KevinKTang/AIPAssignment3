@@ -34,6 +34,22 @@ describe('Users', () => {
             });
     });
 
+    it('Try to register new user with same email as another user', () => {
+        return agent
+            .post('/newUser')
+            .send({
+                firstname: 'Joe',
+                lastname: 'Bloggs',
+                email: userEmail,
+                password: 'password'
+            })
+            .then((res) => {
+                expect(res).to.have.status(409);
+                // Need to log out user after login to test login later
+                return agent.get('/logout');
+            });
+    });
+
     it ('Login attempt with incorrect email and password', () => {
         return agent
             .post('/login')
