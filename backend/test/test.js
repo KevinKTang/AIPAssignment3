@@ -187,6 +187,26 @@ describe('Blogs', () => {
             })
     });
 
+    it('Like own blog post', () => {
+        return agent
+            .post('/likeBlog')
+            .send({blogId: createdBlogId})
+            .then((res) => {
+                expect(res).to.have.status(200);
+                expect(res.body.liked).to.be.true;
+            });
+    });
+
+    it('Unlike own blog post', () => {
+        return agent
+            .post('/likeBlog')
+            .send({blogId: createdBlogId})
+            .then((res) => {
+                expect(res).to.have.status(200);
+                expect(res.body.liked).to.be.false;
+            });
+    });
+
     it('Delete incorrect blog post', () => {
         return agent
             .delete('/deleteBlog')
