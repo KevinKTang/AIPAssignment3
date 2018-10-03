@@ -76,7 +76,7 @@ class BlogPosts extends Component {
                     id={blog.id}
                     title={blog.title}
                     content={blog.content}
-                    likes={blog.likes}
+                    likes={blog.likesCount}
                     likeable={true}>
                 </BlogPost>
             );
@@ -87,7 +87,7 @@ class BlogPosts extends Component {
                     id={blog.id}
                     title={blog.title}
                     content={blog.content}
-                    likes={blog.likes}
+                    likes={blog.likesCount}
                     likeable={false}>
                 </BlogPost>
             );

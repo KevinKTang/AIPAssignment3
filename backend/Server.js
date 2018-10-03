@@ -56,10 +56,21 @@ User.beforeCreate((user, options) => {
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
     content: Sequelize.STRING,
-    likes: Sequelize.INTEGER
+    likesCount: Sequelize.INTEGER
 });
 
 User.hasMany(Blog, {foreignKey: 'userId'});
+
+// Likes model
+const Likes = sequelize.define('likes', {
+
+});
+
+User.hasMany(Likes, {foreignKey: 'userId'});
+Blog.hasMany(Likes, {foreignKey: 'blogId'});
+
+//Likes.hasMany(User, {foreignKey: 'userId'});
+//Likes.hasMany(Blog, {foreignKey: 'blogId'});
 
 // Test the connection
 sequelize
@@ -81,9 +92,9 @@ sequelize
         User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com', password: 'Smith'});
         User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com', password: 'North'});
 
-        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.', likes: 4});
-        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.', likes: 2});
-        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!', likes: 4}); */
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.', likesCount: 4});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.', likesCount: 2});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!', likesCount: 4});*/
 
     });
 
@@ -102,7 +113,7 @@ app.get('/blogs', (req, res) => {
 app.get('/myBlogs', (req, res) => {
     if (req.session.id) {
         Blog
-            .findAll({ where: { userId: req.session.userId } })
+            .findAll({where: {userId: req.session.userId} })
             .then(blogs => res.status(200).json(blogs));
     }
 });
@@ -143,7 +154,7 @@ app.delete('/deleteBlog', (req, res) => {
                 console.log('blog found, userid for this blog is: ' + blog.userId)
                 // Check the user is the one who created this blog
                 if (blog.userId === req.session.userId) {
-                    Blog.destroy({ where: { id: req.body.blogId } })
+                    Blog.destroy({where: {id: req.body.blogId}})
                         .then(affectedRows => {
                             if (affectedRows === 1) {
                                 res.status(200).send();
@@ -216,7 +227,7 @@ app.get('/logout', (req, res) => {
 app.get('/checkSession', (req, res) => {
     if (req.session.userId) {
         User
-            .findOne({where: id = req.session.userId})
+            .findOne({where: {id: req.session.userId}})
             .then(user => {
                 if (user) {
                     res.status(200).json(user.firstname)
@@ -230,28 +241,61 @@ app.get('/checkSession', (req, res) => {
     }
 });
 
-// Add a like to a post
+// Add a like to a blog post
+// If the post is already liked, unlike the blog post
 app.post('/likeBlog', (req, res) => {
     if (req.session.userId) {
-        // Add test to see if already liked
         Blog
-            .findOne({where: id = req.body.blogId})
+            .findOne({where: {id: req.body.blogId}})
             .then(blog => {
                 if (blog) {
-                    blog.update({
-                        likes: blog.likes + 1
-                    })
-                    .then(affectedRows => {
-                        if (affectedRows) {
-                            res.status(200).send();
-                        } else {
-                            res.status(409).send();
-                        }
-                    });
+                    // Check if blog already liked by user
+                    Likes.findOne({ where: { blogId: req.body.blogId, userId: req.session.userId } })
+                        .then(row => {
+                            if (row) {
+                                // Unlike comment
+                                blog.update({likesCount: blog.likesCount - 1})
+                                .then(affectedBlogRows => {
+                                    if (affectedBlogRows) {
+                                        Likes.destroy({where: {userId: req.session.userId, blogId: req.body.blogId}})
+                                            .then(deletedLikedRows => {
+                                                if (deletedLikedRows) {
+                                                    // Successfully removed like
+                                                    console.log('Blog post unliked')
+                                                    res.status(200).send({"liked": false});
+                                                } else {
+                                                    res.status(409).send();
+                                                }
+                                            });
+                                    } else {
+                                        res.status(409).send();
+                                    }
+                                });
+                            } else {
+                                // Like post
+                                blog.update({likesCount: blog.likesCount + 1})
+                                    .then(affectedBlogRows => {
+                                        if (affectedBlogRows) {
+                                            Likes.create({userId: req.session.userId, blogId: req.body.blogId})
+                                                .then(affectedLikedRows => {
+                                                    if (affectedLikedRows) {
+                                                        // Successfully liked blog post
+                                                        console.log('Blog post liked');
+                                                        res.status(200).send({"liked": true});
+                                                    } else {
+                                                        res.status(409).send();
+                                                    }
+                                                });
+                                        } else {
+                                            res.status(409).send();
+                                        }
+                                    });
+                            }
+                        })
                 } else {
                     res.status(404).send();
                 }
-            });
+            })
     } else {
         res.status(403).send();
     }

@@ -12,11 +12,17 @@ class BlogPost extends Component {
     constructor(props) {
         super();
         this.state = {
-            likes: props.likes,
+            likes: '',
             alert: ''
         }
         this.likeBlog = this.likeBlog.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            likes: this.props.likes
+        });
     }
 
     dismissAlert() {
@@ -34,10 +40,24 @@ class BlogPost extends Component {
             })
         }).then((res) => {
             if (res.status === 200) {
-                this.setState({
-                    likes: this.state.likes + 1,
-                    alert: ''
-                });
+                res.json()
+                    .then(res => {
+                        if (res.liked) {
+                            // Blog post has been liked
+                            console.log('liked')
+                            this.setState({
+                                likes: this.state.likes + 1,
+                                alert: ''
+                            });
+                        }else {
+                            console.log('unliked')
+                            // Blog post has been unliked
+                            this.setState({
+                                likes: this.state.likes - 1,
+                                alert: ''
+                            });
+                        }
+                    })
             } else if (res.status === 404) {
                 this.setState({
                     alert: 'Error. Blog post not found.'
