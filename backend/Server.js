@@ -55,7 +55,8 @@ User.beforeCreate((user, options) => {
 // Blog model
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
-    content: Sequelize.STRING
+    content: Sequelize.STRING,
+    likes: Sequelize.INTEGER
 });
 
 User.hasMany(Blog, {foreignKey: 'userId'});
@@ -80,9 +81,9 @@ sequelize
         User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com', password: 'Smith'});
         User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com', password: 'North'});
 
-        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.'});
-        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.'});
-        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!'}); */
+        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.', likes: 4});
+        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.', likes: 2});
+        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!', likes: 4}); */
 
     });
 
@@ -94,7 +95,7 @@ sequelize
 app.get('/blogs', (req, res) => {
     Blog
         .findAll()
-        .then(blogs => res.json(blogs));
+        .then(blogs => res.status(200).json(blogs));
 });
 
 // Returns all the blogs belonging to a certain user
@@ -226,6 +227,33 @@ app.get('/checkSession', (req, res) => {
     }
     else {
         res.status(404).send();
+    }
+});
+
+// Add a like to a post
+app.post('/likeBlog', (req, res) => {
+    if (req.session.userId) {
+        // Add test to see if already liked
+        Blog
+            .findOne({where: id = req.body.blogId})
+            .then(blog => {
+                if (blog) {
+                    blog.update({
+                        likes: blog.likes + 1
+                    })
+                    .then(affectedRows => {
+                        if (affectedRows) {
+                            res.status(200).send();
+                        } else {
+                            res.status(409).send();
+                        }
+                    });
+                } else {
+                    res.status(404).send();
+                }
+            });
+    } else {
+        res.status(403).send();
     }
 });
 

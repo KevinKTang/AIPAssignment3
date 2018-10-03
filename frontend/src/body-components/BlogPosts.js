@@ -68,14 +68,30 @@ class BlogPosts extends Component {
 
     // Function to loop through and render the blogs
     eachBlog(blog) {
-        return(
-            <BlogPost
-                key={blog.id}
-                id={blog.id}
-                title={blog.title}
-                content={blog.content}>
-            </BlogPost>
-        );
+        // If logged in, allow ability to like a blog post
+        if (this.props.isLoggedIn) {
+            return (
+                <BlogPost
+                    key={blog.id}
+                    id={blog.id}
+                    title={blog.title}
+                    content={blog.content}
+                    likes={blog.likes}
+                    likeable={true}>
+                </BlogPost>
+            );
+        } else {
+            return (
+                <BlogPost
+                    key={blog.id}
+                    id={blog.id}
+                    title={blog.title}
+                    content={blog.content}
+                    likes={blog.likes}
+                    likeable={false}>
+                </BlogPost>
+            );
+        }
     }
 
     render() {
