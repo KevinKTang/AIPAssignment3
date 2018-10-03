@@ -13,10 +13,12 @@ class RegisterForm extends Component {
             firstname: '',
             lastname: '',
             email: '',
-            password: ''
+            password: '',
+            alert: ''
         }
         this.register = this.register.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.dismissAlert = this.dismissAlert.bind(this);
     }
 
     register(event) {
@@ -38,11 +40,24 @@ class RegisterForm extends Component {
                     console.log('Registered successfully');
                     this.props.history.push('/');
                 });
-            } else {
-                console.log('Error registering new user');
+            } else if (res.status === 401) {
+                this.setState({
+                    alert: 'Error registering new user'
+                });
+            }
+            else {
+                this.setState({
+                    alert: 'Error registering new user'
+                });
             }
         })
         .catch(err => console.error('An error occurred: ' + err));
+    }
+
+    dismissAlert() {
+        this.setState({
+            alert: ''
+        });
     }
 
     // Update the state to reflect user input
@@ -50,24 +65,37 @@ class RegisterForm extends Component {
         const target = event.target;
         const name = target.name;
         this.setState({
-            [name]: target.value
+            [name]: target.value,
+            // Hide alert when user changes input
+            alert: ''
         });
     }
 
     render() {
         return (
-            <form onSubmit={this.register} id="registerForm">
-                <div className="container">
-                 <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                  <h3 className="register-title">Register</h3>
-                    <input className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
-                    <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
-                    <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
-                    <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                 </div>
-                </div>
-            </form>
+            <div>
+                {/* Alert for incorrect register */}
+                {this.state.alert ? (
+                    <div className="alert alert-danger alert-dismissible">
+                        {this.state.alert}
+                        <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
+                    </div>
+                ) : ('')}
+
+                {/* Register form */}
+                <form onSubmit={this.register} id="registerForm">
+                    <div className="container">
+                        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                            <h3 className="register-title">Register</h3>
+                            <input className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
+                            <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
+                            <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
+                            <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
+                            <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         );
     }
 
