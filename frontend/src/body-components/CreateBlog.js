@@ -37,11 +37,11 @@ class CreatePost extends Component {
                 this.props.history.push("/myBlogs");
             } else if (res.status === 403) {
                 this.setState({
-                    alert: 'Error creating new blog post. Access denied'
+                    alert: "Access denied. Make sure you're logged in before creating a blog post."
                 });
             } else {
                 this.setState({
-                    alert: 'Error creating new blog post'
+                    alert: 'Error creating new blog post.'
                 });
             }
         })

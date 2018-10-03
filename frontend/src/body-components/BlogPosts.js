@@ -87,7 +87,10 @@ class BlogPosts extends Component {
                 </div>
             ) : (
                     this.state.blogs.length === 0 && this.state.isLoading === false ? (
-                        <p>There are no blogs to display!</p>
+                        <div>
+                            {this.props.isLoggedIn ? '' : <Welcome />}
+                            <p>There are no blogs to display!</p>
+                        </div>
                     ) : (
                             <div>
                                 {this.props.isLoggedIn ? '' : <Welcome />}

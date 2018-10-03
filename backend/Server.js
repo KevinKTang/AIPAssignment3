@@ -41,7 +41,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const User = sequelize.define('user', {
     firstname: Sequelize.STRING,
     lastname: Sequelize.STRING,
-    email: Sequelize.STRING,
+    email: {type: Sequelize.STRING, unique: true},
     password: Sequelize.STRING // Change later
 });
 
@@ -176,8 +176,10 @@ app.post('/newUser', (req, res) => {
         } else {
             res.status(500).send();
         }
-    }
-    )
+    })
+    .catch(Sequelize.UniqueConstraintError, (err) => {
+        res.status(409).send();
+    });
 });
 
 // If user login successful, create the session and return the user's firstname

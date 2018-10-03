@@ -40,14 +40,14 @@ class RegisterForm extends Component {
                     console.log('Registered successfully');
                     this.props.history.push('/');
                 });
-            } else if (res.status === 401) {
+            } else if (res.status === 409) {
                 this.setState({
-                    alert: 'Error registering new user'
+                    alert: 'An account with that email address is already taken. Try using a different email address.'
                 });
             }
             else {
                 this.setState({
-                    alert: 'Error registering new user'
+                    alert: 'Error registering new user.'
                 });
             }
         })

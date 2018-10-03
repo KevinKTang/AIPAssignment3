@@ -38,11 +38,11 @@ class LoginForm extends Component {
             } else  if (res.status === 401) {
                 this.setState({
                     password: '',
-                    alert: 'Incorrect username or password'
+                    alert: 'Incorrect username or password.'
                 });
             } else {
                 this.setState({
-                    alert: 'Error logging in'
+                    alert: 'Error logging in.'
                 });
             }
         })
