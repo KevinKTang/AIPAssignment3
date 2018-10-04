@@ -249,18 +249,18 @@ app.post('/likeBlog', (req, res) => {
             .findOne({where: {id: req.body.blogId}})
             .then(blog => {
                 if (blog) {
-                    // Check if blog already liked by user
+                    // Check if blog post already liked by user
                     Likes.findOne({ where: { blogId: req.body.blogId, userId: req.session.userId } })
                         .then(row => {
                             if (row) {
-                                // Unlike comment
+                                // If already liked, unlike blog post
                                 blog.update({likesCount: blog.likesCount - 1})
                                 .then(affectedBlogRows => {
                                     if (affectedBlogRows) {
                                         Likes.destroy({where: {userId: req.session.userId, blogId: req.body.blogId}})
                                             .then(deletedLikedRows => {
                                                 if (deletedLikedRows) {
-                                                    // Successfully removed like
+                                                    // Successfully removed like from blog post
                                                     console.log('Blog post unliked')
                                                     res.status(200).send({"liked": false});
                                                 } else {
@@ -272,7 +272,7 @@ app.post('/likeBlog', (req, res) => {
                                     }
                                 });
                             } else {
-                                // Like post
+                                // If not already liked, Like blog post
                                 blog.update({likesCount: blog.likesCount + 1})
                                     .then(affectedBlogRows => {
                                         if (affectedBlogRows) {

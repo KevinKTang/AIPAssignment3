@@ -9,11 +9,12 @@ chai.use(chaihttp);
 const server = require('../Server.js');
 var agent = chai.request.agent(server);
 
-describe('Users', () => {
+describe('Users', function() {
+    this.timeout(10000);
 
     let firstname = 'Darcy';
     let lastname = 'Smith';
-    let userEmail = 'darcysmith@tgmail.com';
+    let userEmail = 'darcysmith@mygmail.com';
     let userPassword = 'myPassword';
 
     it('Register new user', () => {
@@ -105,7 +106,8 @@ describe('Users', () => {
 
 });
 
-describe('Blogs', () => {
+describe('Blogs', function() {
+    this.timeout(10000);
 
     after(() => {
         agent.close();
@@ -138,17 +140,22 @@ describe('Blogs', () => {
             })
     });
 
+    let firstname = 'firstname18462';
+    let lastname = 'lastname';
+    let userEmail = 'user18462@email.com';
+    let userPassword = 'userPassword';
+
     it('No created blogs to start off with', () => {
         // Login first
         return agent
             .post('/newUser')
             .send({
-                firstname: 'firstname18462',
-                lastname: 'lastname',
-                email: 'user@email.com',
-                password: 'userPassword'
+                firstname: firstname,
+                lastname: lastname,
+                email: userEmail,
+                password: userPassword
             })
-            .then(() => {
+            .then((res) => {
                 return agent
                     .get('/myBlogs')
                     .then((res) => {
@@ -226,6 +233,28 @@ describe('Blogs', () => {
             })
             .then((res) => {
                 expect(res).to.have.status(200);
+            });
+    });
+
+    it('Like blog post while not logged in', () => {
+        return agent
+            .post('/createBlog')
+            .send({
+                title: blogTitle,
+                content: blogContent
+            })
+            .then((res) => {
+                createdBlogId = res.body.id;
+                return agent
+                    .get('/logout')
+                    .then(() => {
+                        return agent
+                            .post('/likeBlog')
+                            .send({blogId: createdBlogId})
+                            .then(res => {
+                                expect(res).to.have.status(403);
+                            });
+                    });
             });
     });
 
