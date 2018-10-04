@@ -104,9 +104,25 @@ sequelize
 // GET / blogs:
 // Retrieve a list of all blogs in the database
 app.get('/blogs', (req, res) => {
-    Blog
-        .findAll()
-        .then(blogs => res.status(200).json(blogs));
+    // If logged in, return blogs and the liked record if the blog post has been liked
+    if (req.session.userId) {
+        Blog
+            .findAll({
+                include: [{
+                    model: Likes,
+                    where: {userId: req.session.userId},
+                    required: false
+                }]
+            })
+            .then(blogs => {
+                res.status(200).json(blogs);
+            });
+    } else {
+        // If not logged in, just return blog posts
+        Blog
+            .findAll()
+            .then(blogs => res.status(200).json(blogs));
+    }
 });
 
 // Returns all the blogs belonging to a certain user

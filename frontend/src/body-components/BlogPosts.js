@@ -77,7 +77,8 @@ class BlogPosts extends Component {
                     title={blog.title}
                     content={blog.content}
                     likes={blog.likesCount}
-                    likeable={true}>
+                    likeable={true}
+                    liked={blog.likes.length !== 0}>
                 </BlogPost>
             );
         } else {

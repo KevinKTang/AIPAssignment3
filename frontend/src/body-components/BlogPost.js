@@ -13,7 +13,8 @@ class BlogPost extends Component {
         super();
         this.state = {
             likes: '',
-            alert: ''
+            alert: '',
+            liked: '',
         }
         this.likeBlog = this.likeBlog.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
@@ -21,7 +22,8 @@ class BlogPost extends Component {
 
     componentDidMount() {
         this.setState({
-            likes: this.props.likes
+            likes: this.props.likes,
+            liked: this.props.liked
         });
     }
 
@@ -44,17 +46,17 @@ class BlogPost extends Component {
                     .then(res => {
                         if (res.liked) {
                             // Blog post has been liked
-                            console.log('liked')
                             this.setState({
                                 likes: this.state.likes + 1,
-                                alert: ''
+                                alert: '',
+                                liked: true
                             });
-                        }else {
-                            console.log('unliked')
+                        } else if (!res.liked) {
                             // Blog post has been unliked
                             this.setState({
                                 likes: this.state.likes - 1,
-                                alert: ''
+                                alert: '',
+                                liked: false
                             });
                         }
                     })
@@ -101,10 +103,12 @@ class BlogPost extends Component {
 
                         {/* If being viewed while logged in, show number of likes and option to like */}
                         {this.props.likeable ? (
-                            <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
+                            this.state.liked ? (
+                                <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
+                            ) : (
+                                <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
+                            )
                         ) : ('')}
-                                
-                            
                     </div>
                 </div>
             </div>
