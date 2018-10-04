@@ -20,6 +20,16 @@ class BlogPost extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
     }
 
+    // To update some props when component mounts before parent async call complete
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            this.setState({
+                likes: this.props.likes,
+                liked: this.props.liked
+            });
+        }
+    }
+
     componentDidMount() {
         this.setState({
             likes: this.props.likes,
