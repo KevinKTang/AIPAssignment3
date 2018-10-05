@@ -107,6 +107,7 @@ app.get('/blogs', (req, res) => {
         .then(blogs => res.status(200).json(blogs));
 });
 
+// Return ordering of blogs specified by the user
 app.post('/blogsCustom', (req, res) => {
     if (req.session.userId) {
         switch (req.body.display) {
@@ -159,6 +160,7 @@ app.post('/blogsCustom', (req, res) => {
                     });
                 break;
             case 'random':
+                    console.log('------------------------------------------------------')
                 console.log('ORDERING BY RANDOM');
                 Blog
                     .findAll({
@@ -174,6 +176,22 @@ app.post('/blogsCustom', (req, res) => {
                         res.status(200).json(blogs);
                     });
                 break;
+            default:
+                console.log('Default selected:');
+                console.log('ORDERING BY RECENT');
+                Blog
+                    .findAll({
+                        include: [{
+                            model: Likes,
+                            where: { userId: req.session.userId },
+                            required: false
+                        }],
+                        limit: 20,
+                        order: [['createdAt', 'DESC']]
+                    })
+                    .then(blogs => {
+                        res.status(200).json(blogs);
+                    });
         }
         if (req.body.display === 'recent') {
             
@@ -204,7 +222,7 @@ app.post('/createBlog', (req, res) => {
                 })
                 .then(newBlog => {
                     if (newBlog) {
-                        res.status(201).send();
+                        res.status(201).json({blogId: newBlog.id});
                     }
                 });
                 console.log(user.firstname + ' has created a blog post');

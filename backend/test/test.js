@@ -92,6 +92,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(200);
+                expect(res.body).to.equal(firstname);
                 expect(res).to.have.cookie('connect.sid');
             });
     });
@@ -166,38 +167,68 @@ describe('Blogs', function() {
             });
     });
 
-    let blogTitle = 'Blog Title';
-    let blogContent = 'This is the body of the blog post.';
-    let createdBlogId = '';
+    let firstBlogTitle = 'First';
+    let firstBlogContent = 'This is the body of the blog post.';
+    let secondBlogTitle = 'Second';
+    let secondBlogContent = 'Second blog post.';
+    let thirdBlogTitle = 'Third';
+    let thirdBlogContent = 'Third blog post';
+    let firstBlogId = '';
+    let secondBlogId = '';
+    let thirdBlogId = '';
 
-    it('Create a blog', () => {
+    it('Create 3 blog posts', () => {
         return agent
             .post('/createBlog')
             .send({
-                title: blogTitle,
-                content: blogContent
+                title: firstBlogTitle,
+                content: firstBlogContent
             })
             .then((res) => {
                 expect(res).to.have.status(201);
-            });
+                firstBlogId = res.body.blogId;
+                return agent
+                    .post('/createBlog')
+                    .send({
+                        title: secondBlogTitle,
+                        content: secondBlogContent
+                    })
+                    .then((res) => {
+                        expect(res).to.have.status(201);
+                        secondBlogId = res.body.blogId;
+                        return agent
+                            .post('/createBlog')
+                            .send({
+                                title: thirdBlogTitle,
+                                content: thirdBlogContent
+                            })
+                            .then((res) => {
+                                expect(res).to.have.status(201);
+                                thirdBlogId = res.body.blogId;
+                            });
+                    });
+            })
     });
 
-    it('Retrieve created blog', () => {
+    it('Retrieve created blog posts', () => {
         return agent
             .get('/myBlogs')
             .then((res) => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
-                expect(res.body[0].title).to.equal(blogTitle);
-                expect(res.body[0].content).to.equal(blogContent);
-                createdBlogId = res.body[0].id;
+                expect(res.body[0].title).to.equal(thirdBlogTitle);
+                expect(res.body[0].content).to.equal(thirdBlogContent);
+                expect(res.body[1].title).to.equal(secondBlogTitle);
+                expect(res.body[1].content).to.equal(secondBlogContent);
+                expect(res.body[2].title).to.equal(firstBlogTitle);
+                expect(res.body[2].content).to.equal(firstBlogContent);
             })
     });
 
     it('Like own blog post', () => {
         return agent
             .post('/likeBlog')
-            .send({blogId: createdBlogId})
+            .send({blogId: firstBlogId})
             .then((res) => {
                 expect(res).to.have.status(200);
                 expect(res.body.liked).to.be.true;
@@ -207,7 +238,7 @@ describe('Blogs', function() {
     it('Unlike own blog post', () => {
         return agent
             .post('/likeBlog')
-            .send({blogId: createdBlogId})
+            .send({blogId: firstBlogId})
             .then((res) => {
                 expect(res).to.have.status(200);
                 expect(res.body.liked).to.be.false;
@@ -218,7 +249,7 @@ describe('Blogs', function() {
         return agent
             .delete('/deleteBlog')
             .send({
-                blogId: 2000
+                blogId: -1
             })
             .then((res) => {
                 expect(res).to.have.status(404);
@@ -229,7 +260,7 @@ describe('Blogs', function() {
         return agent
             .delete('/deleteBlog')
             .send({
-                blogId: createdBlogId
+                blogId: firstBlogId
             })
             .then((res) => {
                 expect(res).to.have.status(200);
@@ -238,23 +269,77 @@ describe('Blogs', function() {
 
     it('Like blog post while not logged in', () => {
         return agent
-            .post('/createBlog')
-            .send({
-                title: blogTitle,
-                content: blogContent
-            })
-            .then((res) => {
-                createdBlogId = res.body.id;
+            .get('/logout')
+            .then(() => {
                 return agent
-                    .get('/logout')
-                    .then(() => {
-                        return agent
-                            .post('/likeBlog')
-                            .send({blogId: createdBlogId})
-                            .then(res => {
-                                expect(res).to.have.status(403);
-                            });
+                    .post('/likeBlog')
+                    .send({ blogId: secondBlogId })
+                    .then(res => {
+                        expect(res).to.have.status(403);
                     });
+            });
+    });
+
+    it('Change ordering to sort by liked blog posts', () => {
+        return agent
+            .post('/login')
+            .send({email: userEmail, password: userPassword})
+            .then((res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.equal(firstname);
+                return agent
+                    .post('/likeBlog')
+                    .send({blogId: secondBlogId})
+                    .then((res) => {
+                            expect(res).to.have.status(200);
+                            expect(res.body.liked).to.be.true;
+                            return agent
+                                .post('/blogsCustom')
+                                .send({display: 'liked'})
+                                .then(res => {
+                                    // Only liked the second blog post, that should be the only blog post returned
+                                    expect(res).to.have.status(200);
+                                    expect(res.body.length).to.equal(1);
+                                    expect(res.body[0].title).to.equal(secondBlogTitle);
+                                });
+                    });
+            });
+    });
+
+    it('Change ordering to sort by most liked blog posts', () => {
+        return agent
+            .post('/blogsCustom')
+            .send({ display: 'mostLiked' })
+            .then(res => {
+                // Only have 2 blog posts, secondBlog is liked, thirdBlog is not
+                expect(res).to.have.status(200);
+                expect(res.body.length).to.equal(2);
+                expect(res.body[0].title).to.equal(secondBlogTitle);
+                expect(res.body[1].title).to.equal(thirdBlogTitle);
+            });
+    });
+
+    it('Change ordering to sort by random blog posts', () => {
+        return agent
+            .post('/blogsCustom')
+            .send({ display: 'random' })
+            .then(res => {
+                // Only have 2 blog posts
+                expect(res).to.have.status(200);
+                expect(res.body.length).to.equal(2);
+            });
+    });
+
+    it('Change ordering to sort by recent blog posts', () => {
+        return agent
+            .post('/blogsCustom')
+            .send({ display: 'recent' })
+            .then(res => {
+                // Only have 2 blog posts, secondBlog was created before thirdBlog
+                expect(res).to.have.status(200);
+                expect(res.body.length).to.equal(2);
+                expect(res.body[0].title).to.equal(thirdBlogTitle);
+                expect(res.body[1].title).to.equal(secondBlogTitle);
             });
     });
 
