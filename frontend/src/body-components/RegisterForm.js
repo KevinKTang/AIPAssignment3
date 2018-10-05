@@ -37,7 +37,6 @@ class RegisterForm extends Component {
             if (res.status === 200) {
                 res.json().then(userFirstname => {
                     this.props.updateLogin(true, userFirstname);
-                    console.log('Registered successfully');
                     this.props.history.push('/');
                 });
             } else if (res.status === 409) {

@@ -21,7 +21,7 @@ app.use(session({
     },
     saveUninitialized: false,
     // 10 minutes expiration
-    cookie: { maxAge: 600000}
+    //cookie: { maxAge: 600000}
     /*
     resave: true // Come back to this when sorted out store
     app.set('trust proxy', 1) // Come back to this
@@ -69,9 +69,6 @@ const Likes = sequelize.define('likes', {
 User.hasMany(Likes, {foreignKey: 'userId'});
 Blog.hasMany(Likes, {foreignKey: 'blogId'});
 
-//Likes.hasMany(User, {foreignKey: 'userId'});
-//Likes.hasMany(Blog, {foreignKey: 'blogId'});
-
 // Test the connection
 sequelize
   .authenticate()
@@ -99,37 +96,97 @@ sequelize
     });
 
 // Simulate delay
-//app.use((req, res, next) => setTimeout(() => next(), 1000));
+//app.use((req, res, next) => setTimeout(() => next(), 2000));
+
 
 // GET / blogs:
-// Retrieve a list of all blogs in the database
+// Retrieve a list of the 20 most recent blog posts
 app.get('/blogs', (req, res) => {
-    // If logged in, return blogs and the liked record if the blog post has been liked
-    if (req.session.userId) {
-        Blog
-            .findAll({
-                include: [{
-                    model: Likes,
-                    where: {userId: req.session.userId},
-                    required: false
-                }]
-            })
-            .then(blogs => {
-                res.status(200).json(blogs);
-            });
-    } else {
-        // If not logged in, just return blog posts
-        Blog
-            .findAll()
-            .then(blogs => res.status(200).json(blogs));
-    }
+    Blog
+        .findAll({ limit: 20, order: [['updatedAt', 'DESC']]})
+        .then(blogs => res.status(200).json(blogs));
 });
 
+app.post('/blogsCustom', (req, res) => {
+    if (req.session.userId) {
+        switch (req.body.display) {
+            case 'recent':
+                console.log('ORDERING BY RECENT');
+                Blog
+                    .findAll({
+                        include: [{
+                            model: Likes,
+                            where: { userId: req.session.userId },
+                            required: false
+                        }],
+                        limit: 20,
+                        order: [['createdAt', 'DESC']]
+                    })
+                    .then(blogs => {
+                        res.status(200).json(blogs);
+                    });
+                break;
+            case 'liked':
+                console.log('ORDERING BY LIKED');
+                Blog
+                .findAll({
+                    include: [{
+                        model: Likes,
+                        where: { userId: req.session.userId },
+                        required: true
+                    }],
+                    limit: 20,
+                    order: [['createdAt', 'DESC']]
+                })
+                .then(blogs => {
+                    res.status(200).json(blogs);
+                });
+                break;
+            case 'mostLiked':
+                console.log('ORDERING BY MOST LIKED');
+                Blog
+                    .findAll({
+                        include: [{
+                            model: Likes,
+                            where: { userId: req.session.userId },
+                            required: false
+                        }],
+                        limit: 20,
+                        order: [['likesCount', 'DESC']]
+                    })
+                    .then(blogs => {
+                        res.status(200).json(blogs);
+                    });
+                break;
+            case 'random':
+                console.log('ORDERING BY RANDOM');
+                Blog
+                    .findAll({
+                        include: [{
+                            model: Likes,
+                            where: { userId: req.session.userId },
+                            required: false
+                        }],
+                        limit: 20,
+                        order: sequelize.random()
+                    })
+                    .then(blogs => {
+                        res.status(200).json(blogs);
+                    });
+                break;
+        }
+        if (req.body.display === 'recent') {
+            
+        } 
+    } else {
+        res.status(403).send();
+    }
+});
 // Returns all the blogs belonging to a certain user
 app.get('/myBlogs', (req, res) => {
     if (req.session.id) {
         Blog
-            .findAll({where: {userId: req.session.userId} })
+            .findAll({where: {userId: req.session.userId}, order: [['updatedAt', 'DESC']] })
             .then(blogs => res.status(200).json(blogs));
     }
 });

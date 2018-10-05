@@ -24,7 +24,6 @@ class Header extends Component {
         fetch('/logout')
             .then((res) => {
                 this.props.updateLogin(false, '');
-                console.log('Log out successful');
                 this.props.history.push('/');
             });
     }
