@@ -7,7 +7,7 @@ This web application is currently under development. To run, install the files a
 ```
 npm install
 ```
-This will install all the dependencies. To start the backend database run:
+This will install all the dependencies. To start the backend server run:
 ```
 node Server.js
 ```
@@ -17,6 +17,14 @@ To start the front end, run:
 npm start
 ```
 in the frontend folder. This will start the application at http://localhost:3000/
+
+## Running the Tests
+Testing has been provided for our backend using the testing framework Mocha and the assertion library Chai.
+To run the tests, navigate to the backend folder and run:
+```
+npm test
+```
+These tests have been designed to test all aspects of our backend server.
 
 ## Key Principles of Code Style and Design
 The following coding conventions have been used to provide consistency and improve readability of code.
