@@ -59,7 +59,9 @@ const Blog = sequelize.define('blog', {
     likesCount: Sequelize.INTEGER
 });
 
+// Associated both ways so can get user from blog, and blog from user
 User.hasMany(Blog, {foreignKey: 'userId'});
+Blog.belongsTo(User, {foreignKey: 'userId'});
 
 // Likes model
 const Likes = sequelize.define('likes', {
@@ -103,7 +105,16 @@ sequelize
 // Retrieve a list of the 20 most recent blog posts
 app.get('/blogs', (req, res) => {
     Blog
-        .findAll({ limit: 20, order: [['updatedAt', 'DESC']]})
+        .findAll({
+            include: [{
+                model: User,
+                where: { id: {$col: 'Blog.userId'} },
+                attributes: ['firstname', 'lastname'],
+                required: false
+            }],
+            limit: 20,
+            order: [['updatedAt', 'DESC']]
+        })
         .then(blogs => res.status(200).json(blogs));
 });
 
@@ -118,6 +129,12 @@ app.post('/blogsCustom', (req, res) => {
                         include: [{
                             model: Likes,
                             where: { userId: req.session.userId },
+                            required: false
+                        },
+                        {
+                            model: User,
+                            where: { id: {$col: 'Blog.userId'} },
+                            attributes: ['firstname', 'lastname'],
                             required: false
                         }],
                         limit: 20,
@@ -135,6 +152,12 @@ app.post('/blogsCustom', (req, res) => {
                         model: Likes,
                         where: { userId: req.session.userId },
                         required: true
+                    },
+                    {
+                        model: User,
+                        where: { id: {$col: 'Blog.userId'} },
+                        attributes: ['firstname', 'lastname'],
+                        required: false
                     }],
                     limit: 20,
                     order: [['createdAt', 'DESC']]
@@ -150,6 +173,12 @@ app.post('/blogsCustom', (req, res) => {
                         include: [{
                             model: Likes,
                             where: { userId: req.session.userId },
+                            required: false
+                        },
+                        {
+                            model: User,
+                            where: { id: {$col: 'Blog.userId'} },
+                            attributes: ['firstname', 'lastname'],
                             required: false
                         }],
                         limit: 20,
@@ -168,6 +197,12 @@ app.post('/blogsCustom', (req, res) => {
                             model: Likes,
                             where: { userId: req.session.userId },
                             required: false
+                        },
+                        {
+                            model: User,
+                            where: { id: {$col: 'Blog.userId'} },
+                            attributes: ['firstname', 'lastname'],
+                            required: false
                         }],
                         limit: 20,
                         order: sequelize.random()
@@ -184,6 +219,12 @@ app.post('/blogsCustom', (req, res) => {
                         include: [{
                             model: Likes,
                             where: { userId: req.session.userId },
+                            required: false
+                        },
+                        {
+                            model: User,
+                            where: { id: {$col: 'Blog.userId'} },
+                            attributes: ['firstname', 'lastname'],
                             required: false
                         }],
                         limit: 20,

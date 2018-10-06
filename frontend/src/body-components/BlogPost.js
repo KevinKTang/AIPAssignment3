@@ -102,10 +102,16 @@ class BlogPost extends Component {
                 <div className="card shadow">
                     <div className="card-body">
                         <h5 className="card-title">{this.props.title}</h5>
+
+                        {/* Show author if not viewing your own blogs */}
+                        {this.props.canDelete ? '' : (<p>Author: {this.props.author}</p>)}
+                        <hr></hr>
+                        
                         <div className="card-text">{this.props.content}</div>
                         <hr></hr>
                         {/* If no likes, show 0 */}
                         <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+
                         {/* If being viewed as my blogs, show delete option and number of likes */}
                         {this.props.canDelete ? (
                             <button className="btn btn-danger" onClick={() => this.props.deleteBlog(this.props.id)}>Delete</button>

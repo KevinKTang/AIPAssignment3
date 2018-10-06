@@ -343,4 +343,18 @@ describe('Blogs', function() {
             });
     });
 
+    it('Check author of blog posts', () => {
+        return agent
+        .post('/blogsCustom')
+        .send({display: 'recent'})
+        .then(res => {
+            expect(res).to.have.status(200);
+            expect(res.body.length).to.equal(2);
+            expect(res.body[0].user.firstname).to.equal(firstname);
+            expect(res.body[0].user.lastname).to.equal(lastname);
+            expect(res.body[1].user.firstname).to.equal(firstname);
+            expect(res.body[1].user.lastname).to.equal(lastname);
+        });
+    });
+
 });

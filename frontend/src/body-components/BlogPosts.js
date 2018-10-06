@@ -135,7 +135,8 @@ class BlogPosts extends Component {
                     content={blog.content}
                     likes={blog.likesCount}
                     likeable={true}
-                    liked={blogLiked}>
+                    liked={blogLiked}
+                    author={blog.user.firstname + ' ' + blog.user.lastname}>
                 </BlogPost>
             );
         } else {
@@ -146,7 +147,8 @@ class BlogPosts extends Component {
                     title={blog.title}
                     content={blog.content}
                     likes={blog.likesCount}
-                    likeable={false}>
+                    likeable={false}
+                    author={blog.user.firstname + ' ' + blog.user.lastname}>
                 </BlogPost>
             );
         }
