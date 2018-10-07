@@ -25,33 +25,37 @@ class CreatePost extends Component {
     
     newBlog(event) {
         event.preventDefault();
-        fetch('/createBlog', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                title: this.state.title,
-                blurb: this.state.blurb,
-                content: convertToRaw(this.state.editorState)
+        if (convertToRaw(this.state.editorState).blocks[0].text !== '') {
+            fetch('/createBlog', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: this.state.title,
+                    blurb: this.state.blurb,
+                    content: convertToRaw(this.state.editorState)
+                })
+            }).then(res => {
+                if (res.status === 201) {
+                    this.setState({
+                        title: '',
+                        blurb: '',
+                        editorState: ''
+                    });
+                    this.props.history.push("/myBlogs");
+                } else if (res.status === 403) {
+                    this.setState({
+                        alert: "Access denied. Make sure you're logged in before creating a blog post."
+                    });
+                } else {
+                    this.setState({
+                        alert: 'Error creating new blog post.'
+                    });
+                }
             })
-        }).then(res => {
-            if (res.status === 201) {
-                this.setState({
-                    title: '',
-                    blurb: '',
-                    editorState: ''
-                });
-                this.props.history.push("/myBlogs");
-            } else if (res.status === 403) {
-                this.setState({
-                    alert: "Access denied. Make sure you're logged in before creating a blog post."
-                });
-            } else {
-                this.setState({
-                    alert: 'Error creating new blog post.'
-                });
-            }
-        })
-        .catch(err => console.error('An error occurred: ' + err));
+                .catch(err => console.error('An error occurred: ' + err));
+        } else {
+            this.setState({alert: 'no content'})
+        }
     }
 
     dismissAlert() {
@@ -79,20 +83,24 @@ class CreatePost extends Component {
     render() {
         return (
             <div>
-                {/* Alert for incorrect blog post */}
-                {this.state.alert ? (
-                    <div className="alert alert-danger alert-dismissible">
-                        {this.state.alert}
-                        <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
-                    </div>
-                ) : ('')}
-
                 <h1>Create Blog</h1>
                 {/* Blog post form */}
-                <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                <input className="create-blurb-input" name="blurb" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Blurb" required></input>
-                <MyEditor updateParent={this.onEditorChange} />
-                <button className="btn btn-primary" onClick={this.newBlog}>Post</button>
+                <form onSubmit={this.newBlog}>
+                    <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                    <input className="create-blurb-input" name="blurb" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Blurb" required></input>
+                    <MyEditor updateParent={this.onEditorChange} />
+
+                    {/* TODO: fix rendering position */}
+                    {/* Alert for incorrect blog post */}
+                    {this.state.alert ? (
+                        <div className="alert alert-danger alert-dismissible">
+                            {this.state.alert}
+                            <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
+                        </div>
+                    ) : ('')}
+                
+                    <button className="btn btn-primary">Post</button>
+                </form>
             </div>
         )
 

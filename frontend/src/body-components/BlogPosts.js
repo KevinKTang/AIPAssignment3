@@ -121,6 +121,7 @@ class BlogPosts extends Component {
     eachBlog(blog) {
         // If logged in, allow ability to like a blog post and indicate if blog post is already liked
         if (this.props.isLoggedIn) {
+            // Check if this user has liked the blog post
             let blogLiked;
             if (blog.likes) {
                 blogLiked = blog.likes.length !== 0;

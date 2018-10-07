@@ -101,6 +101,32 @@ sequelize
 // Simulate delay
 //app.use((req, res, next) => setTimeout(() => next(), 2000));
 
+// Retrieve a single blog by id
+app.get('/blog/:blogId', (req, res) => {
+    Blog
+        .findOne({
+            where: {id: req.params.blogId},
+            include: [{
+                model: User,
+                where: { id: {$col: 'Blog.userId'} },
+                attributes: ['firstname', 'lastname'],
+                required: false
+            },
+            {
+                model: Likes,
+                where: { userId: req.session.userId },
+                required: false
+            }
+        ]
+        })
+        .then(blog => {
+            if (blog) {
+                res.status(200).json(blog);
+            } else {
+                res.status(404).send();
+            }
+        });
+});
 
 // GET / blogs:
 // Retrieve a list of the 20 most recent blog posts

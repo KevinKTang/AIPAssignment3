@@ -6,6 +6,7 @@ import RegisterForm from './body-components/RegisterForm';
 import BlogPosts from './body-components/BlogPosts.js';
 import CreateBlog from './body-components/CreateBlog.js';
 import MyBlogs from './body-components/MyBlogs.js';
+import ViewBlogPost from './body-components/ViewBlogPost.js'
 import './styles/Body.css';
 
 /* 
@@ -43,6 +44,11 @@ class Body extends Component {
                     <Route
                         exact path="/createblog"
                         render={(props) => <CreateBlog {...props} addBlog={this.addBlog} />} />
+
+                    {/* Check later */}
+                    <Route
+                        path="/viewBlogPost"
+                        render={(props) => <ViewBlogPost {...props} isLoggedIn={this.props.isLoggedIn} />} />
                 </Switch>
             </main>
         )

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/BlogPost.css';
+import { withRouter } from 'react-router';
 
 /* 
     Blog Post cards will be displayed on the main page.
@@ -18,6 +19,7 @@ class BlogPost extends Component {
         }
         this.likeBlog = this.likeBlog.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
+        this.viewSelectedBlog = this.viewSelectedBlog.bind(this);
     }
 
     // To update some props when component mounts before parent async call complete
@@ -86,6 +88,12 @@ class BlogPost extends Component {
         });
     }
 
+    viewSelectedBlog() {
+        this.props.history.push({
+            pathname: '/ViewBlogPost/' + this.props.id
+        });
+    }
+
     // Blog posts that are displayed in the user's blog section can be deleted
     render() {
         return (
@@ -104,7 +112,7 @@ class BlogPost extends Component {
                         <h5 className="card-title">{this.props.title}</h5>
 
                         {/* Show author if not viewing your own blogs */}
-                        {this.props.canDelete ? '' : (<p>Author: {this.props.author}</p>)}
+                        {this.props.canDelete ? '' : (<p>By: {this.props.author}</p>)}
                         <hr></hr>
                         
                         <div className="card-text">{this.props.blurb}</div>
@@ -125,6 +133,7 @@ class BlogPost extends Component {
                                 <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                             )
                         ) : ('')}
+                        <button className="btn btn-success view-button" onClick={this.viewSelectedBlog}>View</button>
                     </div>
                 </div>
             </div>
@@ -133,4 +142,4 @@ class BlogPost extends Component {
 
 }
 
-export default BlogPost;
+export default withRouter(BlogPost);
