@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Loading from '../Loading'
+import { EditorState, convertFromRaw} from 'draft-js';
+import '../styles/ViewBlogPost.css'
 
 class ViewBlogPost extends Component {
 
@@ -57,7 +59,7 @@ class ViewBlogPost extends Component {
                             this.setState({
                                 title: blog.title,
                                 blurb: blog.blurb,
-                                content: blog.content,
+                                content: EditorState.createWithContent(convertFromRaw(blog.content)),
                                 author: blog.user.firstname + blog.user.lastname,
                                 likes: blog.likesCount,
                                 liked: blogLiked
@@ -125,34 +127,39 @@ class ViewBlogPost extends Component {
 
     render() {
         return (
-            this.state.showLoading ? (
+            <div>
+            <button className="btn btn-danger" onClick={this.props.history.goBack}>Back</button>
+            {this.state.showLoading ? (
                 <Loading />
             ) : (
-                    <div>
-                        {/* Alert for error loading blog post */}
-                        {this.state.alert ? (
-                            <div className="alert alert-danger alert-dismissible">
-                                {this.state.alert}
-                                <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
-                            </div>
-                        ) : ('')}
+                    this.state.isLoading ? ('') : (
+                        <div>
+                            {/* Alert for error loading blog post */}
+                            {this.state.alert ? (
+                                <div className="alert alert-danger alert-dismissible">
+                                    {this.state.alert}
+                                    <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
+                                </div>
+                            ) : ('')}
 
-                        <h2>{this.state.title}</h2>
-                        <p>By {this.state.author}</p>
-                        <hr></hr>
-                        <p>{this.state.blurb}</p>
-                        <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+                            <h2>{this.state.title}</h2>
+                            <p>By {this.state.author}</p>
+                            <hr></hr>
+                            <p>{this.state.blurb}</p>
+                            <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
 
-                        {this.props.isLoggedIn ? (
-                            this.state.liked ? (
-                                <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
-                            ) : (
-                                <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
-                            )
-                        ) : ('')}
+                            {this.props.isLoggedIn ? (
+                                this.state.liked ? (
+                                    <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
+                                ) : (
+                                        <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
+                                    )
+                            ) : ('')}
 
-                    </div>
-                )
+                        </div>
+                    )
+                )}
+            </div>
         )
     }
 

@@ -28,6 +28,7 @@ class BlogPosts extends Component {
         this.changeBlogDisplay = this.changeBlogDisplay.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
         this.showAlert = this.showAlert.bind(this);
+        this.renderTopComponents = this.renderTopComponents.bind(this);
     }
 
     // Loading icon will only show after half a second
@@ -49,10 +50,6 @@ class BlogPosts extends Component {
     }
 
     updateBlogs() {
-        this.setState({
-            isLoading: true,
-            showLoading: true
-        });
         if (this.props.isLoggedIn) {
             fetch('/blogsCustom', {
                 method: 'POST',
@@ -194,13 +191,26 @@ class BlogPosts extends Component {
         )
     }
 
+    renderTopComponents() {
+        // If logged in show home text and sorting buttons
+        // If not logged in, show welcome jumbotron
+        return (
+            this.props.isLoggedIn ? (
+                <div>
+                    <h1>Home</h1>
+                    {this.showBlogOptions()}
+                </div>
+            ) : <Welcome />
+        )
+    }
+
     render() {
         return (
             // If loading
             this.state.showLoading ? (
                 <div>
                     {this.state.alert ? this.showAlert() : ''}
-                    {this.props.isLoggedIn ? this.showBlogOptions() : <Welcome />}
+                    {this.renderTopComponents()}
                     <Loading />
                 </div>
             ) : (
@@ -208,13 +218,13 @@ class BlogPosts extends Component {
                     !this.state.isLoading && this.state.blogs.length === 0 ? (
                         <div>
                             {this.state.alert ? this.showAlert() : ''}
-                            {this.props.isLoggedIn ? this.showBlogOptions() : <Welcome />}
+                            {this.renderTopComponents()}
                             <p>There are no blogs to display!</p>
                         </div>
                     ) : (
                             <div>
                                 {this.state.alert ? this.showAlert() : ''}
-                                {this.props.isLoggedIn ? this.showBlogOptions() : <Welcome />}
+                                {this.renderTopComponents()}
                                 <div className="blog-posts-flex">
                                     {this.state.blogs.map(blog => this.eachBlog(blog))}
                                 </div>

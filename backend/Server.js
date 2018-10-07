@@ -216,7 +216,6 @@ app.post('/blogsCustom', (req, res) => {
                     });
                 break;
             case 'random':
-                    console.log('------------------------------------------------------')
                 console.log('ORDERING BY RANDOM');
                 Blog
                     .findAll({

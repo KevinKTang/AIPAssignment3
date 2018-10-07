@@ -90,15 +90,21 @@ class MyBlogs extends Component {
     render() {
         return (
             this.state.showLoading ? (
-                <Loading />
+                <div>
+                    <h1>My Blogs</h1>
+                    <Loading />
+                </div>
             ) : (
-                    this.state.blogs.length === 0 && this.state.isLoading === false ? (
+                    <div>
+                    <h1>My Blogs</h1>
+                    {this.state.blogs.length === 0 && this.state.isLoading === false ? (
                         <p>You haven't created any blogs yet!</p>
                     ) : (
                             <div className="blog-posts-flex">
                                 {this.state.blogs.map(blog => this.eachBlog(blog))}
                             </div>
-                        )
+                        )}
+                    </div>
                 )
         )
     }

@@ -168,11 +168,11 @@ describe('Blogs', function() {
     });
 
     let firstBlogTitle = 'First';
-    let firstBlogBlurb = 'This is the body of the blog post.';
+    let firstBlogBlurb = 'This is the blurb of the blog post.';
     let secondBlogTitle = 'Second';
-    let secondBlogBlurb = 'Second blog post.';
+    let secondBlogBlurb = 'Second blurb.';
     let thirdBlogTitle = 'Third';
-    let thirdBlogBlurb = 'Third blog post';
+    let thirdBlogBlurb = 'Third blurb';
     let firstBlogId = '';
     let secondBlogId = '';
     let thirdBlogId = '';
@@ -213,7 +213,7 @@ describe('Blogs', function() {
     it('Retrieve created blog posts', () => {
         return agent
             .get('/myBlogs')
-            .then((res) => {
+            .then(res => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
                 expect(res.body[0].title).to.equal(thirdBlogTitle);
@@ -223,6 +223,27 @@ describe('Blogs', function() {
                 expect(res.body[2].title).to.equal(firstBlogTitle);
                 expect(res.body[2].blurb).to.equal(firstBlogBlurb);
             })
+    });
+
+    it('View a single post', () => {
+        return agent
+            .get('/blog/' + thirdBlogId)
+            .then((res) => {
+                expect(res).to.to.status(200);
+                expect(res).to.be.json;
+                expect(res.body.title).to.equal(thirdBlogTitle);
+                expect(res.body.blurb).to.equal(thirdBlogBlurb);
+                expect(res.body.user.firstname).to.equal(firstname);
+                expect(res.body.user.lastname).to.equal(lastname);
+            });
+    });
+
+    it('View a single post with incorrect blogId', () => {
+        return agent
+            .get('/blog/' + '-1')
+            .then((res) => {
+                expect(res).to.to.status(404);
+            });
     });
 
     it('Like own blog post', () => {

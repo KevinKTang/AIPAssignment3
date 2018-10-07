@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MyEditor from './MyEditor.js';
-import { EditorState, Editor, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import '../styles/CreateBlog.css';
 
 /*
@@ -54,7 +54,7 @@ class CreatePost extends Component {
             })
                 .catch(err => console.error('An error occurred: ' + err));
         } else {
-            this.setState({alert: 'no content'})
+            this.setState({alert: 'There is no content in your blog!'})
         }
     }
 
