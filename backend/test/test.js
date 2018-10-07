@@ -122,7 +122,7 @@ describe('Blogs', function() {
                     .post('/createBlog')
                     .send({
                         title: 'Blog Title',
-                        body: 'This is the body of the blog post.'
+                        blurb: 'This is the body of the blog post.'
                     })
                     .then((res) => {
                         expect(res).to.have.status(403);
@@ -168,11 +168,11 @@ describe('Blogs', function() {
     });
 
     let firstBlogTitle = 'First';
-    let firstBlogContent = 'This is the body of the blog post.';
+    let firstBlogBlurb = 'This is the body of the blog post.';
     let secondBlogTitle = 'Second';
-    let secondBlogContent = 'Second blog post.';
+    let secondBlogBlurb = 'Second blog post.';
     let thirdBlogTitle = 'Third';
-    let thirdBlogContent = 'Third blog post';
+    let thirdBlogBlurb = 'Third blog post';
     let firstBlogId = '';
     let secondBlogId = '';
     let thirdBlogId = '';
@@ -182,7 +182,7 @@ describe('Blogs', function() {
             .post('/createBlog')
             .send({
                 title: firstBlogTitle,
-                content: firstBlogContent
+                blurb: firstBlogBlurb
             })
             .then((res) => {
                 expect(res).to.have.status(201);
@@ -191,7 +191,7 @@ describe('Blogs', function() {
                     .post('/createBlog')
                     .send({
                         title: secondBlogTitle,
-                        content: secondBlogContent
+                        blurb: secondBlogBlurb
                     })
                     .then((res) => {
                         expect(res).to.have.status(201);
@@ -200,7 +200,7 @@ describe('Blogs', function() {
                             .post('/createBlog')
                             .send({
                                 title: thirdBlogTitle,
-                                content: thirdBlogContent
+                                blurb: thirdBlogBlurb
                             })
                             .then((res) => {
                                 expect(res).to.have.status(201);
@@ -217,11 +217,11 @@ describe('Blogs', function() {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
                 expect(res.body[0].title).to.equal(thirdBlogTitle);
-                expect(res.body[0].content).to.equal(thirdBlogContent);
+                expect(res.body[0].blurb).to.equal(thirdBlogBlurb);
                 expect(res.body[1].title).to.equal(secondBlogTitle);
-                expect(res.body[1].content).to.equal(secondBlogContent);
+                expect(res.body[1].blurb).to.equal(secondBlogBlurb);
                 expect(res.body[2].title).to.equal(firstBlogTitle);
-                expect(res.body[2].content).to.equal(firstBlogContent);
+                expect(res.body[2].blurb).to.equal(firstBlogBlurb);
             })
     });
 
