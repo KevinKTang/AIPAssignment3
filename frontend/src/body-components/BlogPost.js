@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import '../styles/BlogPost.css';
 
 /* 
-    Blog Post cards will be displayed on the main page
-    they will display a title, image where it is available
-    and a summary or short blurb of the blog content.
+    Blog Post cards will be displayed on the main page.
+    They will display a title, image where it is available
+    and short blurb of the blog content.
 */
 
 class BlogPost extends Component {
@@ -107,7 +107,7 @@ class BlogPost extends Component {
                         {this.props.canDelete ? '' : (<p>Author: {this.props.author}</p>)}
                         <hr></hr>
                         
-                        <div className="card-text">{this.props.content}</div>
+                        <div className="card-text">{this.props.blurb}</div>
                         <hr></hr>
                         {/* If no likes, show 0 */}
                         <p>Likes: {this.state.likes ? this.state.likes : 0}</p>

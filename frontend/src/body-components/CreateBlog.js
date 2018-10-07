@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import '../styles/CreateBlog.css';
 import MyEditor from './MyEditor.js';
+import { EditorState, Editor, convertToRaw } from 'draft-js';
+import '../styles/CreateBlog.css';
 
 /*
     This component contains the form used to create
@@ -12,12 +13,14 @@ class CreatePost extends Component {
         super();
         this.state = {
             title: '',
-            content: '',
+            blurb: '',
+            editorState: EditorState.createEmpty(),
             alert: ''
         }
         this.newBlog = this.newBlog.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
+        this.onEditorChange = this.onEditorChange.bind(this);
     }
     
     newBlog(event) {
@@ -27,13 +30,15 @@ class CreatePost extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 title: this.state.title,
-                content: this.state.content
+                blurb: this.state.blurb,
+                content: convertToRaw(this.state.editorState)
             })
         }).then(res => {
             if (res.status === 201) {
                 this.setState({
                     title: '',
-                    content: ''
+                    blurb: '',
+                    editorState: ''
                 });
                 this.props.history.push("/myBlogs");
             } else if (res.status === 403) {
@@ -65,6 +70,12 @@ class CreatePost extends Component {
         });
     }
 
+    onEditorChange(editorState) {
+        this.setState({
+            editorState: editorState.getCurrentContent()
+        });
+    }
+
     render() {
         return (
             <div>
@@ -76,14 +87,12 @@ class CreatePost extends Component {
                     </div>
                 ) : ('')}
 
-                <h1>New Blog Post</h1>
+                <h1>Create Blog</h1>
                 {/* Blog post form */}
-                <form onSubmit={this.newBlog}>
-                    <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                    <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input" placeholder="Blog post content" required></textarea>
-                    <button className="btn btn-primary">Post</button>
-                </form>
-                <MyEditor />
+                <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                <input className="create-blurb-input" name="blurb" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Blurb" required></input>
+                <MyEditor updateParent={this.onEditorChange} />
+                <button className="btn btn-primary" onClick={this.newBlog}>Post</button>
             </div>
         )
 

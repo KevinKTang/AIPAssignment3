@@ -41,7 +41,7 @@ class MyEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: createEditorStateWithText(text),
+      editorState: createEditorStateWithText(text)
     };
   }
 
@@ -49,6 +49,7 @@ class MyEditor extends Component {
     this.setState({
       editorState,
     });
+    this.props.updateParent(this.state.editorState);
   }
 
   focus = () => {
@@ -58,9 +59,6 @@ class MyEditor extends Component {
   render() {
     return (
       <div className="container">
-        <div className="title">
-          <h1>Create A New Post</h1>
-        </div>
         <div>
           <BoldButton />
           <ItalicButton />

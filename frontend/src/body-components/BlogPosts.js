@@ -132,7 +132,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    content={blog.content}
+                    blurb={blog.blurb}
                     likes={blog.likesCount}
                     likeable={true}
                     liked={blogLiked}
@@ -145,7 +145,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    content={blog.content}
+                    blurb={blog.blurb}
                     likes={blog.likesCount}
                     likeable={false}
                     author={blog.user.firstname + ' ' + blog.user.lastname}>

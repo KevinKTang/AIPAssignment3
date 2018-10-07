@@ -79,7 +79,7 @@ class MyBlogs extends Component {
                 key={blog.id}
                 id={blog.id}
                 title={blog.title}
-                content={blog.content}
+                blurb={blog.blurb}
                 likes={blog.likesCount}
                 canDelete={true}
                 deleteBlog={this.deleteBlog}>
