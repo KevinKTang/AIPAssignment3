@@ -5,7 +5,7 @@ import {
   convertFromRaw,
   EditorState,
 } from 'draft-js';
-import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
+import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
@@ -38,11 +38,10 @@ const plugins = [
 const text = "Tell your story";
 
 class MyEditor extends Component {
-
-  // Create empty editorState object to store editor data
-  state = {
-    editorState: createEditorStateWithText(text),
-  };
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   focus = () => {
     this.editor.focus();

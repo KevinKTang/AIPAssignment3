@@ -1,33 +1,21 @@
-h1 {
-    text-align: center;
-  }
-  
-  div.DraftEditor-root {
-    background-color: #fffef7;
-    width:80%;
-    margin:auto;
-    box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.5);
-    height:300px;
-    overflow-y: scroll;
-    padding:20px;
-    font-size: 18px;
-    font-family: 'calibri', sans-serif;
-    margin-top: 20px;
-  }
-  
-  div.toolbar {
-    position: relative;
-    width: 80%;
-    padding: 10px 20px;
-    margin: auto;
-    top: 45px;
-    text-align: center;
-  }
-  div.toolbar button {
-    border: 1px solid black;
-    border-radius: 1.5px;
-    padding:5px;
-    margin-right:4px;
-    background-color:black;
-    color:white;
-  }
+.container {
+  margin: 5em;
+  position: relative;
+  align-content: center;
+}
+
+.editor {
+  box-sizing: content-box;
+  border: 1.5px solid grey;
+  cursor: text;
+  padding: 15px;
+  border-radius: 2px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  box-shadow: inset 0px 1px 8px -3px #ABABAB;
+  background: whitesmoke;
+}
+
+.editor :global(.public-DraftEditor-content) {
+  min-height: 300px;
+}
