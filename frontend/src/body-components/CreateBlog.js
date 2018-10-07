@@ -30,8 +30,8 @@ class CreatePost extends Component {
             //TODO: remove following lines later
             let x = this.state.editorState.getCurrentContent();
             let y = convertToRaw(x);
-            let z = JSON.stringify(y);
-            console.log(z)
+            let z = (y);
+            console.log(z) // According to a demo, this is the correct output
 
             fetch('/createBlog', {
                 method: 'POST',
@@ -39,7 +39,7 @@ class CreatePost extends Component {
                 body: JSON.stringify({
                     title: this.state.title,
                     blurb: this.state.blurb,
-                    content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+                    content: convertToRaw(this.state.editorState.getCurrentContent())
                 })
             }).then(res => {
                 if (res.status === 201) {

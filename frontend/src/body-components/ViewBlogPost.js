@@ -51,9 +51,9 @@ class ViewBlogPost extends Component {
                         .then(blog => {
 
                             //TODO: remove following lines later
-                            let x = (JSON.parse(blog.content))
+                            let x = ((blog.content))
                             let y = convertFromRaw(x);
-                            console.log(y)
+                            console.log(x)
                             
                             // Check if this user has liked the blog post
                             let blogLiked;
