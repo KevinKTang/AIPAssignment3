@@ -25,14 +25,21 @@ class CreatePost extends Component {
     
     newBlog(event) {
         event.preventDefault();
-        if (convertToRaw(this.state.editorState).blocks[0].text !== '') {
+        if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
+
+            //TODO: remove following lines later
+            let x = this.state.editorState.getCurrentContent();
+            let y = convertToRaw(x);
+            let z = JSON.stringify(y);
+            console.log(z)
+
             fetch('/createBlog', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     title: this.state.title,
                     blurb: this.state.blurb,
-                    content: convertToRaw(this.state.editorState)
+                    content: JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
                 })
             }).then(res => {
                 if (res.status === 201) {
@@ -76,7 +83,7 @@ class CreatePost extends Component {
 
     onEditorChange(editorState) {
         this.setState({
-            editorState: editorState.getCurrentContent()
+            editorState: editorState
         });
     }
 

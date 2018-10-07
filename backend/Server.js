@@ -56,7 +56,7 @@ User.beforeCreate((user, options) => {
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
     blurb: Sequelize.STRING,
-    content: Sequelize.JSON,
+    content: Sequelize.STRING,
     likesCount: Sequelize.INTEGER
 });
 

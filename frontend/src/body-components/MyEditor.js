@@ -47,7 +47,7 @@ class MyEditor extends Component {
 
   onChange = (editorState) => {
     this.setState({
-      editorState,
+      editorState
     });
     this.props.updateParent(this.state.editorState);
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Loading from '../Loading'
-import { EditorState, convertFromRaw} from 'draft-js';
+import { EditorState, convertFromRaw, Editor, ContentState} from 'draft-js';
 import '../styles/ViewBlogPost.css'
 
 class ViewBlogPost extends Component {
@@ -49,6 +49,12 @@ class ViewBlogPost extends Component {
                 if (res.status === 200) {
                     res.json()
                         .then(blog => {
+
+                            //TODO: remove following lines later
+                            let x = (JSON.parse(blog.content))
+                            let y = convertFromRaw(x);
+                            console.log(y)
+                            
                             // Check if this user has liked the blog post
                             let blogLiked;
                             if (blog.likes) {
@@ -59,7 +65,7 @@ class ViewBlogPost extends Component {
                             this.setState({
                                 title: blog.title,
                                 blurb: blog.blurb,
-                                content: EditorState.createWithContent(convertFromRaw(blog.content)),
+                                content: blog.content,
                                 author: blog.user.firstname + blog.user.lastname,
                                 likes: blog.likesCount,
                                 liked: blogLiked
@@ -147,6 +153,7 @@ class ViewBlogPost extends Component {
                             <hr></hr>
                             <p>{this.state.blurb}</p>
                             <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+                            {<Editor editorState={EditorState.createEmpty()} readOnly />}
 
                             {this.props.isLoggedIn ? (
                                 this.state.liked ? (
