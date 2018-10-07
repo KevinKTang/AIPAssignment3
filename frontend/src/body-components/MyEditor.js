@@ -1,86 +1,88 @@
-import 'draft-js/dist/Draft.css';
-import './MyEditor.css';
-
-import React from 'react';
-import { EditorState, RichUtils } from 'draft-js';
+import React, { Component } from 'react';
+import debounce from 'lodash/debounce';
+import {
+  convertToRaw,
+  convertFromRaw,
+  EditorState,
+} from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
+import createEmojiPlugin from 'draft-js-emoji-plugin';
+import createAutoListPlugin from 'draft-js-autolist-plugin';
+import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
 
-import basicTextStylePlugin from './plugins/basicTextStylePlugin';
-import addLinkPlugin from './plugins/addLinkPlugin';
+import './MyEditor.css';
+import 'draft-js-emoji-plugin/lib/plugin.css';
 
-class MyEditor extends React.Component {
+const richButtonsPlugin = createRichButtonsPlugin();
+const {
+  // inline buttons
+  ItalicButton, BoldButton, UnderlineButton,
+  // block buttons
+  CodeButton, OLButton, ULButton, H1Button, H2Button, H3Button,
+} = richButtonsPlugin;
+
+
+//Instantiate emoji plugin
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+
+//Instantiate the autolist plugin
+const autoListPlugin = createAutoListPlugin();
+
+//Instantiate all plugins
+const plugins = [
+  richButtonsPlugin,
+  autoListPlugin,
+  emojiPlugin,
+];
+const text = "Tell your story";
+ 
+class MyEditor extends Component {
   constructor(props) {
     super(props);
-    // Create empty editorState object to store editor data
-    this.state = {
-      editorState: EditorState.createEmpty(),
-    };
-
-    /* Create an array of plugins to be passed to `Editor` */
-    this.plugins = [
-      addLinkPlugin,
-      basicTextStylePlugin,
-    ];
+    this.state = {};
   }
-
-  componentDidMount() {
-    // Places the cursor into the editor
-    this.focus();
-  }
-
-  // Updates editorState to new contents as we type in it
-  onChange = (editorState) => {
-    if (editorState.getDecorator() !== null) {
-      this.setState({
-        editorState,
-      });
-    }
-  }
-
-  _onBoldClick(e) {
-    e.preventDefault()
-    this.onChange(RichUtils.toggleInlineStyle(
-      this.state.editorState, 'BOLD'))
-  }
-
-  _onItalicClick(e) {
-    e.preventDefault()
-    this.onChange(RichUtils.toggleInlineStyle(
-      this.state.editorState, 'ITALIC'))
-  }
-
-  _onUnderlineClick(e) {
-    e.preventDefault()
-    this.onChange(RichUtils.toggleInlineStyle(
-      this.state.editorState, 'UNDERLINE'))
-  }
-
-
   focus = () => {
     this.editor.focus();
-  }
+  };
 
   render() {
-    const { editorState } = this.state;
+    // Show loading if this.state.editorState is empty
+    if (!this.state.editorState) {
+      return (
+        <h3 className="loading">Loading...</h3>
+      );
+    }
     return (
       <div className="container">
-        <h1>Create A New Post</h1>
-        <div className="toolbar" onClick={this.focus}>
-          <button onMouseDown={this._onBoldClick.bind(this)}>Bold</button>
-          <button onMouseDown={this._onItalicClick.bind(this)}>Italic</button>
-          <button onMou={this._onUnderlineClick.bind(this)}>Underline</button>
+        <div className="title">
+          <h1>Create A New Post</h1>
+        </div>
+        <div>
+          <BoldButton />
+          <ItalicButton />
+          <UnderlineButton />
+          <CodeButton />
+          <ULButton />
+          <OLButton />
+          <H1Button />
+          <H2Button />
+          <H3Button />
+        </div>
+        <div className="editor" onClick={this.focus}>
           <Editor
-            editorState={editorState}
+            editorState={this.state.editorState}
             onChange={this.onChange}
             // Pass the plugins to the editor
-            plugins={this.plugins}
+            plugins={plugins}
             // Saving a reference to the Editor component to call methods
             // of that component easily
             ref={(element) => { this.editor = element; }}
-            placeholder="Tell your story"
             spellCheck
           />
         </div>
+        <EmojiSuggestions />
+        <EmojiSelect />
       </div>
     );
   }
