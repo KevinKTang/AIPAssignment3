@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
 import {
-  convertToRaw,
-  convertFromRaw,
   EditorState,
+  convertToRaw, 
+  convertFromRaw,
 } from 'draft-js';
-import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
+import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
 
-import './MyEditor.css';
+import '../styles/MyEditor.css';
 import 'draft-js-emoji-plugin/lib/plugin.css';
 
 const richButtonsPlugin = createRichButtonsPlugin();
@@ -35,12 +35,20 @@ const plugins = [
   autoListPlugin,
   emojiPlugin,
 ];
-const text = "Tell your story";
+const text = 'Tell your story';
 
 class MyEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editorState: createEditorStateWithText(text),
+    };
+  }
+
+  onChange = (editorState) => {
+    this.setState({
+      editorState,
+    });
   }
 
   focus = () => {

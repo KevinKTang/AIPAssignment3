@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/CreateBlog.css';
+import MyEditor from './MyEditor.js';
 
 /*
     This component contains the form used to create
@@ -82,8 +83,10 @@ class CreatePost extends Component {
                     <textarea rows="10" cols="50" name="content" value={this.state.content} onChange={this.handleInputChange} className="create-post-input" placeholder="Blog post content" required></textarea>
                     <button className="btn btn-primary">Post</button>
                 </form>
+                <MyEditor />
             </div>
         )
+
     }
 
 }
