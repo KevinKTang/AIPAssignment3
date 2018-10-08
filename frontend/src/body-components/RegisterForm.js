@@ -21,12 +21,17 @@ class RegisterForm extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
     }
 
+    componentDidMount() {
+        // Focus on first form input box
+        this._input.focus();
+    }
+
     register(event) {
         event.preventDefault();
 
         // Visually indicate loading to user
-        document.getElementById("registerBtn").disabled = true;
-        document.getElementById("registerBtn").innerHTML = 'Submitting...';
+        document.getElementById('registerBtn').disabled = true;
+        document.getElementById('registerBtn').innerHTML = 'Submitting...';
 
         fetch('/newUser', {
             method: 'POST',
@@ -41,8 +46,8 @@ class RegisterForm extends Component {
         .then(res => {
 
             // Restore button to normal state (not loading)
-            document.getElementById("registerBtn").disabled = false;
-            document.getElementById("registerBtn").innerHTML = 'Submit';
+            document.getElementById('registerBtn').disabled = false;
+            document.getElementById('registerBtn').innerHTML = 'Submit';
 
             if (res.status === 200) {
                 res.json().then(userFirstname => {
@@ -96,7 +101,7 @@ class RegisterForm extends Component {
                     <div className="container">
                         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                             <h3 className="register-title">Register</h3>
-                            <input className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
+                            <input ref={c => this._input = c} className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
                             <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
                             <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />

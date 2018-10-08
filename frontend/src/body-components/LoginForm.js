@@ -19,13 +19,18 @@ class LoginForm extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
     }
 
+    componentDidMount() {
+        // Focus on first form input box
+        this._input.focus();
+    }
+
     // Send username and password to server, check if login successful
     login(event) {
         event.preventDefault();
 
         // Visually indicate loading to user
-        document.getElementById("loginBtn").disabled = true;
-        document.getElementById("loginBtn").innerHTML = 'Submitting...';
+        document.getElementById('loginBtn').disabled = true;
+        document.getElementById('loginBtn').innerHTML = 'Submitting...';
 
         fetch('/login', {
             method: 'POST',
@@ -38,8 +43,8 @@ class LoginForm extends Component {
         .then(res => {
 
             // Restore button to normal state (not loading)
-            document.getElementById("loginBtn").disabled = false;
-            document.getElementById("loginBtn").innerHTML = 'Submit';
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginBtn').innerHTML = 'Submit';
 
             if (res.status === 200) {
                 res.json().then(userFirstname => {this.props.updateLogin(true, userFirstname)});
@@ -91,7 +96,7 @@ class LoginForm extends Component {
                     <div className="container">
                         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                             <h3 className="login-title">Login</h3>
-                            <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
+                            <input ref={c => this._input = c} className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
                             <button id="loginBtn" className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                         </div>

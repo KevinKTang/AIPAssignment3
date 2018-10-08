@@ -22,14 +22,19 @@ class CreatePost extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
         this.onEditorChange = this.onEditorChange.bind(this);
     }
+
+    componentDidMount() {
+        // Focus on first form input box
+        this._input.focus();
+    }
     
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
 
             // Visually indicate loading to user
-            document.getElementById("postBtn").disabled = true;
-            document.getElementById("postBtn").innerHTML = 'Posting...';
+            document.getElementById('postBtn').disabled = true;
+            document.getElementById('postBtn').innerHTML = 'Posting...';
 
             fetch('/createBlog', {
                 method: 'POST',
@@ -42,8 +47,8 @@ class CreatePost extends Component {
             }).then(res => {
 
                 // Restore button to normal state (not loading)
-                document.getElementById("postBtn").disabled = false;
-                document.getElementById("postBtn").innerHTML = 'Post';
+                document.getElementById('postBtn').disabled = false;
+                document.getElementById('postBtn').innerHTML = 'Post';
 
                 if (res.status === 201) {
                     this.setState({
@@ -96,7 +101,7 @@ class CreatePost extends Component {
                 <h1>Create Blog</h1>
                 {/* Blog post form */}
                 <form onSubmit={this.newBlog}>
-                    <input className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                    <input ref={c => this._input = c} className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
                     <input className="create-blurb-input" name="blurb" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Blurb" required></input>
                     <MyEditor updateParent={this.onEditorChange} />
 
