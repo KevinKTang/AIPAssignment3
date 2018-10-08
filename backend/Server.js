@@ -101,6 +101,7 @@ sequelize
 // Simulate delay
 //app.use((req, res, next) => setTimeout(() => next(), 2000));
 
+
 // Retrieve a single blog by id
 app.get('/blog/:blogId', (req, res) => {
     Blog

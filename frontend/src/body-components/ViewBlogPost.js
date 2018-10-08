@@ -13,7 +13,8 @@ class ViewBlogPost extends Component {
             alert: '',
             title: '',
             blurb: '',
-            content: '',
+            // Initialise empty editorState so we can add content later
+            editorState: EditorState.createEmpty(),
             author: '',
             likes: '',
             liked: ''
@@ -49,12 +50,6 @@ class ViewBlogPost extends Component {
                 if (res.status === 200) {
                     res.json()
                         .then(blog => {
-
-                            //TODO: remove following lines later
-                            let x = ((blog.content))
-                            let y = convertFromRaw(x);
-                            console.log(x)
-                            
                             // Check if this user has liked the blog post
                             let blogLiked;
                             if (blog.likes) {
@@ -62,10 +57,11 @@ class ViewBlogPost extends Component {
                             } else {
                                 blogLiked = false;
                             }
+
                             this.setState({
                                 title: blog.title,
                                 blurb: blog.blurb,
-                                content: blog.content,
+                                editorState: EditorState.createWithContent(convertFromRaw(blog.content)),
                                 author: blog.user.firstname + blog.user.lastname,
                                 likes: blog.likesCount,
                                 liked: blogLiked
@@ -153,7 +149,7 @@ class ViewBlogPost extends Component {
                             <hr></hr>
                             <p>{this.state.blurb}</p>
                             <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
-                            {<Editor editorState={EditorState.createEmpty()} readOnly />}
+                            {<Editor editorState={this.state.editorState} readOnly />}
 
                             {this.props.isLoggedIn ? (
                                 this.state.liked ? (

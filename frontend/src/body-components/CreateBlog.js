@@ -26,13 +26,6 @@ class CreatePost extends Component {
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
-
-            //TODO: remove following lines later
-            let x = this.state.editorState.getCurrentContent();
-            let y = convertToRaw(x);
-            let z = (y);
-            console.log(z) // According to a demo, this is the correct output
-
             fetch('/createBlog', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
