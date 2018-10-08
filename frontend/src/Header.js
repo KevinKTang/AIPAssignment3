@@ -30,7 +30,7 @@ class Header extends Component {
     
     render() {
         return (
-            <header className="navbar navbar-expand-sm fixed-top bg-dark d-print">
+            <header className="navbar navbar-expand-md fixed-top bg-dark d-print">
             <div>
                 <Link className="navbar-brand" to="/">Off With His Read</Link>
                 {this.props.isLoggedIn ? (<div className="navbar-text mx-auto"> Welcome, {this.props.userFirstname}</div>) : ('')}
