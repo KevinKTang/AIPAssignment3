@@ -18,7 +18,6 @@ class BlogPosts extends Component {
             isLoading: true,
             showLoading: '',
             blogs: [],
-            blogsDisplay: 'recent',
             alert: ''
         }
         this.eachBlog = this.eachBlog.bind(this);
@@ -29,6 +28,7 @@ class BlogPosts extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.renderTopComponents = this.renderTopComponents.bind(this);
+        this.updateButtons = this.updateButtons.bind(this);
     }
 
     // Loading icon will only show after half a second
@@ -49,13 +49,34 @@ class BlogPosts extends Component {
         this.updateBlogs();
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.blogsView !== this.props.blogsView) {
+            this.updateBlogs();
+        }
+    }
+
+    updateButtons() {
+        // Visually indicate selected blogsView on the button
+        let buttonElements = document.getElementsByClassName('blog-button');
+        for (var i = 0; i < buttonElements.length; i++) {
+            if (buttonElements.item(i).name === this.props.blogsView) {
+                buttonElements.item(i).classList.add('active', 'border', 'border-dark');
+            } else {
+                buttonElements.item(i).classList.remove('active', 'border', 'border-dark');
+            }
+        }
+    }
+
     updateBlogs() {
         if (this.props.isLoggedIn) {
+            this.updateButtons();
             fetch('/blogsCustom', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    display: this.state.blogsDisplay
+                    // blogsView is held in the parent (body) state.
+                    // This allows a user to go back and return to the selected blogsView
+                    display: this.props.blogsView
                 })
             })
             .then(res => {
@@ -153,22 +174,7 @@ class BlogPosts extends Component {
     }
 
     changeBlogDisplay(event) {
-        this.setState({
-            blogsDisplay: event.target.name
-        }, () => {
-            // Function uses the changed state,
-            // placed in callback to ensure state has updated
-            this.updateBlogs();
-            // Visually indicate selected blogsDisplay on the button
-            let buttonElements = document.getElementsByClassName('blog-button');
-            for (var i = 0; i < buttonElements.length; i++) {
-                if (buttonElements.item(i).name === this.state.blogsDisplay) {
-                    buttonElements.item(i).classList.add('active', 'border', 'border-dark');
-                } else {
-                    buttonElements.item(i).classList.remove('active', 'border', 'border-dark');
-                }
-            }
-        });
+        this.props.updateBlogsView(event.target.name);
     }
 
     showBlogOptions() {
