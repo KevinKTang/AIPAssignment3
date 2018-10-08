@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import './styles/App.css';
 import Header from './Header.js';
 import Body from './Body.js';
-import Footer from './Footer.js';
 
 /* 
     This is the parent component which renders
-    the header, body and footer.
+    the header and body.
 */
 
 class App extends Component {
@@ -48,13 +47,12 @@ class App extends Component {
             this.setState({isLoggedIn: newIsLoggedIn});
         }
     }
-    // Simply renders the header, body and footer
+    // Simply renders the header and body
     render() {
         return (
             <div className="app">
                 <Header isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} userFirstname={this.state.userFirstname} />
                 <Body isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} />
-                <Footer />
             </div>
         );
     }
