@@ -18,11 +18,7 @@ import './styles/Body.css';
 class Body extends Component {
 
     constructor(props) {
-        super(props);
-        this.state = {
-            blogToAdd: '',
-            blogIdToDelete: ''
-        }
+        super();
     }
 
     render() {
@@ -40,10 +36,10 @@ class Body extends Component {
                         render={(props) => <RegisterForm {...props} updateLogin={this.props.updateLogin} />} />
                     <Route
                         exact path="/myblogs"
-                        render={(props) => <MyBlogs {...props} removeBlog={this.removeBlog} />} />
+                        render={(props) => <MyBlogs {...props} />} />
                     <Route
                         exact path="/createblog"
-                        render={(props) => <CreateBlog {...props} addBlog={this.addBlog} />} />
+                        render={(props) => <CreateBlog {...props} />} />
 
                     {/* Check later */}
                     <Route

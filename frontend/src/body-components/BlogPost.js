@@ -120,9 +120,10 @@ class BlogPost extends Component {
                         {/* If no likes, show 0 */}
                         <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
 
-                        {/* If being viewed as my blogs, show delete option and number of likes */}
+                        {/* If being viewed as my blogs, show delete option and number of likes 
+                        () => this.props.deleteBlog(this.props.id)*/}
                         {this.props.canDelete ? (
-                            <button className="btn btn-danger" onClick={() => this.props.deleteBlog(this.props.id)}>Delete</button>
+                            <button className="btn btn-danger" onClick={() => {if (window.confirm('Are you sure you wish to delete this blog post?')) this.props.deleteBlog(this.props.id)}}>Delete</button>
                         ) : ('')}
 
                         {/* If being viewed while logged in, show number of likes and option to like */}
