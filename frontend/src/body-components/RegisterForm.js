@@ -23,6 +23,11 @@ class RegisterForm extends Component {
 
     register(event) {
         event.preventDefault();
+
+        // Visually indicate loading to user
+        document.getElementById("registerBtn").disabled = true;
+        document.getElementById("registerBtn").innerHTML = 'Submitting...';
+
         fetch('/newUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -34,6 +39,11 @@ class RegisterForm extends Component {
             })
         })
         .then(res => {
+
+            // Restore button to normal state (not loading)
+            document.getElementById("registerBtn").disabled = false;
+            document.getElementById("registerBtn").innerHTML = 'Submit';
+
             if (res.status === 200) {
                 res.json().then(userFirstname => {
                     this.props.updateLogin(true, userFirstname);
@@ -90,7 +100,7 @@ class RegisterForm extends Component {
                             <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
                             <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                            <button className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                            <button id="registerBtn" className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                         </div>
                     </div>
                 </form>
