@@ -151,7 +151,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    blurb={blog.blurb}
+                    description={blog.description}
                     likes={blog.likesCount}
                     likeable={true}
                     liked={blogLiked}
@@ -164,7 +164,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    blurb={blog.blurb}
+                    description={blog.description}
                     likes={blog.likesCount}
                     likeable={false}
                     author={blog.user.firstname + ' ' + blog.user.lastname}>
@@ -180,10 +180,10 @@ class BlogPosts extends Component {
     showBlogOptions() {
         return (
             <div className="blog-button-area">
-                <button name="recent" className="btn btn-primary blog-button active" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Latest Blog Posts</button>
-                <button name="liked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Liked Blog Posts</button>
-                <button name="mostLiked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Most Liked Blog Posts</button>
-                <button name="random" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Random Blog Posts</button>
+                <button name="recent" className="btn btn-primary blog-button active" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Latest</button>
+                <button name="liked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>My Liked</button>
+                <button name="mostLiked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Most Liked</button>
+                <button name="random" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Random</button>
             </div>
         )
     }

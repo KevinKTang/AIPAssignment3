@@ -12,7 +12,7 @@ class ViewBlogPost extends Component {
             showLoading: '',
             alert: '',
             title: '',
-            blurb: '',
+            description: '',
             // Initialise empty editorState so we can add content later
             editorState: EditorState.createEmpty(),
             author: '',
@@ -60,7 +60,7 @@ class ViewBlogPost extends Component {
 
                             this.setState({
                                 title: blog.title,
-                                blurb: blog.blurb,
+                                description: blog.description,
                                 editorState: EditorState.createWithContent(convertFromRaw(blog.content)),
                                 author: blog.user.firstname + blog.user.lastname,
                                 likes: blog.likesCount,
@@ -147,7 +147,7 @@ class ViewBlogPost extends Component {
                             <h2>{this.state.title}</h2>
                             <p>By {this.state.author}</p>
                             <hr></hr>
-                            <p>{this.state.blurb}</p>
+                            <p>{this.state.description}</p>
                             <div className="editor-display">
                                 {<Editor editorState={this.state.editorState} readOnly />}
                             </div>

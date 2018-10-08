@@ -13,7 +13,7 @@ class CreatePost extends Component {
         super();
         this.state = {
             title: '',
-            blurb: '',
+            description: '',
             editorState: EditorState.createEmpty(),
             alert: ''
         }
@@ -41,7 +41,7 @@ class CreatePost extends Component {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     title: this.state.title,
-                    blurb: this.state.blurb,
+                    description: this.state.description,
                     content: convertToRaw(this.state.editorState.getCurrentContent())
                 })
             }).then(res => {
@@ -102,7 +102,7 @@ class CreatePost extends Component {
                 {/* Blog post form */}
                 <form onSubmit={this.newBlog}>
                     <input ref={c => this._input = c} className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                    <input className="create-blurb-input" name="blurb" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Blurb" required></input>
+                    <input className="create-post-input" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
                     <MyEditor updateParent={this.onEditorChange} />
 
                     {/* TODO: fix rendering position */}

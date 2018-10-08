@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 /* 
     Blog Post cards will be displayed on the main page.
     They will display a title, image where it is available
-    and short blurb of the blog content.
+    and short description of the blog content.
 */
 
 class BlogPost extends Component {
@@ -115,7 +115,7 @@ class BlogPost extends Component {
                         {this.props.canDelete ? '' : (<p>By: {this.props.author}</p>)}
                         <hr></hr>
                         
-                        <div className="card-text">{this.props.blurb}</div>
+                        <div className="card-text">{this.props.description}</div>
                         <hr></hr>
                         {/* If no likes, show 0 */}
                         <p>Likes: {this.state.likes ? this.state.likes : 0}</p>

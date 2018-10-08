@@ -55,7 +55,7 @@ User.beforeCreate((user, options) => {
 // Blog model
 const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
-    blurb: Sequelize.STRING,
+    description: Sequelize.STRING,
     content: Sequelize.JSON,
     likesCount: Sequelize.INTEGER
 });
@@ -285,7 +285,7 @@ app.post('/createBlog', (req, res) => {
             if (user) {
                 Blog.create({
                     title: req.body.title,
-                    blurb: req.body.blurb,
+                    description: req.body.description,
                     content: req.body.content,
                     userId: req.session.userId
                 })

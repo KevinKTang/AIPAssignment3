@@ -1,5 +1,5 @@
 .container {
-  margin: 5em;
+  margin: 2.5%;
   position: relative;
   align-content: center;
 }
@@ -11,7 +11,7 @@
   padding: 15px;
   border-radius: 2px;
   margin-bottom: 1em;
-  margin-top: 1em;
+
   box-shadow: inset 0px 1px 8px -3px #ABABAB;
   background: whitesmoke;
 }
