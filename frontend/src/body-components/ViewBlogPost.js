@@ -148,8 +148,10 @@ class ViewBlogPost extends Component {
                             <p>By {this.state.author}</p>
                             <hr></hr>
                             <p>{this.state.blurb}</p>
+                            <div className="editor-display">
+                                {<Editor editorState={this.state.editorState} readOnly />}
+                            </div>
                             <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
-                            {<Editor editorState={this.state.editorState} readOnly />}
 
                             {this.props.isLoggedIn ? (
                                 this.state.liked ? (
