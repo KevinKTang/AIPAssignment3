@@ -26,6 +26,11 @@ class CreatePost extends Component {
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
+
+            // Visually indicate loading to user
+            document.getElementById("postBtn").disabled = true;
+            document.getElementById("postBtn").innerHTML = 'Posting...';
+
             fetch('/createBlog', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -35,6 +40,11 @@ class CreatePost extends Component {
                     content: convertToRaw(this.state.editorState.getCurrentContent())
                 })
             }).then(res => {
+
+                // Restore button to normal state (not loading)
+                document.getElementById("postBtn").disabled = false;
+                document.getElementById("postBtn").innerHTML = 'Post';
+
                 if (res.status === 201) {
                     this.setState({
                         title: '',
@@ -99,7 +109,7 @@ class CreatePost extends Component {
                         </div>
                     ) : ('')}
                 
-                    <button className="btn btn-primary">Post</button>
+                    <button id="postBtn" className="btn btn-primary">Post</button>
                 </form>
             </div>
         )
