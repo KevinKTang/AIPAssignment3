@@ -11,17 +11,24 @@ class ViewBlogPost extends Component {
             isLoading: true,
             showLoading: '',
             alert: '',
+            blogId: '',
             title: '',
             description: '',
+            commentCount: '',
+            comments: [],
             // Initialise empty editorState so we can add content later
             editorState: EditorState.createEmpty(),
             author: '',
             likes: '',
-            liked: ''
+            liked: '',
+            inputComment: ''
         }
         this.startLoading = this.startLoading.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
+        this.eachComment = this.eachComment.bind(this);
+        this.comment = this.comment.bind(this);
         this.likeBlog = this.likeBlog.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.timer = setInterval(this.startLoading, 500);
     }
 
@@ -50,6 +57,8 @@ class ViewBlogPost extends Component {
                 if (res.status === 200) {
                     res.json()
                         .then(blog => {
+                            console.log(blog)
+                            console.log(blog.comments)
                             // Check if this user has liked the blog post
                             let blogLiked;
                             if (blog.likes) {
@@ -59,12 +68,15 @@ class ViewBlogPost extends Component {
                             }
 
                             this.setState({
+                                blogId: blog.id,
                                 title: blog.title,
+                                author: blog.user.firstname + ' ' + blog.user.lastname,
                                 description: blog.description,
                                 editorState: EditorState.createWithContent(convertFromRaw(blog.content)),
-                                author: blog.user.firstname + blog.user.lastname,
                                 likes: blog.likesCount,
-                                liked: blogLiked
+                                liked: blogLiked,
+                                commentCount: blog.commentCount,
+                                //comments: blog.comment
                             });
                         });
                 } else {
@@ -83,13 +95,11 @@ class ViewBlogPost extends Component {
     }
 
     likeBlog() {
-        let path = this.props.location.pathname;
-        let blogId = this.props.location.pathname.substr(path.length-1)
         fetch('/likeBlog', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                blogId: blogId
+                blogId: this.state.blogId
             })
         }).then((res) => {
             if (res.status === 200) {
@@ -127,6 +137,56 @@ class ViewBlogPost extends Component {
         });
     }
 
+    comment(e) {
+        e.preventDefault();
+        fetch('/commentBlog', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                blogId: this.state.blogId,
+                comment: this.state.inputComment
+            })
+        }).then(res => {
+            if (res.status === 200) {
+                res.json().then(res => {
+                    this.setState({
+                        inputComment: '',
+                        commentCount: res.updatedCommentCount
+                    })
+                });
+            } else if (res.status === 403) {
+                this.setState({
+                    alert: 'Error. You must be logged in to comment on blog posts.'
+                });
+            } else if (res.status === 404) {
+                this.setState({
+                    alert: 'Error. Blog post not found.'
+                });
+            } else {
+                this.setState({
+                    alert: 'Error commenting on blog post.'
+                });
+            }
+        });
+    }
+
+    eachComment(comment) {
+        return (
+            <div>
+                <p>comment.name</p>
+                <p>comment.content</p>
+            </div>
+        )
+    }
+
+    handleInputChange(event) {
+        this.setState({
+            inputComment: event.target.value,
+            // Hide alert when user changes input
+            alert: ''
+        });
+    }
+
     render() {
         return (
             <div>
@@ -151,6 +211,8 @@ class ViewBlogPost extends Component {
                             <div className="editor-display">
                                 {<Editor editorState={this.state.editorState} readOnly />}
                             </div>
+
+                             {/* Likes. If no likes, show 0 */}
                             <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
 
                             {this.props.isLoggedIn ? (
@@ -160,7 +222,18 @@ class ViewBlogPost extends Component {
                                         <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                                     )
                             ) : ('')}
+                            {/* Comments. If no comments, show 0 */}
+                            <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
 
+                            <h2>Comments</h2>
+                            {this.state.comments.map(comment => this.eachComment(comment))}
+                            {/* Comment form */}
+                            <p>Comment:</p>
+                            <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
+                                <input className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
+                                <button className="btn btn-primary" type="submit">Submit</button>
+                            </form>
+                            
                         </div>
                     )
                 )}

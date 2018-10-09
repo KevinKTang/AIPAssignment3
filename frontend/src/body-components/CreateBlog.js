@@ -53,7 +53,7 @@ class CreatePost extends Component {
                 if (res.status === 201) {
                     this.setState({
                         title: '',
-                        blurb: '',
+                        description: '',
                         editorState: ''
                     });
                     this.props.history.push("/myBlogs");
@@ -102,7 +102,7 @@ class CreatePost extends Component {
                 {/* Blog post form */}
                 <form onSubmit={this.newBlog}>
                     <input ref={c => this._input = c} className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                    <input className="create-post-input" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                    <input className="create-post-input" name="description" value={this.state.description} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
                     <MyEditor updateParent={this.onEditorChange} />
 
                     {/* TODO: fix rendering position */}

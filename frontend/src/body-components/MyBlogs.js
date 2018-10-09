@@ -81,6 +81,7 @@ class MyBlogs extends Component {
                 title={blog.title}
                 description={blog.description}
                 likes={blog.likesCount}
+                comments={blog.commentCount}
                 canDelete={true}
                 deleteBlog={this.deleteBlog}>
             </BlogPost>

@@ -57,7 +57,8 @@ const Blog = sequelize.define('blog', {
     title: Sequelize.STRING,
     description: Sequelize.STRING,
     content: Sequelize.JSON,
-    likesCount: Sequelize.INTEGER
+    likesCount: Sequelize.INTEGER,
+    commentCount: Sequelize.INTEGER
 });
 
 // Associated both ways so can get user from blog, and blog from user
@@ -71,6 +72,13 @@ const Likes = sequelize.define('likes', {
 
 User.hasMany(Likes, {foreignKey: 'userId'});
 Blog.hasMany(Likes, {foreignKey: 'blogId'});
+
+const Comments = sequelize.define('comments', {
+    comment: Sequelize.STRING
+});
+
+User.hasMany(Comments, {foreignKey: 'userId'});
+Blog.hasMany(Comments, {foreignKey: 'blogId'});
 
 // Test the connection
 sequelize
@@ -94,7 +102,7 @@ sequelize
 
         Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.', likesCount: 4});
         Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.', likesCount: 2});
-        Blog.create({title: 'Sequelize', content: 'Sequelize is an object relational mapper. It has been used in this project!', likesCount: 4});*/
+        Blog.create({title: 'Sequelize', description: 'some description', content: 'Sequelize is an object relational mapper. It has been used in this project!', likesCount: 4, commentCount: 1});*/
 
     });
 
@@ -117,6 +125,17 @@ app.get('/blog/:blogId', (req, res) => {
                 model: Likes,
                 where: { userId: req.session.userId },
                 required: false
+            },
+            {
+                model: Comments,
+                where: { blogId: req.params.blogId },
+                required: false,
+               /* include: [{
+                    model: User,
+                    where: { userId: {$col: 'Comments.userId' } },
+                    attributes: ['firstname', 'lastname'],
+                    required: false
+                }]*/
             }
         ]
         })
@@ -309,6 +328,7 @@ app.post('/createBlog', (req, res) => {
 app.delete('/deleteBlog', (req, res) => {
     if (req.session.userId) {
         Blog.findOne({where: {id: req.body.blogId}})
+        // TODO: remove likes and comments from tables
         .then(blog => {
             if (blog) {
                 console.log('blog found, userid for this blog is: ' + blog.userId)
@@ -422,7 +442,7 @@ app.post('/likeBlog', (req, res) => {
                                                 if (deletedLikedRows) {
                                                     // Successfully removed like from blog post
                                                     console.log('Blog post unliked')
-                                                    res.status(200).send({"liked": false});
+                                                    res.status(200).json({"liked": false});
                                                 } else {
                                                     res.status(409).send();
                                                 }
@@ -433,15 +453,15 @@ app.post('/likeBlog', (req, res) => {
                                 });
                             } else {
                                 // If not already liked, Like blog post
-                                blog.update({likesCount: blog.likesCount + 1})
-                                    .then(affectedBlogRows => {
-                                        if (affectedBlogRows) {
-                                            Likes.create({userId: req.session.userId, blogId: req.body.blogId})
-                                                .then(affectedLikedRows => {
-                                                    if (affectedLikedRows) {
+                                Likes.create({userId: req.session.userId, blogId: req.body.blogId})
+                                    .then(affectedLikesRows => {
+                                        if (affectedLikesRows) {
+                                            blog.update({ likesCount: blog.likesCount + 1 })
+                                                .then(affectedBlogRows => {
+                                                    if (affectedBlogRows) {
                                                         // Successfully liked blog post
                                                         console.log('Blog post liked');
-                                                        res.status(200).send({"liked": true});
+                                                        res.status(200).json({ "liked": true });
                                                     } else {
                                                         res.status(409).send();
                                                     }
@@ -456,6 +476,37 @@ app.post('/likeBlog', (req, res) => {
                     res.status(404).send();
                 }
             })
+    } else {
+        res.status(403).send();
+    }
+});
+
+// Add a comment to a blog post
+app.post('/commentBlog', (req, res) => {
+    if (req.session.userId) {
+        Blog
+            .findOne({where: {id: req.body.blogId}})
+            .then(blog => {
+                if (blog) {
+                    Comments.create({userId: req.session.userId, blogId: req.body.blogI, comment: req.body.comment})
+                        .then(affectedCommentRows => {
+                            if (affectedCommentRows) {
+                                blog.update({commentCount: blog.commentCount + 1})
+                                    .then(affectedBlogRows => {
+                                        if (affectedBlogRows) {
+                                            res.status(200).json({ "updatedCommentCount": blog.commentCount});
+                                        } else {
+                                            res.status(409).send();
+                                        }
+                                    });
+                            } else {
+                                res.status(409).send();
+                            }
+                        });
+                } else {
+                    res.status(404).send();
+                }
+            });
     } else {
         res.status(403).send();
     }

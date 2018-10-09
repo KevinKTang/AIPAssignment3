@@ -153,6 +153,7 @@ class BlogPosts extends Component {
                     title={blog.title}
                     description={blog.description}
                     likes={blog.likesCount}
+                    comments={blog.commentCount}
                     likeable={true}
                     liked={blogLiked}
                     author={blog.user.firstname + ' ' + blog.user.lastname}>
@@ -166,6 +167,7 @@ class BlogPosts extends Component {
                     title={blog.title}
                     description={blog.description}
                     likes={blog.likesCount}
+                    comments={blog.commentCount}
                     likeable={false}
                     author={blog.user.firstname + ' ' + blog.user.lastname}>
                 </BlogPost>

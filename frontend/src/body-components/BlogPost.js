@@ -117,8 +117,11 @@ class BlogPost extends Component {
                         
                         <div className="card-text">{this.props.description}</div>
                         <hr></hr>
-                        {/* If no likes, show 0 */}
+                        
+                        {/* Likes. If no likes, show 0 */}
                         <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+                        {/* Comments. If no comments, show 0 */}
+                        <p>Comments: {this.props.comments ? this.props.comments : 0}</p>
 
                         {/* If being viewed as my blogs, show delete option and number of likes 
                         () => this.props.deleteBlog(this.props.id)*/}
