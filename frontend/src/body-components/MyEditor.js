@@ -11,7 +11,7 @@ const {
   // inline buttons
   ItalicButton, BoldButton, UnderlineButton,
   // block buttons
-  CodeButton, OLButton, ULButton, H1Button, H2Button, H3Button,
+  CodeButton,BlockquoteButton, OLButton, ULButton, H1Button, H2Button, H3Button,
 } = richButtonsPlugin;
 
 //Instantiate emoji plugin
@@ -27,7 +27,7 @@ const plugins = [
   autoListPlugin,
   emojiPlugin,
 ];
-const text = 'Tell your story';
+const text = '';
 
 /* 
     This component provides a rich text editor for blog creation
@@ -60,8 +60,9 @@ class MyEditor extends Component {
           <BoldButton />
           <ItalicButton />
           <UnderlineButton />
-          <CodeButton />
           <b> | &nbsp; </b>
+          <CodeButton />
+          <BlockquoteButton />
           <H1Button />
           <H2Button />
           <H3Button />
@@ -79,7 +80,6 @@ class MyEditor extends Component {
             // of that component easily
             ref={(element) => { this.editor = element; }}
             spellCheck
-
           />
         </div>
         <EmojiSuggestions />

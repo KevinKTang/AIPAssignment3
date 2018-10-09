@@ -1,6 +1,8 @@
 .editor-display {
-    border: 1px solid black;
+    border-left: 4px solid grey;
     margin: auto;
-    width: 80%;
-    
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 85%;
+    text-align: justify;
 }

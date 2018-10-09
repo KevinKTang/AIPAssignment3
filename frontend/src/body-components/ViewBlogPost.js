@@ -204,8 +204,8 @@ class ViewBlogPost extends Component {
                                 </div>
                             ) : ('')}
 
-                            <h2>{this.state.title}</h2>
-                            <p>By {this.state.author}</p>
+                            <h1>{this.state.title}</h1>
+                            <h2>By {this.state.author}</h2>
                             <hr></hr>
                             <p>{this.state.description}</p>
                             <div className="editor-display">
