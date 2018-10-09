@@ -33,6 +33,7 @@ class BlogPosts extends Component {
     // Loading icon will only show after half a second
     // This avoids it flashing on screen briefly before content loads
     startLoading() {
+        console.log("TIMER")
         if (this.state.isLoading) {
             this.setState({showLoading: true});
         }
@@ -49,12 +50,17 @@ class BlogPosts extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.blogsView !== this.props.blogsView) {
+        if ((prevProps.blogsView !== this.props.blogsView) || (this.props.refreshView)) {
             this.updateBlogs();
+            this.props.updateComplete();
         }
     }
 
     updateBlogs() {
+        this.setState({
+            isLoading: true
+        });
+
         if (this.props.isLoggedIn) {
             fetch('/blogsCustom', {
                 method: 'POST',
@@ -73,19 +79,25 @@ class BlogPosts extends Component {
                             isLoading: false,
                             showLoading: false
                         }));
-                } else if (res.status === 403) {
-                    this.setState({
-                        alert: 'An error occurred. You must be logged in to use this feature.'
-                    });
                 } else {
                     this.setState({
-                        alert: 'Error retrieving blog posts.'
-                    })
+                        isLoading: false
+                    });
+                    if (res.status === 403) {
+                        this.setState({
+                            alert: 'An error occurred. You must be logged in to use this feature.'
+                        });
+                    } else {
+                        this.setState({
+                            alert: 'Error retrieving blog posts.'
+                        })
+                    }
                 }
             })
             .catch(err => {
                 this.setState({
-                    alert: 'An error occured: ' + err
+                    alert: 'An error occured: ' + err,
+                    isLoading: false
                 });
             })
             

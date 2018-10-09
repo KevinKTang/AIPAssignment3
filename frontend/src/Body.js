@@ -20,14 +20,23 @@ class Body extends Component {
     constructor(props) {
         super();
         this.state = {
-            blogsView: 'recent'
+            blogsView: 'recent',
+            refreshView: false
         }
         this.updateBlogsView = this.updateBlogsView.bind(this);
+        this.updateComplete = this.updateComplete.bind(this);
     }
 
     updateBlogsView(view) {
         this.setState({
-            blogsView: view
+            blogsView: view,
+            refreshView: true
+        });
+    }
+
+    updateComplete() {
+        this.setState({
+            refreshView: false
         });
     }
 
@@ -37,7 +46,7 @@ class Body extends Component {
             <main className="app-body">
                 <Switch>
                     <Route exact path="/"
-                    render={(props) => <BlogPosts {...props} isLoggedIn={this.props.isLoggedIn} blogsView={this.state.blogsView} updateBlogsView={this.updateBlogsView} />} />
+                    render={(props) => <BlogPosts {...props} isLoggedIn={this.props.isLoggedIn} blogsView={this.state.blogsView} updateBlogsView={this.updateBlogsView} refreshView={this.state.refreshView} updateComplete={this.updateComplete} />} />
                     <Route
                         exact path="/login"
                         render={(props) => <LoginForm {...props} updateLogin={this.props.updateLogin} />} />
@@ -51,7 +60,6 @@ class Body extends Component {
                         exact path="/createblog"
                         render={(props) => <CreateBlog {...props} />} />
 
-                    {/* Check later */}
                     <Route
                         path="/viewBlogPost"
                         render={(props) => <ViewBlogPost {...props} isLoggedIn={this.props.isLoggedIn} user={this.props.user} />} />
