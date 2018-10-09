@@ -1,8 +1,54 @@
+@font-face {
+    font-family: 'Audrey';
+    src: url('./fonts/Audrey-Normal.woff');
+}
+
 .editor-display {
-    border-left: 4px solid grey;
+    border-left: 4px solid black;
     margin: auto;
     padding-left: 1%;
     padding-right: 1%;
     width: 85%;
     text-align: justify;
+}
+
+.view-blog-title {
+    margin-left: 7.5%;
+    font-family: 'Lucida', Georgia, 'Times New Roman', Times, serif;
+}
+
+.view-blog-author {
+     font-style: oblique;
+     margin-left: 7.5%;
+     font-family: 'Calibri', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.view-blog-description {
+    color: slategray;
+    margin-left: 7.5%;
+    font-family: 'Calibri';
+}
+
+.view-blog-backBtn {
+    margin-left: 7.5%;
+    margin-bottom: 0.5%;
+}
+
+.view-blog-hr {
+    overflow: visible; /* For IE */
+    height: 25px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px 0 0 0;
+    border-radius: 20px;
+}
+.view-blog-hr::after {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
 }
