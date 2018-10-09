@@ -74,7 +74,7 @@ User.hasMany(Likes, {foreignKey: 'userId'});
 Blog.hasMany(Likes, {foreignKey: 'blogId'});
 
 const Comments = sequelize.define('comments', {
-    comment: Sequelize.STRING
+    content: Sequelize.STRING
 });
 
 User.hasMany(Comments, {foreignKey: 'userId'});
@@ -129,7 +129,7 @@ app.get('/blog/:blogId', (req, res) => {
             {
                 model: Comments,
                 where: { blogId: req.params.blogId },
-                required: false,
+                required: false
                /* include: [{
                     model: User,
                     where: { userId: {$col: 'Comments.userId' } },
@@ -488,12 +488,13 @@ app.post('/commentBlog', (req, res) => {
             .findOne({where: {id: req.body.blogId}})
             .then(blog => {
                 if (blog) {
-                    Comments.create({userId: req.session.userId, blogId: req.body.blogI, comment: req.body.comment})
+                    Comments.create({userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment})
                         .then(affectedCommentRows => {
                             if (affectedCommentRows) {
                                 blog.update({commentCount: blog.commentCount + 1})
                                     .then(affectedBlogRows => {
                                         if (affectedBlogRows) {
+                                            console.log('Blog post commented')
                                             res.status(200).json({ "updatedCommentCount": blog.commentCount});
                                         } else {
                                             res.status(409).send();
