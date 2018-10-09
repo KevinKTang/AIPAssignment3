@@ -28,7 +28,6 @@ class BlogPosts extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
         this.showAlert = this.showAlert.bind(this);
         this.renderTopComponents = this.renderTopComponents.bind(this);
-        this.updateButtons = this.updateButtons.bind(this);
     }
 
     // Loading icon will only show after half a second
@@ -55,21 +54,8 @@ class BlogPosts extends Component {
         }
     }
 
-    updateButtons() {
-        // Visually indicate selected blogsView on the button
-        let buttonElements = document.getElementsByClassName('blog-button');
-        for (var i = 0; i < buttonElements.length; i++) {
-            if (buttonElements.item(i).name === this.props.blogsView) {
-                buttonElements.item(i).classList.add('active', 'border', 'border-dark');
-            } else {
-                buttonElements.item(i).classList.remove('active', 'border', 'border-dark');
-            }
-        }
-    }
-
     updateBlogs() {
         if (this.props.isLoggedIn) {
-            this.updateButtons();
             fetch('/blogsCustom', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -180,12 +166,13 @@ class BlogPosts extends Component {
     }
 
     showBlogOptions() {
+        console.log(this.props.blogsView)
         return (
             <div className="blog-button-area">
-                <button name="recent" className="btn btn-primary blog-button active" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Latest</button>
-                <button name="liked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>My Liked</button>
-                <button name="mostLiked" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Most Liked</button>
-                <button name="random" className="btn btn-primary blog-button" disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Random</button>
+                <button name="recent" className={this.props.blogsView === 'recent' ? ('btn btn-primary blog-button active active border border-dark') : ('btn btn-primary blog-button')} disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Latest</button>
+                <button name="liked" className={this.props.blogsView === 'liked' ? ('btn btn-primary blog-button active active border border-dark') : ('btn btn-primary blog-button')} disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>My Liked</button>
+                <button name="mostLiked" className={this.props.blogsView === 'mostLiked' ? ('btn btn-primary blog-button active active border border-dark') : ('btn btn-primary blog-button')} disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Most Liked</button>
+                <button name="random" className={this.props.blogsView === 'random' ? ('btn btn-primary blog-button active active border border-dark') : ('btn btn-primary blog-button tive')} disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Random</button>
             </div>
         )
     }
