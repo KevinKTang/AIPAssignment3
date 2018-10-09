@@ -107,7 +107,7 @@ class BlogPost extends Component {
                 ) : ('')}
 
                 {/* Blog post */}
-                <div className="card shadow">
+                <div className="card shadow text-center">
                     <div className="card-body">
                         <h5 className="card-title">{this.props.title}</h5>
 

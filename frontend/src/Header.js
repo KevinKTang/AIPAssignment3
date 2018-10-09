@@ -19,7 +19,7 @@ class Header extends Component {
         }
         this.logout = this.logout.bind(this);
     }
-
+    
     logout() {
         fetch('/logout')
             .then((res) => {
