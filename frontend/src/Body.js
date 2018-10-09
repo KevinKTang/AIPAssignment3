@@ -55,10 +55,10 @@ class Body extends Component {
                         render={(props) => <RegisterForm {...props} updateLogin={this.props.updateLogin} />} />
                     <Route
                         exact path="/myblogs"
-                        render={(props) => <MyBlogs {...props} />} />
+                        component={MyBlogs} />
                     <Route
                         exact path="/createblog"
-                        render={(props) => <CreateBlog {...props} />} />
+                        component={CreateBlog} />
 
                     <Route
                         path="/viewBlogPost"

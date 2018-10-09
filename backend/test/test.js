@@ -14,7 +14,7 @@ describe('Users', function() {
 
     let firstname = 'Darcy';
     let lastname = 'Smith';
-    let userEmail = 'darcysmith@mygmail.com';
+    let userEmail = 'darcysmith675423@mygmail.com';
     let userPassword = 'myPassword';
 
     it('Register new user', () => {
@@ -29,7 +29,8 @@ describe('Users', function() {
             .then((res) => {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
-                expect(res.body).to.equal('Darcy');
+                expect(res.body.firstname).to.equal('Darcy');
+                expect(res.body.lastname).to.equal('Smith');
                 // Need to log out user after login to test login later
                 return agent.get('/logout');
             });
@@ -92,7 +93,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(200);
-                expect(res.body).to.equal(firstname);
+                expect(res.body.firstname).to.equal(firstname);
                 expect(res).to.have.cookie('connect.sid');
             });
     });
@@ -145,6 +146,7 @@ describe('Blogs', function() {
     let lastname = 'lastname';
     let userEmail = 'user18462@email.com';
     let userPassword = 'userPassword';
+    let userId = '';
 
     it('No created blogs to start off with', () => {
         // Login first
@@ -157,6 +159,7 @@ describe('Blogs', function() {
                 password: userPassword
             })
             .then((res) => {
+                userId = res.body.id;
                 return agent
                     .get('/myBlogs')
                     .then((res) => {
@@ -307,7 +310,7 @@ describe('Blogs', function() {
             .send({email: userEmail, password: userPassword})
             .then((res) => {
                 expect(res).to.have.status(200);
-                expect(res.body).to.equal(firstname);
+                expect(res.body.firstname).to.equal(firstname);
                 return agent
                     .post('/likeBlog')
                     .send({blogId: secondBlogId})
@@ -375,6 +378,41 @@ describe('Blogs', function() {
             expect(res.body[0].user.lastname).to.equal(lastname);
             expect(res.body[1].user.firstname).to.equal(firstname);
             expect(res.body[1].user.lastname).to.equal(lastname);
+        });
+    });
+
+    it('Add a comment to a blog post', () => {
+        return agent
+            .post('/commentBlog')
+            .send({blogId: secondBlogId, comment: 'New comment'})
+                .then(res => {
+                    expect(res).to.have.status(200);
+                    expect(res.body.updatedCommentCount).to.equal(1);
+                    expect(res.body.affectedCommentRow.content).to.equal('New comment');
+                    expect(res.body.affectedCommentRow.userId).to.equal(userId);
+                    expect(res.body.affectedCommentRow.blogId).to.equal(secondBlogId);
+                })
+    });
+
+    it("Try to add a comment to a blog post that doesn't exist", () => {
+        return agent
+        .post('/commentBlog')
+            .send({blogId: -1, comment: 'New comment'})
+                .then(res => {
+                    expect(res).to.have.status(404);
+                })
+    });
+
+    it('Try to add a comment to a blog post when not logged in', () => {
+        return agent
+        .get('/logout')
+        .then(() => {
+            return agent
+            .post('/commentBlog')
+            .send({blogId: secondBlogId, comment: 'New comment'})
+                .then(res => {
+                    expect(res).to.have.status(403);
+                })
         });
     });
 

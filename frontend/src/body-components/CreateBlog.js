@@ -112,7 +112,7 @@ class CreatePost extends Component {
                 <form onSubmit={this.newBlog}>
                     <div className="form-group">
                         <input ref={c => this._input = c} className="form-control" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                        <input className="form-control" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                        <input className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
                     </div>
                     <MyEditor updateParent={this.onEditorChange} />
                     {/* TODO: fix rendering position */}

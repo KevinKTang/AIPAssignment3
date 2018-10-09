@@ -33,7 +33,6 @@ class BlogPosts extends Component {
     // Loading icon will only show after half a second
     // This avoids it flashing on screen briefly before content loads
     startLoading() {
-        console.log("TIMER")
         if (this.state.isLoading) {
             this.setState({showLoading: true});
         }
@@ -178,7 +177,6 @@ class BlogPosts extends Component {
     }
 
     showBlogOptions() {
-        console.log(this.props.blogsView)
         return (
             <div className="blog-button-area">
                 <button name="recent" className={this.props.blogsView === 'recent' ? ('btn btn-primary blog-button active active border border-dark') : ('btn btn-primary blog-button')} disabled={this.state.isLoading} onClick={this.changeBlogDisplay}>Latest</button>
