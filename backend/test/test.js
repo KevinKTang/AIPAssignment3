@@ -106,6 +106,18 @@ describe('Users', function() {
             });
     });
 
+    it('Try to get my blogs while logged out', () => {
+        return agent
+            .get('/logout')
+            .then(() => {
+                return agent
+                .get('/myBlogs')
+                .then(res => {
+                    expect(res).to.have.status(403);
+                });
+            });
+    });
+
 });
 
 describe('Blogs', function() {

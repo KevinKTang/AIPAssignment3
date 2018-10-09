@@ -29,7 +29,8 @@ class BlogPost extends Component {
         if (this.props !== prevProps) {
             this.setState({
                 likes: this.props.likes,
-                liked: this.props.liked
+                liked: this.props.liked,
+                isDeleting: false
             });
         }
     }

@@ -292,10 +292,12 @@ app.post('/blogsCustom', (req, res) => {
 });
 // Returns all the blogs belonging to a certain user
 app.get('/myBlogs', (req, res) => {
-    if (req.session.id) {
+    if (req.session.userId) {
         Blog
             .findAll({where: {userId: req.session.userId}, order: [['updatedAt', 'DESC']] })
             .then(blogs => res.status(200).json(blogs));
+    } else {
+        res.status(403).send();
     }
 });
 

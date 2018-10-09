@@ -14,12 +14,14 @@ class MyBlogs extends Component {
         this.state = {
             isLoading: true,
             showLoading: '',
-            blogs: []
+            blogs: [],
+            alert: ''
         }
         this.eachBlog = this.eachBlog.bind(this);
         this.deleteBlog = this.deleteBlog.bind(this);
         this.deleteBlogState = this.deleteBlogState.bind(this);
         this.startLoading = this.startLoading.bind(this);
+        this.dismissAlert = this.dismissAlert.bind(this);
         this.timer = setInterval(this.startLoading, 500);
     }
 
@@ -48,10 +50,30 @@ class MyBlogs extends Component {
                         isLoading: false,
                         showLoading: false
                     }));
+            } else if (res.status == 403) {
+                this.setState({
+                    alert: "Access denied. Make sure you're logged in before viewing your blog posts.",
+                    isLoading: false,
+                    showLoading: false
+                });
             }
         })
-        .catch(err => console.error('An error occurred: ' + err));
+        .catch(err => {
+            console.error('An error occurred: ' + err);
+            this.setState({
+                alert: "An error occurred.",
+                isLoading: false,
+                showLoading: false
+            });
+        });
     }
+
+    dismissAlert() {
+        this.setState({
+            alert: ''
+        });
+    }
+
 
     deleteBlog(id) {
         fetch('/deleteBlog', {
@@ -64,10 +86,21 @@ class MyBlogs extends Component {
             if (res.status === 200) {
                 this.deleteBlogState(id);
             } else if (res.status === 403) {
-                console.log('Access denied to delete this blog');
-            } else {console.log('Error deleting blog');}
+                this.setState({
+                    alert: 'Access denied to delete this blog.'
+                });
+            } else {
+                this.setState({
+                    alert: 'Error deleting blog.'
+                });
+            }
         })
-        .catch();
+        .catch(err => {
+            console.log('An error occurred. ' + err);
+            this.setState({
+                alert: 'An error occurred.'
+            });
+        });
     }
 
     // Deletes the selected blog from the state
@@ -95,23 +128,33 @@ class MyBlogs extends Component {
 
     render() {
         return (
-            this.state.showLoading ? (
-                <div>
-                    <h1>My Blogs</h1>
-                    <Loading />
-                </div>
-            ) : (
-                    <div className="text-center">
-                    <h1>My Blogs</h1>
-                    {this.state.blogs.length === 0 && this.state.isLoading === false ? (
-                        <p>You haven't created any blogs yet!</p>
-                    ) : (
-                            <div className="blog-posts-flex">
-                                {this.state.blogs.map(blog => this.eachBlog(blog))}
-                            </div>
-                        )}
+            <div>
+                {/* Alert for incorrect register */}
+                {this.state.alert ? (
+                    <div className="alert alert-danger alert-dismissible">
+                        {this.state.alert}
+                        <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
                     </div>
-                )
+                ) : ('')}
+
+                {this.state.showLoading ? (
+                    <div>
+                        <h1>My Blogs</h1>
+                        <Loading />
+                    </div>
+                ) : (
+                        <div className="text-center">
+                            <h1>My Blogs</h1>
+                            {this.state.blogs.length === 0 && this.state.isLoading === false && this.props.isLoggedIn ? (
+                                <p>You haven't created any blogs yet!</p>
+                            ) : (
+                                    <div className="blog-posts-flex">
+                                        {this.state.blogs.map(blog => this.eachBlog(blog))}
+                                    </div>
+                                )}
+                        </div>
+                    )}
+            </div>
         )
     }
 
