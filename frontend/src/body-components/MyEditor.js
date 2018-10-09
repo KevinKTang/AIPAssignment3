@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
+import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
@@ -67,7 +67,7 @@ class MyEditor extends Component {
           <H3Button />
           <ULButton />
           <OLButton />
-          
+
         </div>
         <div className="editor" onClick={this.focus}>
           <Editor
@@ -79,6 +79,7 @@ class MyEditor extends Component {
             // of that component easily
             ref={(element) => { this.editor = element; }}
             spellCheck
+
           />
         </div>
         <EmojiSuggestions />
