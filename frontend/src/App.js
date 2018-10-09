@@ -14,7 +14,7 @@ class App extends Component {
         this.state = {
             bodyView: '',
             isLoggedIn: false,
-            userFirstname: ''
+            user: ''
         }
         this.updateLogin = this.updateLogin.bind(this);
     }
@@ -25,10 +25,10 @@ class App extends Component {
         fetch('/checkSession')
             .then(res => {
                 if (res.status === 200) {
-                    res.json().then(firstname => {
+                    res.json().then(user => {
                         this.setState({
                             isLoggedIn: true,
-                            userFirstname: firstname
+                            user: user
                         });
                     });
                 }
@@ -37,22 +37,23 @@ class App extends Component {
     }
 
     // Function for child components to update login status
-    updateLogin(newIsLoggedIn, userFirstname) {
+    updateLogin(newIsLoggedIn, user) {
         if (newIsLoggedIn) {
             this.setState({
                 isLoggedIn: newIsLoggedIn,
-                userFirstname: userFirstname
+                user: user
             });
         } else {
             this.setState({isLoggedIn: newIsLoggedIn});
         }
     }
+
     // Simply renders the header and body
     render() {
         return (
             <div className="app">
-                <Header isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} userFirstname={this.state.userFirstname} />
-                <Body isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} />
+                <Header isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} userFirstname={this.state.user.firstname} />
+                <Body isLoggedIn={this.state.isLoggedIn} updateLogin={this.updateLogin} user={this.state.user} />
             </div>
         );
     }

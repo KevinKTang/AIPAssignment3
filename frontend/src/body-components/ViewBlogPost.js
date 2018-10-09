@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Loading from '../Loading'
 import { EditorState, convertFromRaw, Editor } from 'draft-js';
+import Moment from 'moment'
+import Loading from '../Loading'
 import '../styles/ViewBlogPost.css'
 
 class ViewBlogPost extends Component {
@@ -163,7 +164,13 @@ class ViewBlogPost extends Component {
                 res.json().then(res => {
                     this.setState({
                         inputComment: '',
-                        commentCount: res.updatedCommentCount
+                        commentCount: res.updatedCommentCount,
+                        comments: [
+                            // Since server returns comment and does not perform a join to find user,
+                            // get user from app state and add to comment row
+                            {...res.affectedCommentRow, user: {firstname: this.props.user.firstname, lastname: this.props.user.lastname}},
+                            ...this.state.comments
+                        ]
                     });
                 });
             } else if (res.status === 403) {
@@ -191,7 +198,7 @@ class ViewBlogPost extends Component {
     eachComment(comment) {
         return (
             <li key={comment.id}>
-                {comment.content}
+                {comment.user.firstname + ' ' + comment.user.lastname} | {comment.content} | {Moment(comment.createdAt).format('Do MMMM YYYY hh:mm A')}
             </li>
         )
     }
@@ -247,16 +254,18 @@ class ViewBlogPost extends Component {
                                             <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                                         )
                                 ) : ('')}
-                                {/* Comments. If no comments, show 0 */}
+                                
+                                {/* Comments Section. If no comments, indicate this to the user */}
 
-                                <h2>Comments</h2>
-                                {this.state.comments ? (this.state.comments.map(comment => this.eachComment(comment))) : (<p>Be the first to write a comment!</p>)}
                                 {/* Comment form */}
                                 <p>Comment:</p>
                                 <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
                                     <input className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
                                     <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                 </form>
+
+                                <h2>Comments</h2>
+                                {this.state.comments.length === 0 ? (<p>Be the first to write a comment!</p>) : (this.state.comments.map(comment => this.eachComment(comment)))}
                             </div>
                         )
                     )}

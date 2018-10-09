@@ -44,7 +44,7 @@ class LoginForm extends Component {
         })
         .then(res => {
             if (res.status === 200) {
-                res.json().then(userFirstname => {this.props.updateLogin(true, userFirstname)});
+                res.json().then(user => {this.props.updateLogin(true, user)});
                 this.props.history.push('/');
             } else {
 

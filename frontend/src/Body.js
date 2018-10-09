@@ -54,7 +54,7 @@ class Body extends Component {
                     {/* Check later */}
                     <Route
                         path="/viewBlogPost"
-                        render={(props) => <ViewBlogPost {...props} isLoggedIn={this.props.isLoggedIn} />} />
+                        render={(props) => <ViewBlogPost {...props} isLoggedIn={this.props.isLoggedIn} user={this.props.user} />} />
                 </Switch>
             </main>
         )

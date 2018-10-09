@@ -77,8 +77,10 @@ const Comments = sequelize.define('comments', {
     content: Sequelize.STRING
 });
 
-User.hasMany(Comments, {foreignKey: 'userId'});
 Blog.hasMany(Comments, {foreignKey: 'blogId'});
+// Associated both ways so can get comments from user, and user from comments
+User.hasMany(Comments, {foreignKey: 'userId'});
+Comments.belongsTo(User, {foreignKey: 'userId'});
 
 // Test the connection
 sequelize
@@ -129,13 +131,14 @@ app.get('/blog/:blogId', (req, res) => {
             {
                 model: Comments,
                 where: { blogId: req.params.blogId },
-                required: false
-               /* include: [{
+                include: [{
                     model: User,
-                    where: { userId: {$col: 'Comments.userId' } },
+                    where: { id: {$col: 'Comments.userId'} },
                     attributes: ['firstname', 'lastname'],
                     required: false
-                }]*/
+                }],
+                order: [['createdAt', 'DESC']],
+                required: false
             }
         ]
         })
@@ -363,7 +366,7 @@ app.post('/newUser', (req, res) => {
     .then(newUser => {
         if (newUser) {
             req.session.userId = newUser.id;
-            res.status(200).json(newUser.firstname);
+            res.status(200).json(newUser);
             console.log('New user ' + newUser.firstname + ' created');
         } else {
             res.status(500).send();
@@ -389,7 +392,7 @@ app.post('/login', (req, res) => {
                 } else {
                     req.session.userId = user.id;
                     console.log(user.firstname + ' has logged in successfully');
-                    res.status(200).json(user.firstname);
+                    res.status(200).json(user);
                 }
             });
         }
@@ -410,7 +413,7 @@ app.get('/checkSession', (req, res) => {
             .findOne({where: {id: req.session.userId}})
             .then(user => {
                 if (user) {
-                    res.status(200).json(user.firstname)
+                    res.status(200).json(user)
                 } else {
                     res.status(404).send();
                 } 
@@ -489,13 +492,13 @@ app.post('/commentBlog', (req, res) => {
             .then(blog => {
                 if (blog) {
                     Comments.create({userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment})
-                        .then(affectedCommentRows => {
-                            if (affectedCommentRows) {
+                        .then(affectedCommentRow => {
+                            if (affectedCommentRow) {
                                 blog.update({commentCount: blog.commentCount + 1})
-                                    .then(affectedBlogRows => {
-                                        if (affectedBlogRows) {
+                                    .then(affectedBlogRow => {
+                                        if (affectedBlogRow) {
                                             console.log('Blog post commented')
-                                            res.status(200).json({ "updatedCommentCount": blog.commentCount});
+                                            res.status(200).json({ "updatedCommentCount": blog.commentCount, affectedCommentRow});
                                         } else {
                                             res.status(409).send();
                                         }

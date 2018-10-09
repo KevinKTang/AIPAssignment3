@@ -53,8 +53,8 @@ class RegisterForm extends Component {
             });
 
             if (res.status === 200) {
-                res.json().then(userFirstname => {
-                    this.props.updateLogin(true, userFirstname);
+                res.json().then(user => {
+                    this.props.updateLogin(true, user);
                     this.props.history.push('/');
                 });
             } else if (res.status === 409) {

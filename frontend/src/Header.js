@@ -14,6 +14,8 @@ class Header extends Component {
     constructor(props) {
         super();
         this.state = {
+            // Used to indicate if trying to log out
+            isLoading: false,
             isLoginForm: false,
             isRegisterForm: false
         }
@@ -21,11 +23,23 @@ class Header extends Component {
     }
     
     logout() {
+        this.setState({
+            isLoading: true
+        });
         fetch('/logout')
             .then((res) => {
+                this.setState({
+                    isLoading: false
+                });
                 this.props.updateLogin(false, '');
                 this.props.history.push('/');
-            });
+            })
+            .catch(err => {
+                console.log('An error occurred. ' + err);
+                this.setState({
+                    isLoading: false
+                });
+            })
     }
     
     render() {
@@ -41,7 +55,7 @@ class Header extends Component {
                         <Link className="btn btn-primary header-btn" to="/">Home</Link>
                         <Link className="btn btn-info header-btn" to="/myblogs">My Blogs</Link>
                         <Link className="btn btn-info header-btn" to="/createblog">Create Blog</Link>
-                        <button className="btn btn-danger header-btn" onClick={this.logout}>Logout</button>
+                        <button disabled={this.state.isLoading} className="btn btn-danger header-btn" onClick={this.logout}>{this.state.isLoading ? ('Logging out...') : ('Logout')}</button>
                     </div>
                 ) : (
                         <div className="navbar-nav ml-auto">
