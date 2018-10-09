@@ -10,6 +10,7 @@ class LoginForm extends Component {
     constructor(props) {
         super();
         this.state = {
+            isLoading: false,
             email: '',
             password: '',
             alert: ''
@@ -28,9 +29,10 @@ class LoginForm extends Component {
     login(event) {
         event.preventDefault();
 
-        // Visually indicate loading to user
-        document.getElementById('loginBtn').disabled = true;
-        document.getElementById('loginBtn').innerHTML = 'Submitting...';
+        // Visually indicate loading on submit button to user
+        this.setState({
+            isLoading: true
+        });
 
         fetch('/login', {
             method: 'POST',
@@ -41,26 +43,35 @@ class LoginForm extends Component {
             })
         })
         .then(res => {
-
-            // Restore button to normal state (not loading)
-            document.getElementById('loginBtn').disabled = false;
-            document.getElementById('loginBtn').innerHTML = 'Submit';
-
             if (res.status === 200) {
                 res.json().then(userFirstname => {this.props.updateLogin(true, userFirstname)});
                 this.props.history.push('/');
-            } else  if (res.status === 401) {
-                this.setState({
-                    password: '',
-                    alert: 'Incorrect username or password.'
-                });
             } else {
+
+                // Restore button to normal state (not loading)
                 this.setState({
-                    alert: 'Error logging in.'
+                    isLoading: false
                 });
-            }
+
+                if (res.status === 401) {
+                    this.setState({
+                        password: '',
+                        alert: 'Incorrect username or password.'
+                    });
+                } else {
+                    this.setState({
+                        alert: 'Error logging in.'
+                    });
+                }
+            } 
         })
-        .catch(err => console.error('An error occured: ' + err));
+        .catch(err => {
+            console.error('An error occured: ' + err);
+            // Restore button to normal state (not loading)
+            this.setState({
+                isLoading: false
+            });
+        });
     }
 
     dismissAlert() {
@@ -98,7 +109,7 @@ class LoginForm extends Component {
                             <h3 className="login-title">Login</h3>
                             <input ref={c => this._input = c} className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                            <button id="loginBtn" className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                            <button disabled={this.state.isLoading} className="btn btn-lg btn-primary btn-block" type="submit">{this.state.isLoading ? ('Submitting...') : ('Submit')}</button>
                         </div>
                     </div>
                 </form>

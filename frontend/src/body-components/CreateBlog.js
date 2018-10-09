@@ -12,6 +12,7 @@ class CreatePost extends Component {
     constructor(props) {
         super();
         this.state = {
+            isLoading: false,
             title: '',
             description: '',
             editorState: EditorState.createEmpty(),
@@ -31,10 +32,11 @@ class CreatePost extends Component {
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
-
-            // Visually indicate loading to user
-            document.getElementById('postBtn').disabled = true;
-            document.getElementById('postBtn').innerHTML = 'Posting...';
+            
+            // Visually indicate loading on submit button to user
+            this.setState({
+                isLoading: true
+            });
 
             fetch('/createBlog', {
                 method: 'POST',
@@ -47,8 +49,9 @@ class CreatePost extends Component {
             }).then(res => {
 
                 // Restore button to normal state (not loading)
-                document.getElementById('postBtn').disabled = false;
-                document.getElementById('postBtn').innerHTML = 'Post';
+                this.setState({
+                    isLoading: false
+                });
 
                 if (res.status === 201) {
                     this.setState({
@@ -67,7 +70,13 @@ class CreatePost extends Component {
                     });
                 }
             })
-                .catch(err => console.error('An error occurred: ' + err));
+            .catch(err => {
+                console.error('An error occurred: ' + err);
+                // Restore button to normal state (not loading)
+                this.setState({
+                    isLoading: false
+                });
+            });
         } else {
             this.setState({ alert: 'There is no content in your blog!' })
         }
@@ -115,7 +124,7 @@ class CreatePost extends Component {
                         ) : ('')}
                     </div>
                     <div className="text-center">
-                        <button id="postBtn" className="btn btn-primary">Post</button>
+                        <button disabled={this.state.isLoading} className="btn btn-primary">{this.state.isLoading ? ('Posting...') : ('Post')}</button>
                     </div>
                 </form>
             </div>
