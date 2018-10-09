@@ -4,13 +4,17 @@
   align-content: center;
 }
 
+.toolbar {
+  margin-bottom: 1.5%;
+}
+
 .editor {
   box-sizing: content-box;
   border: 1.5px solid grey;
   cursor: text;
   padding: 15px;
   border-radius: 2px;
-  margin-bottom: 1em;
+  margin-bottom: 2.5%;
 
   box-shadow: inset 0px 1px 8px -3px #ABABAB;
   background: whitesmoke;

@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import debounce from 'lodash/debounce';
-import {
-  EditorState,
-  convertToRaw, 
-  convertFromRaw,
-} from 'draft-js';
 import Editor, {createEditorStateWithText} from 'draft-js-plugins-editor';
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
-
 import '../styles/MyEditor.css';
 import 'draft-js-emoji-plugin/lib/plugin.css';
 
@@ -20,7 +13,6 @@ const {
   // block buttons
   CodeButton, OLButton, ULButton, H1Button, H2Button, H3Button,
 } = richButtonsPlugin;
-
 
 //Instantiate emoji plugin
 const emojiPlugin = createEmojiPlugin();
@@ -36,6 +28,11 @@ const plugins = [
   emojiPlugin,
 ];
 const text = 'Tell your story';
+
+/* 
+    This component provides a rich text editor for blog creation
+    using draft-js and its plugins functionality.
+*/
 
 class MyEditor extends Component {
   constructor(props) {
@@ -64,11 +61,13 @@ class MyEditor extends Component {
           <ItalicButton />
           <UnderlineButton />
           <CodeButton />
-          <ULButton />
-          <OLButton />
+          <b> | &nbsp; </b>
           <H1Button />
           <H2Button />
           <H3Button />
+          <ULButton />
+          <OLButton />
+          
         </div>
         <div className="editor" onClick={this.focus}>
           <Editor

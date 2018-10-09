@@ -27,7 +27,7 @@ class CreatePost extends Component {
         // Focus on first form input box
         this._input.focus();
     }
-    
+
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
@@ -69,7 +69,7 @@ class CreatePost extends Component {
             })
                 .catch(err => console.error('An error occurred: ' + err));
         } else {
-            this.setState({alert: 'There is no content in your blog!'})
+            this.setState({ alert: 'There is no content in your blog!' })
         }
     }
 
@@ -97,24 +97,27 @@ class CreatePost extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Create Blog</h1>
+            <div className="container">
+                <h1 className="create-blog-title">Create Blog</h1>
                 {/* Blog post form */}
                 <form onSubmit={this.newBlog}>
-                    <input ref={c => this._input = c} className="create-post-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                    <input className="create-post-input" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                    <input ref={c => this._input = c} className="create-blog-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                    <input className="create-blog-input" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
                     <MyEditor updateParent={this.onEditorChange} />
 
                     {/* TODO: fix rendering position */}
                     {/* Alert for incorrect blog post */}
-                    {this.state.alert ? (
-                        <div className="alert alert-danger alert-dismissible">
-                            {this.state.alert}
-                            <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
-                        </div>
-                    ) : ('')}
-                
-                    <button id="postBtn" className="btn btn-primary">Post</button>
+                    <div className="text-center">
+                        {this.state.alert ? (
+                            <div className="alert alert-danger alert-dismissible">
+                                {this.state.alert}
+                                <button type="button" onClick={this.dismissAlert} className="close">&times;</button>
+                            </div>
+                        ) : ('')}
+                    </div>
+                    <div className="text-center">
+                        <button id="postBtn" className="btn btn-primary">Post</button>
+                    </div>
                 </form>
             </div>
         )

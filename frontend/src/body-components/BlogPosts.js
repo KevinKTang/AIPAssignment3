@@ -202,7 +202,7 @@ class BlogPosts extends Component {
         // If not logged in, show welcome jumbotron
         return (
             this.props.isLoggedIn ? (
-                <div>
+                <div className="text-center">
                     <h1>Home</h1>
                     {this.showBlogOptions()}
                 </div>
@@ -222,7 +222,7 @@ class BlogPosts extends Component {
             ) : (
                     // If not loading and no blogs were found
                     !this.state.isLoading && this.state.blogs.length === 0 ? (
-                        <div>
+                        <div className="text-center">
                             {this.state.alert ? this.showAlert() : ''}
                             {this.renderTopComponents()}
                             <p>There are no blogs to display!</p>

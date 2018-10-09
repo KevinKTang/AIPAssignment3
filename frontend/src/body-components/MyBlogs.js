@@ -3,6 +3,11 @@ import BlogPost from './BlogPost';
 import Loading from '../Loading.js';
 import '../styles/MyBlogs.css';
 
+/* 
+    This component contains a view with all the blogs
+    the logged in user has created, allowing for deletion and viewing.
+*/
+
 class MyBlogs extends Component {
     constructor(props) {
         super();
@@ -95,7 +100,7 @@ class MyBlogs extends Component {
                     <Loading />
                 </div>
             ) : (
-                    <div>
+                    <div className="text-center">
                     <h1>My Blogs</h1>
                     {this.state.blogs.length === 0 && this.state.isLoading === false ? (
                         <p>You haven't created any blogs yet!</p>

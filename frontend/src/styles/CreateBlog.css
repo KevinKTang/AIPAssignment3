@@ -1,4 +1,8 @@
-.create-post-input {
+.create-blog-input {
     display: block;
     margin: 10px auto;
+}
+
+.create-blog-title {
+    text-align: center;
 }
