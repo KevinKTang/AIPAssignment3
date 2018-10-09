@@ -153,7 +153,9 @@ class BlogPosts extends Component {
                     comments={blog.commentCount}
                     likeable={true}
                     liked={blogLiked}
-                    author={blog.user.firstname + ' ' + blog.user.lastname}>
+                    author={blog.user.firstname + ' ' + blog.user.lastname}
+                    blogsView={this.props.blogsView}
+                    updateBlogsView={this.props.updateBlogsView}>
                 </BlogPost>
             );
         } else {

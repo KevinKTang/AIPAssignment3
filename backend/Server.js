@@ -431,9 +431,6 @@ app.get('/checkSession', (req, res) => {
                 } 
             });
     }
-    else {
-        res.status(404).send();
-    }
 });
 
 // Add a like to a blog post
