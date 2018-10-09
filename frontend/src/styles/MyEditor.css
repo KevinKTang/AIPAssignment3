@@ -1,11 +1,10 @@
 .container {
-  margin: 2.5%;
+  margin: 1%;
   position: relative;
-  align-content: center;
 }
 
 .toolbar {
-  margin-bottom: 1.5%;
+  margin-bottom: 1%;
 }
 
 .editor {
@@ -15,7 +14,6 @@
   padding: 15px;
   border-radius: 2px;
   margin-bottom: 2.5%;
-
   box-shadow: inset 0px 1px 8px -3px #ABABAB;
   background: whitesmoke;
 }
@@ -23,3 +21,4 @@
 .editor :global(.public-DraftEditor-content) {
   min-height: 300px;
 }
+

@@ -100,9 +100,11 @@ class CreatePost extends Component {
             <div className="container">
                 <h1 className="create-blog-title">Create Blog</h1>
                 {/* Blog post form */}
-                <form onSubmit={this.newBlog}> 
-                    <input ref={c => this._input = c} className="create-blog-input" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                    <input className="create-blog-input" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                <form onSubmit={this.newBlog}>
+                    <div className="form-group">
+                        <input ref={c => this._input = c} className="form-control" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
+                        <input className="form-control" name="description" value={this.state.blurb} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                    </div>
                     <MyEditor updateParent={this.onEditorChange} />
                     {/* TODO: fix rendering position */}
                     {/* Alert for incorrect blog post */}

@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import Loading from '../Loading'
-<<<<<<< HEAD
-import { EditorState, convertFromRaw, Editor, ContentState } from 'draft-js';
-=======
-import { EditorState, convertFromRaw, Editor} from 'draft-js';
->>>>>>> 9b62bf988c06097cc9035364694efc6fa10d027a
+import { EditorState, convertFromRaw, Editor } from 'draft-js';
 import '../styles/ViewBlogPost.css'
 
 class ViewBlogPost extends Component {
@@ -228,9 +224,12 @@ class ViewBlogPost extends Component {
                                     {<Editor editorState={this.state.editorState} readOnly />}
                                 </div>
 
+                                <hr className="view-blog-hr"></hr>
+                                <div className="counter text-center">
+                                <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+                                <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
+                                </div>
                                 {/* Likes. If no likes, show 0 */}
-                                    <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
-
                                 {this.props.isLoggedIn ? (
                                     this.state.liked ? (
                                         <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
@@ -239,7 +238,6 @@ class ViewBlogPost extends Component {
                                         )
                                 ) : ('')}
                                 {/* Comments. If no comments, show 0 */}
-                                <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
 
                                 <h2>Comments</h2>
                                 {this.state.comments ? (this.state.comments.map(comment => this.eachComment(comment))) : (<p>Be the first to write a comment!</p>)}
