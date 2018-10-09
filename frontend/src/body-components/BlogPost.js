@@ -16,10 +16,12 @@ class BlogPost extends Component {
             likes: '',
             alert: '',
             liked: '',
+            isDeleting: false,
         }
         this.likeBlog = this.likeBlog.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
         this.viewSelectedBlog = this.viewSelectedBlog.bind(this);
+        this.deleteBlog = this.deleteBlog.bind(this);
     }
 
     // To update some props when component mounts before parent async call complete
@@ -43,6 +45,14 @@ class BlogPost extends Component {
         this.setState({
             alert: ''
         });
+    }
+
+    deleteBlog() {
+        // Visually indicate deleting to user
+        this.setState({
+            isDeleting: true
+        });
+        this.props.deleteBlog(this.props.id);
     }
 
     likeBlog() {
@@ -126,7 +136,7 @@ class BlogPost extends Component {
                         {/* If being viewed as my blogs, show delete option and number of likes 
                         () => this.props.deleteBlog(this.props.id)*/}
                         {this.props.canDelete ? (
-                            <button className="btn btn-danger" onClick={() => {if (window.confirm('Are you sure you wish to delete this blog post?')) this.props.deleteBlog(this.props.id)}}>Delete</button>
+                            <button disabled={this.state.isDeleting} className="btn btn-danger" onClick={() => {if (window.confirm('Are you sure you wish to delete this blog post?')) this.deleteBlog()}}>{this.state.isDeleting ? ('Deleting...') : ('Delete')}</button>
                         ) : ('')}
 
                         {/* If being viewed while logged in, show number of likes and option to like */}

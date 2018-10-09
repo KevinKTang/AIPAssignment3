@@ -10,6 +10,8 @@ class ViewBlogPost extends Component {
         this.state = {
             isLoading: true,
             showLoading: '',
+            // Loading state for when submitting a comment
+            isLoadingComment: false,
             alert: '',
             blogId: '',
             title: '',
@@ -138,9 +140,10 @@ class ViewBlogPost extends Component {
     comment(e) {
         e.preventDefault();
 
-        // Visually indicate loading to user
-        document.getElementById('commentBtn').disabled = true;
-        document.getElementById('commentBtn').innerHTML = 'Submitting...';
+        // Visually indicate loading on submit button to user
+        this.setState({
+            isLoadingComment: true
+        });
 
         fetch('/commentBlog', {
             method: 'POST',
@@ -152,8 +155,9 @@ class ViewBlogPost extends Component {
         }).then(res => {
 
             // Restore button to normal state (not loading)
-            document.getElementById('commentBtn').disabled = false;
-            document.getElementById('commentBtn').innerHTML = 'Submit';
+            this.setState({
+                isLoadingComment: false
+            });
 
             if (res.status === 200) {
                 res.json().then(res => {
@@ -175,6 +179,12 @@ class ViewBlogPost extends Component {
                     alert: 'Error commenting on blog post.'
                 });
             }
+        })
+        .catch(err => {
+            // Restore button to normal state (not loading)
+            this.setState({
+                isLoadingComment: false
+            });
         });
     }
 
@@ -245,9 +255,8 @@ class ViewBlogPost extends Component {
                                 <p>Comment:</p>
                                 <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
                                     <input className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
-                                    <button id="commentBtn" className="btn btn-primary" type="submit">Submit</button>
+                                    <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                 </form>
-
                             </div>
                         )
                     )}

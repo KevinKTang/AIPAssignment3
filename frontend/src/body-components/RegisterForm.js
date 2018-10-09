@@ -10,6 +10,7 @@ class RegisterForm extends Component {
     constructor(props) {
         super();
         this.state = {
+            isLoading: false,
             firstname: '',
             lastname: '',
             email: '',
@@ -29,9 +30,10 @@ class RegisterForm extends Component {
     register(event) {
         event.preventDefault();
 
-        // Visually indicate loading to user
-        document.getElementById('registerBtn').disabled = true;
-        document.getElementById('registerBtn').innerHTML = 'Submitting...';
+        // Visually indicate loading on submit button to user
+        this.setState({
+            isLoading: true
+        });
 
         fetch('/newUser', {
             method: 'POST',
@@ -46,8 +48,9 @@ class RegisterForm extends Component {
         .then(res => {
 
             // Restore button to normal state (not loading)
-            document.getElementById('registerBtn').disabled = false;
-            document.getElementById('registerBtn').innerHTML = 'Submit';
+            this.setState({
+                isLoading: false
+            });
 
             if (res.status === 200) {
                 res.json().then(userFirstname => {
@@ -65,7 +68,13 @@ class RegisterForm extends Component {
                 });
             }
         })
-        .catch(err => console.error('An error occurred: ' + err));
+        .catch(err => {
+            console.error('An error occurred: ' + err);
+            // Restore button to normal state (not loading)
+            this.setState({
+                isLoading: false
+            });
+        });
     }
 
     dismissAlert() {
@@ -105,7 +114,7 @@ class RegisterForm extends Component {
                             <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
                             <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
-                            <button id="registerBtn" className="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                            <button disabled={this.state.isLoading} className="btn btn-lg btn-primary btn-block" type="submit">{this.state.isLoading ? ('Submitting...') : ('Submit')}</button>
                         </div>
                     </div>
                 </form>
