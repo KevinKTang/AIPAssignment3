@@ -67,7 +67,6 @@ class ViewBlogPost extends Component {
                             } else {
                                 blogLiked = false;
                             }
-
                             this.setState({
                                 blogId: blog.id,
                                 title: blog.title,
@@ -232,40 +231,44 @@ class ViewBlogPost extends Component {
                                     ) : ('')}
                                 </div>
 
-                                <h1 className="view-blog-title">{this.state.title}</h1>
-                                <h3 className="view-blog-author" label="By:"> {this.state.author}</h3>
-                                <h6 className="view-blog-description">{this.state.description}</h6>
+                                {!(this.state.title === '') ? (
+                                    <div>
+                                        <h1 className="view-blog-title">{this.state.title}</h1>
+                                        <h3 className="view-blog-author" label="By:"> {this.state.author}</h3>
+                                        <h6 className="view-blog-description">{this.state.description}</h6>
 
-                                <hr className="view-blog-hr"></hr>
-                                <div className="editor-display">
-                                    {<Editor editorState={this.state.editorState} readOnly />}
-                                </div>
+                                        <hr className="view-blog-hr"></hr>
+                                        <div className="editor-display">
+                                            {<Editor editorState={this.state.editorState} readOnly />}
+                                        </div>
 
-                                <hr className="view-blog-hr"></hr>
-                                <div className="counter text-center">
-                                <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
-                                <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
-                                </div>
-                                {/* Likes. If no likes, show 0 */}
-                                {this.props.isLoggedIn ? (
-                                    this.state.liked ? (
-                                        <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
-                                    ) : (
-                                            <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
-                                        )
+                                        <hr className="view-blog-hr"></hr>
+                                        <div className="counter text-center">
+                                            <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
+                                            <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
+                                        </div>
+                                        {/* Likes. If no likes, show 0 */}
+                                        {this.props.isLoggedIn ? (
+                                            this.state.liked ? (
+                                                <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
+                                            ) : (
+                                                    <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
+                                                )
+                                        ) : ('')}
+
+                                        {/* Comments Section. If no comments, indicate this to the user */}
+
+                                        {/* Comment form */}
+                                        <p>Comment:</p>
+                                        <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
+                                            <input disabled={this.state.isLoadingComment} className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
+                                            <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
+                                        </form>
+
+                                        <h2>Comments</h2>
+                                        {this.state.comments.length === 0 ? (<p>Be the first to write a comment!</p>) : (this.state.comments.map(comment => this.eachComment(comment)))}
+                                    </div>
                                 ) : ('')}
-                                
-                                {/* Comments Section. If no comments, indicate this to the user */}
-
-                                {/* Comment form */}
-                                <p>Comment:</p>
-                                <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
-                                    <input className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
-                                    <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
-                                </form>
-
-                                <h2>Comments</h2>
-                                {this.state.comments.length === 0 ? (<p>Be the first to write a comment!</p>) : (this.state.comments.map(comment => this.eachComment(comment)))}
                             </div>
                         )
                     )}

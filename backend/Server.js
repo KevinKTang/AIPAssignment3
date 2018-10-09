@@ -162,6 +162,7 @@ app.get('/blogs', (req, res) => {
                 attributes: ['firstname', 'lastname'],
                 required: false
             }],
+            attributes: {exclude: ['content'] },
             limit: 20,
             order: [['updatedAt', 'DESC']]
         })
@@ -187,6 +188,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['createdAt', 'DESC']]
                     })
@@ -209,6 +211,7 @@ app.post('/blogsCustom', (req, res) => {
                         attributes: ['firstname', 'lastname'],
                         required: false
                     }],
+                    attributes: {exclude: ['content'] },
                     limit: 20,
                     order: [['createdAt', 'DESC']]
                 })
@@ -231,6 +234,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['likesCount', 'DESC']]
                     })
@@ -253,6 +257,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: sequelize.random()
                     })
@@ -276,6 +281,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['createdAt', 'DESC']]
                     })
@@ -294,7 +300,11 @@ app.post('/blogsCustom', (req, res) => {
 app.get('/myBlogs', (req, res) => {
     if (req.session.userId) {
         Blog
-            .findAll({where: {userId: req.session.userId}, order: [['updatedAt', 'DESC']] })
+            .findAll({
+                where: {userId: req.session.userId},
+                attributes: {exclude: ['content'] },
+                order: [['updatedAt', 'DESC']]
+            })
             .then(blogs => res.status(200).json(blogs));
     } else {
         res.status(403).send();
