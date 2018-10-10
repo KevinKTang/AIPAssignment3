@@ -238,14 +238,14 @@ class ViewBlogPost extends Component {
 
     eachComment(comment) {
         return (
-            <ul className="list-unstyled" key={comment.id}>
-                <li className="media">
-                    <div className="comment-content media-body">
-                    <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
-                    <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
-                    {comment.content}
-                    </div>
-                </li>
+            <ul class="list-unstyled">
+            <li className="media" key={comment.id}>
+                <div className="comment-content media-body">
+                <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
+                <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
+                <p>{comment.content} </p>
+                </div>
+            </li>
             </ul>
         )
     }
@@ -290,8 +290,9 @@ class ViewBlogPost extends Component {
 
                                         <hr className="blog-hr"></hr>
 
-                                        <div className="editor-display">
+                                        <div className="editor-display col-8">
                                             {<Editor editorState={this.state.editorState} readOnly />}
+
                                         </div>
                                         {/* Likes. If no likes, show 0 */}
                                         <div className="counter">
