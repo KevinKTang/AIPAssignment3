@@ -51,8 +51,8 @@ class ViewBlogPost extends Component {
     componentDidMount() {
         let path = this.props.location.pathname;
         let slashIndex = this.props.location.pathname.lastIndexOf('/');
-        let blogId = this.props.location.pathname.substr(slashIndex + 1, path.length)
-        console.log(blogId)
+        let blogId = this.props.location.pathname.substr(slashIndex + 1, path.length);
+        fetch('/blog/' + blogId)
             .then(res => {
                 this.setState({
                     isLoading: false,
