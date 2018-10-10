@@ -143,20 +143,19 @@ app.get('/blogs', (req, res) => {
     Blog
         .findAll({
             include: [{
+                model: Likes,
+                where: { userId: req.session.userId },
+                required: false
+            },
+            {
                 model: User,
                 where: { id: {$col: 'Blog.userId'} },
                 attributes: ['firstname', 'lastname'],
                 required: false
-            },
-            {
-                model: Likes,
-                where: { userId: req.session.userId },
-                required: false
-            }
-        ],
+            }],
             attributes: {exclude: ['content'] },
             limit: 20,
-            order: [['updatedAt', 'DESC']]
+            order: [['createdAt', 'DESC']]
         })
         .then(blogs => res.status(200).json(blogs));
 });
@@ -184,9 +183,7 @@ app.post('/blogsCustom', (req, res) => {
                         limit: 20,
                         order: [['createdAt', 'DESC']]
                     })
-                    .then(blogs => {
-                        res.status(200).json(blogs);
-                    });
+                    .then(blogs => res.status(200).json(blogs));
                 break;
             case 'liked':
                 console.log('ORDERING BY LIKED');
