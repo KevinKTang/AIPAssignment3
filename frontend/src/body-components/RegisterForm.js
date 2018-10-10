@@ -115,7 +115,7 @@ class RegisterForm extends Component {
                 <form onSubmit={this.register} id="registerForm">
                     <div className="container">
                         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                            <h3 className="register-title">Register</h3>
+                            <h1 className="register-title">Register</h1>
                             <input ref={c => this._input = c} className="form-control" name="firstname" value={this.state.firstname} onChange={this.handleInputChange} type="text" placeholder="First Name" required />
                             <input className="form-control" name="lastname" value={this.state.lastname} onChange={this.handleInputChange} type="text" placeholder="Last Name" required />
                             <input className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />

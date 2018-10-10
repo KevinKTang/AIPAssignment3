@@ -139,12 +139,12 @@ class MyBlogs extends Component {
 
                 {this.state.showLoading ? (
                     <div>
-                        <h1>My Blogs</h1>
+                        <h1 className="my-blogs-title">My Blogs</h1>
                         <Loading />
                     </div>
                 ) : (
                         <div className="text-center">
-                            <h1>My Blogs</h1>
+                            <h1 className="my-blogs-title">My Blogs</h1>
                             {this.state.blogs.length === 0 && this.state.isLoading === false && this.props.isLoggedIn ? (
                                 <p>You haven't created any blogs yet!</p>
                             ) : (

@@ -1,3 +1,9 @@
+/* Font used from BEfonts at https://befonts.com/ */
+@font-face {
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
 .blog-posts-flex {
     display: flex;
     flex-direction: row;
@@ -11,10 +17,19 @@
     margin-left: 15%;
     margin-right: 15%;
     padding: 0px;
+    text-align: center;
 }
 
 .blog-button {
     margin-left: 1%;
     margin-bottom: 0.5%;
 
+}
+
+.main-title {
+    font-family: 'MasterOfBreak', Georgia, 'Times New Roman', Times, serif;
+}
+
+.blog-button-area {
+    margin-bottom: 1%;
 }

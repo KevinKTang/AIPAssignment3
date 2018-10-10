@@ -1,12 +1,22 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/* Font used from BEfonts at https://befonts.com/ */
+@font-face {
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
+@font-face {
+    font-family: 'Geomanist';
+    src: url('./fonts/geomanist-regular-webfont.woff');
+}
 
 .login-title {
-    font-family: "Audrey", sans-serif;
+    font-family: "MasterOfBreak", sans-serif;
     font-weight: 500;
+    margin-bottom: 3%;
 }
 
 .form-control{
-    font-family: "Calibri", sans-serif;
+    font-family: "Geomanist", sans-serif;
     outline: 0;
     background: #f2f2f2;
     width: 100%;
@@ -15,12 +25,6 @@
     padding: 15px;
     box-sizing: border-box;
     font-size: 12px;
-}
-
-.btn {
-  padding: 50px 24px;
-  border: 0 none;
-  font-weight: 700;
 }
 
 .alert {

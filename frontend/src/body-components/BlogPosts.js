@@ -203,7 +203,7 @@ class BlogPosts extends Component {
         // If not logged in, show welcome jumbotron
         return (
             this.props.isLoggedIn ? (
-                <div className="text-center">
+                <div className="main-title text-center">
                     <h1>Home</h1>
                     {this.showBlogOptions()}
                 </div>
