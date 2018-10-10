@@ -50,7 +50,7 @@ class MyBlogs extends Component {
                         isLoading: false,
                         showLoading: false
                     }));
-            } else if (res.status == 403) {
+            } else if (res.status === 403) {
                 this.setState({
                     alert: "Access denied. Make sure you're logged in before viewing your blog posts.",
                     isLoading: false,

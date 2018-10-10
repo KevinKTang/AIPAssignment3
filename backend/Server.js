@@ -137,10 +137,11 @@ app.get('/blog/:blogId', (req, res) => {
                     attributes: ['firstname', 'lastname'],
                     required: false
                 }],
-                order: [['createdAt', 'DESC']],
                 required: false
-            }
-        ]
+            }],
+            order: [
+                [Comments, 'createdAt', 'DESC']
+            ]
         })
         .then(blog => {
             if (blog) {
@@ -161,7 +162,14 @@ app.get('/blogs', (req, res) => {
                 where: { id: {$col: 'Blog.userId'} },
                 attributes: ['firstname', 'lastname'],
                 required: false
-            }],
+            },
+            {
+                model: Likes,
+                where: { userId: req.session.userId },
+                required: false
+            }
+        ],
+            attributes: {exclude: ['content'] },
             limit: 20,
             order: [['updatedAt', 'DESC']]
         })
@@ -187,6 +195,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['createdAt', 'DESC']]
                     })
@@ -209,6 +218,7 @@ app.post('/blogsCustom', (req, res) => {
                         attributes: ['firstname', 'lastname'],
                         required: false
                     }],
+                    attributes: {exclude: ['content'] },
                     limit: 20,
                     order: [['createdAt', 'DESC']]
                 })
@@ -231,6 +241,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['likesCount', 'DESC']]
                     })
@@ -253,6 +264,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: sequelize.random()
                     })
@@ -276,6 +288,7 @@ app.post('/blogsCustom', (req, res) => {
                             attributes: ['firstname', 'lastname'],
                             required: false
                         }],
+                        attributes: {exclude: ['content'] },
                         limit: 20,
                         order: [['createdAt', 'DESC']]
                     })
@@ -294,7 +307,11 @@ app.post('/blogsCustom', (req, res) => {
 app.get('/myBlogs', (req, res) => {
     if (req.session.userId) {
         Blog
-            .findAll({where: {userId: req.session.userId}, order: [['updatedAt', 'DESC']] })
+            .findAll({
+                where: {userId: req.session.userId},
+                attributes: {exclude: ['content'] },
+                order: [['updatedAt', 'DESC']]
+            })
             .then(blogs => res.status(200).json(blogs));
     } else {
         res.status(403).send();
@@ -420,9 +437,6 @@ app.get('/checkSession', (req, res) => {
                     res.status(404).send();
                 } 
             });
-    }
-    else {
-        res.status(404).send();
     }
 });
 

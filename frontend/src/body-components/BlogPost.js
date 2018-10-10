@@ -81,6 +81,10 @@ class BlogPost extends Component {
                                 alert: '',
                                 liked: false
                             });
+                            // If viewing liked posts, refresh to hide this unliked post
+                            if (this.props.blogsView === 'liked') {
+                                this.props.updateBlogsView('liked');
+                            }
                         }
                     })
             } else if (res.status === 404) {
