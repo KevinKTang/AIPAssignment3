@@ -238,7 +238,6 @@ class ViewBlogPost extends Component {
 
     eachComment(comment) {
         return (
-            <ul class="list-unstyled">
             <li className="media" key={comment.id}>
                 <div className="comment-content media-body">
                 <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
@@ -246,7 +245,6 @@ class ViewBlogPost extends Component {
                 <p>{comment.content} </p>
                 </div>
             </li>
-            </ul>
         )
     }
 
