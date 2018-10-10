@@ -213,7 +213,7 @@ class BlogPosts extends Component {
         return (
             // If loading
             this.state.showLoading ? (
-                <div>
+                <div className="text-center">
                     {this.state.alert ? this.showAlert() : ''}
                     {this.renderTopComponents()}
                     <Loading />

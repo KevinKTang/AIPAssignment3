@@ -96,7 +96,7 @@ class RegisterForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className="text-center">
                 {/* Alert for incorrect register */}
                 {this.state.alert ? (
                     <div className="alert alert-danger alert-dismissible">

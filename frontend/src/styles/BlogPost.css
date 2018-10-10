@@ -1,6 +1,37 @@
+/* Font used from BEfonts at https://befonts.com/ */
+@font-face {
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
+@font-face {
+    font-family: 'Audrey';
+    src: url('./fonts/Audrey-Normal.woff');
+}
+
+@font-face {
+    font-family: 'Geomanist';
+    src: url('./fonts/geomanist-regular-webfont.woff');
+}
+
+
 .card {
     margin: 1.5rem;
     width: 300px;
+}
+
+.card-title {
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.card-author {
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+    font-style: oblique;
+}
+
+.card-description {
+    color: slategray;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }
 
 .view-button {

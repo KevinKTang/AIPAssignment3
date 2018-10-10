@@ -1,19 +1,24 @@
 /* Font used from BEfonts at https://befonts.com/ */
 @font-face {
-    font-family: 'Audrey';
-    src: url('./fonts/Audrey-Normal.woff');
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
+@font-face {
+    font-family: 'Geomanist';
+    src: url('./fonts/geomanist-regular-webfont.woff');
 }
 
 /* Three fonts are given for redundancy in case some users don't have the correct fonts*/
 .welcome-text {
     color: white;
     font-size: 1.2rem;
-    font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }
 
 .navbar-brand {
     color: white;
-    font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'MasterOfBreak', Georgia, 'Times New Roman', Times, serif;
 }
 
 .navbar-brand:hover {
@@ -28,5 +33,5 @@
 .navbar-text {
     padding-left: 1rem;
     color: white;
-    font-family: 'Audrey', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }

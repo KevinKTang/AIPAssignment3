@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { EditorState, convertFromRaw, Editor } from 'draft-js';
-import Moment from 'moment'
+import Moment from 'moment';
 import Loading from '../Loading'
 import '../styles/ViewBlogPost.css'
 
@@ -222,7 +222,7 @@ class ViewBlogPost extends Component {
                 ) : (
                         this.state.isLoading ? ('') : (
                             <div>
-                                <div className="view-blog-alert">
+                                <div className="text-center">
                                     {/* Alert for error loading blog post */}
                                     {this.state.alert ? (
                                         <div className="alert alert-danger alert-dismissible">
@@ -233,7 +233,7 @@ class ViewBlogPost extends Component {
                                 </div>
 
                                 <h1 className="view-blog-title">{this.state.title}</h1>
-                                <h3 className="view-blog-author" label="By:"> {this.state.author}</h3>
+                                <h4 className="view-blog-author" label="By:"> {this.state.author}</h4>
                                 <h6 className="view-blog-description">{this.state.description}</h6>
 
                                 <hr className="view-blog-hr"></hr>
@@ -241,12 +241,8 @@ class ViewBlogPost extends Component {
                                     {<Editor editorState={this.state.editorState} readOnly />}
                                 </div>
 
-                                <hr className="view-blog-hr"></hr>
-                                <div className="counter text-center">
-                                <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
-                                <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
-                                </div>
-                                {/* Likes. If no likes, show 0 */}
+                                <div className="counter">
+                                 {/* Likes. If no likes, show 0 */}
                                 {this.props.isLoggedIn ? (
                                     this.state.liked ? (
                                         <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
@@ -254,18 +250,23 @@ class ViewBlogPost extends Component {
                                             <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                                         )
                                 ) : ('')}
-                                
-                                {/* Comments Section. If no comments, indicate this to the user */}
+                                <h6>Likes: {this.state.likes ? this.state.likes : 0}</h6>
+                                <h6>Comments: {this.state.commentCount ? this.state.commentCount : 0}</h6>
+                                </div>
 
+                               
+
+
+                                {/* Comments Section. If no comments, indicate this to the user */}
                                 {/* Comment form */}
-                                <p>Comment:</p>
-                                <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
+                                <form className="form-group" onSubmit={this.comment}>
                                     <input className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
                                     <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                 </form>
-
+                                <div className="view-blog-comments-section">
                                 <h2>Comments</h2>
                                 {this.state.comments.length === 0 ? (<p>Be the first to write a comment!</p>) : (this.state.comments.map(comment => this.eachComment(comment)))}
+                                </div>
                             </div>
                         )
                     )}
