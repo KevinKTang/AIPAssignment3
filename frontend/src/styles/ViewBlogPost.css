@@ -13,23 +13,11 @@
     src: url('./fonts/BondieDemo-Regular.woff');
 }
 
-
-.editor-display {
-    border-left: 4px solid black;
-    margin: auto;
-    padding-left: 1%;
-    padding-right: 1%;
-    margin-bottom: 2.5%;
-    width: 85%;
-    text-align: left;
-    margin-top: -2.5%;
-}
-
 .view-blog-title {
     margin-left: 7.5%;
     font-family: 'Bondie', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 70px;
-    margin-bottom: -1.5%;
+    margin-bottom: -1%;
 }
 
 .view-blog-author {
@@ -68,12 +56,28 @@
     border-radius: 20px;
 }
 
+.editor-display {
+    border-left: 4px solid black;
+    margin: auto;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-bottom: 2.5%;
+    width: 85%;
+    text-align: left;
+    margin-top: -1.5%;
+}
+
 .counter {
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }
 
 .form-group {
+    margin-left: 7.5%;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.view-blog-comments-form {
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }
