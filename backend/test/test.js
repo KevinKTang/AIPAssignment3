@@ -244,12 +244,55 @@ describe('Blogs', function() {
     let secondBlogId = '';
     let thirdBlogId = '';
 
+    it('Test create blog post title input validation', () => {
+        return agent
+        .post('/createBlog')
+        .send({
+            title: '',
+            description: firstBlogDesc,
+            content: 'some content'
+        })
+        .then((res) => {
+            expect(res).to.have.status(400);
+            expect(res.body.alert).to.equal('Blog title must not be empty.');
+        })
+    });
+
+    it('Test create blog post description input validation', () => {
+        return agent
+        .post('/createBlog')
+        .send({
+            title: firstBlogTitle,
+            description: '',
+            content: 'some content'
+        })
+        .then((res) => {
+            expect(res).to.have.status(400);
+            expect(res.body.alert).to.equal('Blog description must not be empty.');
+        })
+    });
+
+    it('Test create blog post content input validation', () => {
+        return agent
+        .post('/createBlog')
+        .send({
+            title: firstBlogTitle,
+            description: firstBlogDesc,
+            content: ''
+        })
+        .then((res) => {
+            expect(res).to.have.status(400);
+            expect(res.body.alert).to.equal('Blog body must not be empty.');
+        })
+    });
+
     it('Create 3 blog posts', () => {
         return agent
             .post('/createBlog')
             .send({
                 title: firstBlogTitle,
-                description: firstBlogDesc
+                description: firstBlogDesc,
+                content: 'some content'
             })
             .then((res) => {
                 expect(res).to.have.status(201);
@@ -258,7 +301,8 @@ describe('Blogs', function() {
                     .post('/createBlog')
                     .send({
                         title: secondBlogTitle,
-                        description: secondBlogDesc
+                        description: secondBlogDesc,
+                        content: 'some content'
                     })
                     .then((res) => {
                         expect(res).to.have.status(201);
@@ -267,7 +311,8 @@ describe('Blogs', function() {
                             .post('/createBlog')
                             .send({
                                 title: thirdBlogTitle,
-                                description: thirdBlogDesc
+                                description: thirdBlogDesc,
+                                content: 'some content'
                             })
                             .then((res) => {
                                 expect(res).to.have.status(201);
@@ -292,7 +337,7 @@ describe('Blogs', function() {
             })
     });
 
-    it('View a single post', () => {
+    it('View a single blog post', () => {
         return agent
             .get('/blog/' + thirdBlogId)
             .then((res) => {
@@ -305,7 +350,7 @@ describe('Blogs', function() {
             });
     });
 
-    it('View a single post with incorrect blogId', () => {
+    it('View a single blog post with incorrect blogId', () => {
         return agent
             .get('/blog/' + '-1')
             .then((res) => {
@@ -445,6 +490,16 @@ describe('Blogs', function() {
         });
     });
 
+    it('Test add comment input validation', () => {
+        return agent
+            .post('/commentBlog')
+            .send({blogId: secondBlogId, comment: ''})
+                .then(res => {
+                    expect(res).to.have.status(400);
+                    expect(res.body.alert).to.equal('Comment must not be empty.');
+                });
+    });
+
     it('Add a comment to a blog post', () => {
         return agent
             .post('/commentBlog')
@@ -455,7 +510,7 @@ describe('Blogs', function() {
                     expect(res.body.affectedCommentRow.content).to.equal('New comment');
                     expect(res.body.affectedCommentRow.userId).to.equal(userId);
                     expect(res.body.affectedCommentRow.blogId).to.equal(secondBlogId);
-                })
+                });
     });
 
     it("Try to add a comment to a blog post that doesn't exist", () => {
@@ -464,7 +519,7 @@ describe('Blogs', function() {
             .send({blogId: -1, comment: 'New comment'})
                 .then(res => {
                     expect(res).to.have.status(404);
-                })
+                });
     });
 
     it('Try to add a comment to a blog post when not logged in', () => {
@@ -476,7 +531,7 @@ describe('Blogs', function() {
             .send({blogId: secondBlogId, comment: 'New comment'})
                 .then(res => {
                     expect(res).to.have.status(403);
-                })
+                });
         });
     });
 

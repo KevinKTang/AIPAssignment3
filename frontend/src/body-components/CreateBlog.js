@@ -64,6 +64,12 @@ class CreatePost extends Component {
                     this.setState({
                         alert: "Access denied. Make sure you're logged in before creating a blog post."
                     });
+                } else if (res.status === 400) {
+                    res.json().then(res => {
+                        this.setState({
+                            alert: res.alert
+                        });
+                    });
                 } else {
                     this.setState({
                         alert: 'Error creating new blog post.'

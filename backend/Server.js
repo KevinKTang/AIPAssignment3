@@ -324,18 +324,33 @@ app.post('/createBlog', (req, res) => {
         User.findOne({where: {id: req.session.userId}})
         .then(user => {
             if (user) {
-                Blog.create({
-                    title: req.body.title,
-                    description: req.body.description,
-                    content: req.body.content,
-                    userId: req.session.userId
-                })
-                .then(newBlog => {
-                    if (newBlog) {
-                        res.status(201).json({blogId: newBlog.id});
-                    }
-                });
-                console.log(user.firstname + ' has created a blog post');
+                // Validate user input
+                if (!req.body.title || req.body.title === '') {
+                    res.status(400).send({alert: 'Blog title must not be empty.'});
+                } else if (req.body.title.length > 120) {
+                    res.status(400).send({alert: 'Blog title must be 120 characters or less.'});
+                } else if (!req.body.description || req.body.description === '') {
+                    res.status(400).send({alert: 'Blog description must not be empty.'});
+                } else if (req.body.description.length > 250) {
+                    res.status(400).send({alert: 'Blog description must be 250 characters or less.'});
+                } else if (!req.body.content || req.body.content === '') {
+                    res.status(400).send({alert: 'Blog body must not be empty.'});
+                } else {
+                    Blog.create({
+                        title: req.body.title,
+                        description: req.body.description,
+                        content: req.body.content,
+                        userId: req.session.userId
+                    })
+                    .then(newBlog => {
+                        if (newBlog) {
+                            res.status(201).json({blogId: newBlog.id});
+                        } else {
+                            res.status(409).send();
+                        }
+                    });
+                    console.log(user.firstname + ' has created a blog post');
+                }
             } else {
                 res.status(403).send();
             }
@@ -377,13 +392,13 @@ app.delete('/deleteBlog', (req, res) => {
 // Create a new user, create the session and return the user's firstname
 app.post('/newUser', (req, res) => {
     //Validate user input
-    if (req.body.firstname.length < 2) {
+    if (!req.body.firstname || req.body.firstname.length < 2) {
         res.status(400).send({alert: 'Firstname must be 2 or more characters in length.'});
-    } else if (req.body.lastname.length < 2) {
+    } else if (!req.body.lastname || req.body.lastname.length < 2) {
         res.status(400).send({alert: 'Lastname must be 2 or more characters in length.'});
     } else if (!(/.{1,}@{1}.{1,}\.{1,}.{1,}/.test(req.body.email))) {
         res.status(400).send({alert: 'Email format is incorrect. It must be in a format similar to example@email.com'});
-    } else if (req.body.password.length < 8) {
+    } else if (!req.body.password || req.body.password.length < 8) {
         res.status(400).send({alert: 'Password must be 8 or more characters in length.'});
     } else {
         User.create({
@@ -398,7 +413,7 @@ app.post('/newUser', (req, res) => {
                 res.status(200).json(newUser);
                 console.log('New user ' + newUser.firstname + ' created');
             } else {
-                res.status(500).send();
+                res.status(409).send();
             }
         })
         .catch(Sequelize.UniqueConstraintError, (err) => {
@@ -518,7 +533,10 @@ app.post('/commentBlog', (req, res) => {
             .findOne({where: {id: req.body.blogId}})
             .then(blog => {
                 if (blog) {
-                    Comments.create({userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment})
+                    if (!req.body.comment || req.body.comment === '') {
+                        res.status(400).send({alert: 'Comment must not be empty.'});
+                    } else {
+                        Comments.create({userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment})
                         .then(affectedCommentRow => {
                             if (affectedCommentRow) {
                                 blog.update({commentCount: blog.commentCount + 1})
@@ -534,6 +552,7 @@ app.post('/commentBlog', (req, res) => {
                                 res.status(409).send();
                             }
                         });
+                    }
                 } else {
                     res.status(404).send();
                 }

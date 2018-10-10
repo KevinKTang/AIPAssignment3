@@ -73,12 +73,23 @@ class ViewBlogPost extends Component {
                                 title: blog.title,
                                 author: blog.user.firstname + ' ' + blog.user.lastname,
                                 description: blog.description,
-                                editorState: EditorState.createWithContent(convertFromRaw(blog.content)),
                                 likes: blog.likesCount,
                                 liked: blogLiked,
                                 commentCount: blog.commentCount,
                                 comments: blog.comments
                             });
+                            // Populate blog body with content
+                            // If there is an error with displaying, notify the user
+                            try {
+                                this.setState({
+                                    editorState: EditorState.createWithContent(convertFromRaw(blog.content))
+                                });
+                            }
+                            catch(err) {
+                                this.setState({
+                                    alert: 'Error displaying blog content.'
+                                });
+                            }
                         });
                 } else {
                     this.setState({
