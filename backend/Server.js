@@ -356,12 +356,22 @@ app.delete('/deleteBlog', (req, res) => {
                 console.log('blog found, userid for this blog is: ' + blog.userId)
                 // Check the user is the one who created this blog
                 if (blog.userId === req.session.userId) {
-                    Blog.destroy({where: {id: req.body.blogId}})
-                        .then(affectedRows => {
-                            if (affectedRows === 1) {
-                                res.status(200).send();
-                            }
+                    // First delete likes and comments associated with this blog
+                    Likes.destroy({where: {blogId: req.body.blogId}})
+                    .then(() => {
+                        Comments.destroy({where: {blogId: req.body.blogId}})
+                        .then(() => {
+                            // Delete blog
+                            Blog.destroy({where: {id: req.body.blogId}})
+                            .then(affectedRows => {
+                                if (affectedRows === 1) {
+                                    res.status(200).send();
+                                } else {
+                                    res.status(409).send();
+                                }
+                            });
                         });
+                    });
                 } else {
                     res.status(403).send();
                 }
