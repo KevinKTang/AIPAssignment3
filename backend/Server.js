@@ -20,8 +20,6 @@ app.use(session({
         return uuidv4();
     },
     saveUninitialized: false,
-    // 10 minutes expiration
-    //cookie: { maxAge: 600000}
     /*
     resave: true // Come back to this when sorted out store
     app.set('trust proxy', 1) // Come back to this
@@ -33,7 +31,7 @@ app.use(session({
 const sequelize = new Sequelize('database', 'username', 'password', {
     host: 'localhost',
     dialect: 'sqlite',
-    storage: 'mydb.db' //specify location
+    storage: 'website.db' //specify location
     //logging: false
 });
 
@@ -94,23 +92,10 @@ sequelize
 
 // Set up the tables
 sequelize
-    // Force the database tables to be set up from scratch
-    .sync({force: true}) // Drop table if exists
-    .then(() => {
-        
-     /* User.create({firstname: 'Joe', lastname: 'Bloggs', email: 'joe@gmail.com', password: 'Bloggs'});
-        User.create({firstname: 'Pete', lastname: 'Smith', email: 'pete@gmail.com', password: 'Smith'});
-        User.create({firstname: 'Darcy', lastname: 'North', email: 'darcy@gmail.com', password: 'North'});
-
-        Blog.create({title: 'Cats', content: 'I like cats. They are great to have as a pet.', likesCount: 4});
-        Blog.create({title: 'Dogs', content: 'I like dogs. They are fun and like to run around at the park.', likesCount: 2});
-        Blog.create({title: 'Sequelize', description: 'some description', content: 'Sequelize is an object relational mapper. It has been used in this project!', likesCount: 4, commentCount: 1});*/
-
-    });
+    .sync()
 
 // Simulate delay
 //app.use((req, res, next) => setTimeout(() => next(), 2000));
-
 
 // Retrieve a single blog by id
 app.get('/blog/:blogId', (req, res) => {
