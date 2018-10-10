@@ -88,7 +88,7 @@ class ViewBlogPost extends Component {
                                     editorState: EditorState.createWithContent(convertFromRaw(blog.content))
                                 });
                             }
-                            catch(err) {
+                            catch (err) {
                                 this.setState({
                                     alert: 'Error displaying blog content.'
                                 });
@@ -210,31 +210,37 @@ class ViewBlogPost extends Component {
     }
 
     formatWhenCreated(timeCreated) {
-         // Show how long since the blog post was created. If over 24 hours, show date.
-         let timeSince = Moment.duration(Moment(new Date()).diff(timeCreated));
-         let hoursSince = timeSince.asHours();
-         // First check in case local system time is slightly ahead of server time
-         // This avoids a creation date that is pointing to the future (such as in 1 minute)
-         if (hoursSince < 0) {
-             return (
-                 'a few seconds ago'
-             )
-         } else if (timeSince.asHours() >= 24) {
+        // Show how long since the blog post was created. If over 24 hours, show date.
+        let timeSince = Moment.duration(Moment(new Date()).diff(timeCreated));
+        let hoursSince = timeSince.asHours();
+        // First check in case local system time is slightly ahead of server time
+        // This avoids a creation date that is pointing to the future (such as in 1 minute)
+        if (hoursSince < 0) {
+            return (
+                'a few seconds ago'
+            )
+        } else if (timeSince.asHours() >= 24) {
             return (
                 Moment(timeCreated).format('MMM DD, YYYY')
             )
         } else {
-             return (
-                 Moment(timeCreated).fromNow()
-             )
-         }
+            return (
+                Moment(timeCreated).fromNow()
+            )
+        }
     }
 
     eachComment(comment) {
         return (
-            <li key={comment.id}>
-                {comment.user.firstname + ' ' + comment.user.lastname} | {comment.content} | {this.formatWhenCreated(comment.createdAt)}
+            <ul class="list-unstyled">
+            <li className="media" key={comment.id}>
+                <div className="comment-content media-body">
+                <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
+                <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
+                {comment.content} 
+                </div>
             </li>
+            </ul>
         )
     }
 
@@ -268,7 +274,7 @@ class ViewBlogPost extends Component {
                                 </div>
 
                                 {/* Only show content if this blog exists (using title to check).
-                                    This avoid an alert that it does not exist with an empty sekelton blog */}
+                                    This avoid an alert that it does not exist with an empty skeleton blog */}
                                 {!(this.state.title === '') ? (
                                     <div>
                                         <h1 className="view-title">{this.state.title}</h1>
@@ -289,10 +295,10 @@ class ViewBlogPost extends Component {
                                                 ) : (
                                                         <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                                                     )
-                                                ) : ('')}
-                                                <p className="likes-text">Likes: {this.state.likes ? this.state.likes : 0}</p>
+                                            ) : ('')}
+                                            <p className="likes-text">Likes: {this.state.likes ? this.state.likes : 0}</p>
                                         </div>
-                                        
+
                                         <h2 className="comments-heading">Comments</h2>
                                         {/* Comment form */}
                                         {this.props.isLoggedIn ? (

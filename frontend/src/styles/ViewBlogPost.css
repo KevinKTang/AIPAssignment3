@@ -102,3 +102,11 @@
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
     display: inline-block;
 }
+
+.comment-name {
+    font-weight: bold;
+}
+
+.comment-time {
+    font-style: oblique;
+}
