@@ -212,11 +212,18 @@ class ViewBlogPost extends Component {
     formatWhenCreated(timeCreated) {
          // Show how long since the blog post was created. If over 24 hours, show date.
          let timeSince = Moment.duration(Moment(new Date()).diff(timeCreated));
-         if (timeSince.asHours() >= 24) {
+         let hoursSince = timeSince.asHours();
+         // First check in case local system time is slightly ahead of server time
+         // This avoids a creation date that is pointing to the future (such as in 1 minute)
+         if (hoursSince < 0) {
              return (
-                 Moment(timeCreated).format('MMM DD, YYYY')
+                 'a few seconds ago'
              )
-         } else {
+         } else if (timeSince.asHours() >= 24) {
+            return (
+                Moment(timeCreated).format('MMM DD, YYYY')
+            )
+        } else {
              return (
                  Moment(timeCreated).fromNow()
              )

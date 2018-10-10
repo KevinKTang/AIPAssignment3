@@ -114,16 +114,23 @@ class BlogPost extends Component {
     formatWhenCreated() {
         // Show how long since the blog post was created. If over 24 hours, show date.
         let timeSince = Moment.duration(Moment(new Date()).diff(this.props.createdAt));
-        if (timeSince.asHours() >= 24) {
+        let hoursSince = timeSince.asHours();
+        // First check in case local system time is slightly ahead of server time
+        // This avoids a creation date that is pointing to the future (such as in 1 minute)
+        if (hoursSince < 0) {
             return (
-                Moment(this.props.createdAt).format('Do MMMM YYYY')
+                'a few seconds ago'
             )
-        } else {
+        } else if (timeSince.asHours() >= 24) {
+           return (
+               Moment(this.props.createdAt).format('MMM DD, YYYY')
+           )
+       } else {
             return (
                 Moment(this.props.createdAt).fromNow()
             )
         }
-    }
+   }
 
     // Blog posts that are displayed in the user's blog section can be deleted
     render() {
