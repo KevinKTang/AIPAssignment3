@@ -1,4 +1,4 @@
-/* Font used from BEfonts at https://befonts.com/ */
+/* Fonts used from BEfonts at https://befonts.com/ */
 @font-face {
     font-family: 'Geomanist';
     src: url('./fonts/geomanist-regular-webfont.woff');
@@ -64,6 +64,7 @@
 }
 
 .counter {
+    margin-top: 5rem;
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }
@@ -83,4 +84,20 @@
 .view-blog-comments-section {
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.likes-text {
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.input-form {
+    margin: 0;
+    margin-left: 7.5%;
+}
+
+.comments-heading {
+    margin-left: 7.5%;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
