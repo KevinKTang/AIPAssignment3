@@ -96,7 +96,6 @@ class MyBlogs extends Component {
             }
         })
         .catch(err => {
-            console.log('An error occurred. ' + err);
             this.setState({
                 alert: 'An error occurred.'
             });

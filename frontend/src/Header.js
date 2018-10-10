@@ -35,7 +35,6 @@ class Header extends Component {
                 this.props.history.push('/');
             })
             .catch(err => {
-                console.log('An error occurred. ' + err);
                 this.setState({
                     isLoading: false
                 });
