@@ -195,6 +195,12 @@ class ViewBlogPost extends Component {
                 this.setState({
                     alert: 'Error. Blog post not found.'
                 });
+            } else if (res.status === 400) {
+                res.json().then(res => {
+                    this.setState({
+                        alert: res.alert
+                    });
+                });
             } else {
                 this.setState({
                     alert: 'Error commenting on blog post.'
@@ -232,14 +238,14 @@ class ViewBlogPost extends Component {
 
     eachComment(comment) {
         return (
-            <ul class="list-unstyled">
-            <li className="media" key={comment.id}>
-                <div className="comment-content media-body">
-                <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
-                <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
-                {comment.content} 
-                </div>
-            </li>
+            <ul className="list-unstyled" key={comment.id}>
+                <li className="media">
+                    <div className="comment-content media-body">
+                    <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
+                    <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
+                    {comment.content}
+                    </div>
+                </li>
             </ul>
         )
     }

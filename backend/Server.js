@@ -530,8 +530,8 @@ app.post('/commentBlog', (req, res) => {
                 if (blog) {
                     if (!req.body.comment || req.body.comment === '') {
                         res.status(400).send({alert: 'Comment must not be empty.'});
-                    } else if (req.body.comment.length > 200) {
-                        res.status(400).send({alert: 'Comment must be 200 characters or less.'});
+                    } else if (req.body.comment.length > 2500) {
+                        res.status(400).send({alert: 'Comment must be 2500 characters or less.'});
                     } else {
                         Comments.create({userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment})
                         .then(affectedCommentRow => {
