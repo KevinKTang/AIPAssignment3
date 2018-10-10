@@ -249,7 +249,7 @@ class ViewBlogPost extends Component {
     render() {
         return (
             <div>
-                <div className="view-blog-backBtn">
+                <div className="backBtn">
                     <button className="btn btn-danger" onClick={this.props.history.goBack}>Back</button>
                 </div>
                 {this.state.showLoading ? (
@@ -271,12 +271,13 @@ class ViewBlogPost extends Component {
                                     This avoid an alert that it does not exist with an empty sekelton blog */}
                                 {!(this.state.title === '') ? (
                                     <div>
-                                        <h1 className="view-blog-title">{this.state.title}</h1>
-                                        <h3 className="view-blog-author" label="By:"> {this.state.author}</h3>
-                                        <p className="view-blog-author">{Moment(this.props.createdAt).format('Do MMMM YYYY')}</p>
-                                        <h6 className="view-blog-description">{this.state.description}</h6>
+                                        <h1 className="view-title">{this.state.title}</h1>
+                                        <h3 className="author-time" label="By:"> {this.state.author}</h3>
+                                        <h5 className="author-time">{Moment(this.props.createdAt).format('Do MMMM YYYY')}</h5>
+                                        <h6 className="description">{this.state.description}</h6>
 
-                                        <hr className="view-blog-hr"></hr>
+                                        <hr className="blog-hr"></hr>
+
                                         <div className="editor-display">
                                             {<Editor editorState={this.state.editorState} readOnly />}
                                         </div>
@@ -295,13 +296,13 @@ class ViewBlogPost extends Component {
                                         <h2 className="comments-heading">Comments</h2>
                                         {/* Comment form */}
                                         {this.props.isLoggedIn ? (
-                                            <form className="view-blog-comments-form form-inline form-row" onSubmit={this.comment}>
-                                                <input disabled={this.state.isLoadingComment} className="col-6 form-control input-form" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
-                                                <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
+                                            <form className="comments-form form-inline form-row" onSubmit={this.comment}>
+                                                <textarea disabled={this.state.isLoadingComment} className="col-6 form-control input-form" rows="5" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></textarea>
+                                                <button disabled={this.state.isLoadingComment} className="btn btn-primary ml-3" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                             </form>
                                         ) : ('')}
 
-                                        <div className="view-blog-comments-section">
+                                        <div className="comments-section">
                                             {this.state.comments.length === 0 ? (
                                                 <p>There are no comments yet!</p>
                                             ) : (this.state.comments.map(comment => this.eachComment(comment)))}
