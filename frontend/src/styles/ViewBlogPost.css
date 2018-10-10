@@ -1,8 +1,4 @@
-@font-face {
-    font-family: 'Audrey';
-    src: url('./fonts/Audrey-Normal.woff');
-}
-
+/* Font used from BEfonts at https://befonts.com/ */
 @font-face {
     font-family: 'Geomanist';
     src: url('./fonts/geomanist-regular-webfont.woff');
@@ -80,6 +76,8 @@
 .view-blog-comments-form {
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+    margin-right: 2.5%;
+    margin-bottom: 2.5%;
 }
 
 .view-blog-comments-section {

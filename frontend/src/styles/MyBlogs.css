@@ -1,0 +1,11 @@
+/* Font used from BEfonts at https://befonts.com/ */
+@font-face {
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
+.my-blogs-title {
+    font-family: 'MasterOfBreak', Georgia, 'Times New Roman', Times, serif;
+    margin-bottom: 1%;
+}
+

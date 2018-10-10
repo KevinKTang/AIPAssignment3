@@ -106,7 +106,7 @@ class LoginForm extends Component {
                 <form onSubmit={this.login}>
                     <div className="container">
                         <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                            <h3 className="login-title">Login</h3>
+                            <h1 className="login-title">Login</h1>
                             <input ref={c => this._input = c} className="form-control" name="email" value={this.state.email} onChange={this.handleInputChange} type="email" placeholder="E-mail" required />
                             <input className="form-control" name="password" value={this.state.password} onChange={this.handleInputChange} type="password" placeholder="Password" required />
                             <button disabled={this.state.isLoading} className="btn btn-lg btn-primary btn-block" type="submit">{this.state.isLoading ? ('Submitting...') : ('Submit')}</button>

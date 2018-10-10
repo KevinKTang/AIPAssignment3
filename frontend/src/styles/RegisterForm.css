@@ -1,12 +1,24 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/* Font used from BEfonts at https://befonts.com/ */
+@font-face {
+    font-family: 'MasterOfBreak';
+    src: url('./fonts/MasterOfBreak.woff');
+}
+
+@font-face {
+    font-family: 'Geomanist';
+    src: url('./fonts/geomanist-regular-webfont.woff');
+}
+
+
 
 .register-title {
-    font-family: "Audrey", sans-serif;
+    font-family: "MasterOfBreak", sans-serif;
     font-weight: 500;
+    margin-bottom: 3%;
 }
 
 .form-control {
-    font-family: "Roboto", sans-serif;
+    font-family: "Geomanist", sans-serif;
     outline: 0;
     background: #f2f2f2;
     width: 100%;
