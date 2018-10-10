@@ -93,7 +93,7 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div>
+            <div className="text-center">
                 {/* Alert for incorrect login */}
                 {this.state.alert ? (
                     <div className="alert alert-danger alert-dismissible">

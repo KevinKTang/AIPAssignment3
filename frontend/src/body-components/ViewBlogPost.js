@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { EditorState, convertFromRaw, Editor } from 'draft-js';
-import Moment from 'moment'
+import Moment from 'moment';
 import Loading from '../Loading'
 import '../styles/ViewBlogPost.css'
 
@@ -168,7 +168,7 @@ class ViewBlogPost extends Component {
                         comments: [
                             // Since server returns comment and does not perform a join to find user,
                             // get user from app state and add to comment row
-                            {...res.affectedCommentRow, user: {firstname: this.props.user.firstname, lastname: this.props.user.lastname}},
+                            { ...res.affectedCommentRow, user: { firstname: this.props.user.firstname, lastname: this.props.user.lastname } },
                             ...this.state.comments
                         ]
                     });
@@ -187,12 +187,12 @@ class ViewBlogPost extends Component {
                 });
             }
         })
-        .catch(err => {
-            // Restore button to normal state (not loading)
-            this.setState({
-                isLoadingComment: false
+            .catch(err => {
+                // Restore button to normal state (not loading)
+                this.setState({
+                    isLoadingComment: false
+                });
             });
-        });
     }
 
     eachComment(comment) {
@@ -222,7 +222,7 @@ class ViewBlogPost extends Component {
                 ) : (
                         this.state.isLoading ? ('') : (
                             <div>
-                                <div className="view-blog-alert">
+                                <div className="text-center">
                                     {/* Alert for error loading blog post */}
                                     {this.state.alert ? (
                                         <div className="alert alert-danger alert-dismissible">
@@ -242,36 +242,34 @@ class ViewBlogPost extends Component {
                                         <div className="editor-display">
                                             {<Editor editorState={this.state.editorState} readOnly />}
                                         </div>
-
-                                        <hr className="view-blog-hr"></hr>
+                                        {/* Likes. If no likes, show 0 */}
+                                        {/* Comments. If no comments, show 0 */}
                                         <div className="counter text-center">
                                             <p>Likes: {this.state.likes ? this.state.likes : 0}</p>
                                             <p>Comments: {this.state.commentCount ? this.state.commentCount : 0}</p>
-                                        </div>
-                                        {/* Likes. If no likes, show 0 */}
-                                        {this.props.isLoggedIn ? (
+                                            {this.props.isLoggedIn ? (
                                             this.state.liked ? (
                                                 <button className="btn btn-primary" onClick={this.likeBlog}>Unlike</button>
                                             ) : (
                                                     <button className="btn btn-primary" onClick={this.likeBlog}>Like</button>
                                                 )
                                         ) : ('')}
-
-                                        {/* Comments Section. If no comments, indicate this to the user */}
+                                        </div>
 
                                         {/* Comment form */}
-                                        {this.props.isLoggedIn? (
-                                            <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
+                                        {this.props.isLoggedIn ? (
+                                            <form className="view-blog-comments-form" onSubmit={this.comment}>
                                                 <p>Comment:</p>
                                                 <input disabled={this.state.isLoadingComment} className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
                                                 <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                             </form>
                                         ) : ('')}
-
-                                        <h2>Comments</h2>
-                                        {this.state.comments.length === 0 ? (
-                                            <p>There are no comments yet!</p>
-                                        ) : (this.state.comments.map(comment => this.eachComment(comment)))}
+                                        <div className="view-blog-comments-section">
+                                            <h2>Comments</h2>
+                                            {this.state.comments.length === 0 ? (
+                                                <p>There are no comments yet!</p>
+                                            ) : (this.state.comments.map(comment => this.eachComment(comment)))}
+                                        </div>
                                     </div>
                                 ) : ('')}
                             </div>

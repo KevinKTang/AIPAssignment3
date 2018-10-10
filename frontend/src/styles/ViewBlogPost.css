@@ -3,26 +3,29 @@
     src: url('./fonts/Audrey-Normal.woff');
 }
 
-.editor-display {
-    border-left: 4px solid black;
-    margin: auto;
-    padding-left: 1%;
-    padding-right: 1%;
-    width: 85%;
-    text-align: justify;
+@font-face {
+    font-family: 'Geomanist';
+    src: url('./fonts/geomanist-regular-webfont.woff');
+}
+
+@font-face {
+    font-family: 'Bondie';
+    src: url('./fonts/BondieDemo-Regular.woff');
 }
 
 .view-blog-title {
     margin-left: 7.5%;
-    font-family: 'Lucida', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Bondie', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 70px;
+    margin-bottom: -1%;
 }
 
 .view-blog-author {
      font-style: oblique;
      margin-left: 7.5%;
-     font-family: 'Calibri', Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+     margin-top: 0.5%;
+     font-family: 'Geomanist', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-
 .view-blog-description {
     color: slategray;
     margin-left: 7.5%;
@@ -39,9 +42,8 @@
     height: 30px;
     border-style: solid;
     border-color: black;
-    border-width: 2px 0 0 0;
+    border-width: 3px 0 0 0;
     border-radius: 20px;
-    width: 87.5%;
 }
 .view-blog-hr::after {
     display: block;
@@ -50,11 +52,37 @@
     margin-top: -30px;
     border-style: solid;
     border-color: black;
-    border-width: 0 0 1px 0;
+    border-width: 0 0 3px 0;
     border-radius: 20px;
+}
+
+.editor-display {
+    border-left: 4px solid black;
+    margin: auto;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-bottom: 2.5%;
+    width: 85%;
+    text-align: left;
+    margin-top: -1.5%;
 }
 
 .counter {
     margin-left: 7.5%;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.form-group {
+    margin-left: 7.5%;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.view-blog-comments-form {
+    margin-left: 7.5%;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
+}
+
+.view-blog-comments-section {
+    margin-left: 7.5%;
+    font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
 }

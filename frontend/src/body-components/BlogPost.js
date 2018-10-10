@@ -124,13 +124,13 @@ class BlogPost extends Component {
                 {/* Blog post */}
                 <div className="card shadow text-center">
                     <div className="card-body">
-                        <h5 className="card-title">{this.props.title}</h5>
+                        <h3 className="card-title">{this.props.title}</h3>
 
                         {/* Show author if not viewing your own blogs */}
-                        {this.props.canDelete ? '' : (<p>By: {this.props.author}</p>)}
+                        {this.props.canDelete ? '' : (<h5 className="card-author">{this.props.author}</h5>)}
                         <hr></hr>
                         
-                        <div className="card-text">{this.props.description}</div>
+                        <div className="card-description">{this.props.description}</div>
                         <hr></hr>
                         
                         {/* Likes. If no likes, show 0 */}
