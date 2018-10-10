@@ -76,14 +76,6 @@ describe('Users', function() {
             });
     });
 
-    it('Try connect to session while logged out', () => {
-        return agent
-            .get('/checkSession')
-            .then((res) => {
-                expect(res).to.have.status(404);
-            });
-    });
-
     it('Login', () => {
         return agent
             .post('/login')

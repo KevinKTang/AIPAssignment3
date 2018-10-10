@@ -162,7 +162,13 @@ app.get('/blogs', (req, res) => {
                 where: { id: {$col: 'Blog.userId'} },
                 attributes: ['firstname', 'lastname'],
                 required: false
-            }],
+            },
+            {
+                model: Likes,
+                where: { userId: req.session.userId },
+                required: false
+            }
+        ],
             attributes: {exclude: ['content'] },
             limit: 20,
             order: [['updatedAt', 'DESC']]
