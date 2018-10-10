@@ -2,21 +2,26 @@
 
 A web application for bloggers and writers to share and view content.
 
+![Home screen of application](HomeScreen.JPG)
+
 ## Getting Started
-This web application is currently under development. To run, install the files and execute the following command within both the frontend and backend folder:
+To run this web application, first install the files and execute the following command within both the frontend and backend folder:
 ```
 npm install
 ```
-This will install all the dependencies. To start the backend server run:
-```
-node Server.js
-```
-in the backend folder. This will start the server at http://localhost:5000/
+This will install all required dependencies.  
+
 To start the front end, run:
 ```
 npm start
 ```
-in the frontend folder. This will start the application at http://localhost:3000/
+in the frontend folder. This will start the application at http://localhost:3000/.  
+
+To start the backend server run:
+```
+node Server.js
+```
+in the backend folder. This will start the server at http://localhost:5000/.
 
 ## Running the Tests
 Testing has been provided for our backend using the testing framework Mocha and the assertion library Chai.
