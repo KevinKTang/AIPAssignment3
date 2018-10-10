@@ -56,6 +56,10 @@ class MyBlogs extends Component {
                     isLoading: false,
                     showLoading: false
                 });
+            } else {
+                this.setState({
+                    alert: 'Error retrieving blog posts.'
+                });
             }
         })
         .catch(err => {
