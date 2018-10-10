@@ -259,14 +259,18 @@ class ViewBlogPost extends Component {
                                         {/* Comments Section. If no comments, indicate this to the user */}
 
                                         {/* Comment form */}
-                                        <p>Comment:</p>
-                                        <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
-                                            <input disabled={this.state.isLoadingComment} className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
-                                            <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
-                                        </form>
+                                        {this.props.isLoggedIn? (
+                                            <form className="col-sm-9 col-md-7 col-lg-5 mx-auto" onSubmit={this.comment}>
+                                                <p>Comment:</p>
+                                                <input disabled={this.state.isLoadingComment} className="form-control" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></input>
+                                                <button disabled={this.state.isLoadingComment} className="btn btn-primary" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
+                                            </form>
+                                        ) : ('')}
 
                                         <h2>Comments</h2>
-                                        {this.state.comments.length === 0 ? (<p>Be the first to write a comment!</p>) : (this.state.comments.map(comment => this.eachComment(comment)))}
+                                        {this.state.comments.length === 0 ? (
+                                            <p>There are no comments yet!</p>
+                                        ) : (this.state.comments.map(comment => this.eachComment(comment)))}
                                     </div>
                                 ) : ('')}
                             </div>
