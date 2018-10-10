@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import './styles/Header.css';
 
 /*
-    This header component simply displays our website name
-    and contains a login button. Once logged in will contain
-    navigation to Account Settings, Your Posts and Logout.
+    This header component displays our website name
+    and relevant buttons to press relative to the user's
+    state.
 */
 
 class Header extends Component {
@@ -21,7 +21,7 @@ class Header extends Component {
         }
         this.logout = this.logout.bind(this);
     }
-    
+
     logout() {
         this.setState({
             isLoading: true
@@ -40,33 +40,32 @@ class Header extends Component {
                 });
             })
     }
-    
+
     render() {
         return (
-            <header className="navbar navbar-expand-md fixed-top bg-dark d-print">
-            <div>
-                <Link className="navbar-brand" to="/">Off With His Read</Link>
-                {this.props.isLoggedIn ? (<div className="navbar-text mx-auto"> Welcome, {this.props.userFirstname}</div>) : ('')}
-            </div>
-
+            <nav className="navbar navbar-expand-md fixed-top bg-dark d-print">
+                <div>
+                    <Link className="navbar-brand" to="/">Off With His Read</Link>
+                    {this.props.isLoggedIn ? (<div className="navbar-text mx-auto"> Welcome, {this.props.userFirstname}</div>) : ('')}
+                </div>
                 {this.props.isLoggedIn ? (
-                    <div className="navbar-nav ml-auto">
-                        <Link className="btn btn-primary header-btn" to="/">Home</Link>
-                        <Link className="btn btn-info header-btn" to="/myblogs">My Blogs</Link>
-                        <Link className="btn btn-info header-btn" to="/createblog">Create Blog</Link>
-                        <button disabled={this.state.isLoading} className="btn btn-danger header-btn" onClick={this.logout}>{this.state.isLoading ? ('Logging out...') : ('Logout')}</button>
-                    </div>
-                ) : (
+                        <div className="navbar-nav ml-auto">
+                            <Link className="btn btn-primary header-btn" to="/">Home</Link>
+                            <Link className="btn btn-info header-btn" to="/myblogs">My Blogs</Link>
+                            <Link className="btn btn-info header-btn" to="/createblog">Create Blog</Link>
+                            <button disabled={this.state.isLoading} className="btn btn-danger header-btn" onClick={this.logout}>{this.state.isLoading ? ('Logging out...') : ('Logout')}</button>
+                        </div> 
+                        ) : (
                         <div className="navbar-nav ml-auto">
                             <Link className="btn btn-primary header-btn" to="/">Home</Link>
                             <Link className="btn btn-info header-btn" to="/login">Login</Link>
                             <Link className="btn btn-info header-btn" to="/register">Register</Link>
                         </div>
-                    )}
-            </header>
+                        )}
+            </nav>
         )
     }
-    
-}
 
-export default withRouter(Header);
+                }
+                
+                export default withRouter(Header);

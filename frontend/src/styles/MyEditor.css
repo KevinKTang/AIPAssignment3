@@ -13,6 +13,7 @@
   padding: 15px;
   border-radius: 2px;
   margin-bottom: 2.5%;
+  font-family: 'Calibri';
 }
 
 .editor :global(.public-DraftEditor-content) {

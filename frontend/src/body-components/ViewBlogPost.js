@@ -237,7 +237,7 @@ class ViewBlogPost extends Component {
                 <div className="comment-content media-body">
                 <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
                 <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
-                {comment.content} 
+                <p>{comment.content} </p>
                 </div>
             </li>
             </ul>
@@ -284,8 +284,9 @@ class ViewBlogPost extends Component {
 
                                         <hr className="blog-hr"></hr>
 
-                                        <div className="editor-display">
+                                        <div className="editor-display col-8">
                                             {<Editor editorState={this.state.editorState} readOnly />}
+
                                         </div>
                                         {/* Likes. If no likes, show 0 */}
                                         <div className="counter">

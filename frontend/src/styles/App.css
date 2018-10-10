@@ -1,4 +1,10 @@
+/* Fonts used from BEfonts at https://befonts.com/ */
+@font-face {
+  font-family: 'Geomanist';
+  src: url('./fonts/geomanist-regular-webfont.woff');
+}
+
 .btn {
     font-weight: 800;
-    font-family: 'Helvetica', Arial, sans-serif;
+    font-family: 'Geomanist', Arial, sans-serif;
   }
