@@ -113,12 +113,12 @@ class CreatePost extends Component {
     render() {
         return (
             <div>
-                <h1 className="create-blog-title">Create Blog</h1>
+                <h1 className="title">Create Blog</h1>
                 {/* Blog post form */}
                 <form onSubmit={this.newBlog}>
                     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                         <input ref={c => this._input = c} className="form-control" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
-                        <input className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange} type="text" placeholder="Description" required></input>
+                        <textarea className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange} type="text" placeholder="Description" required></textarea>
                     </div>
                     <MyEditor updateParent={this.onEditorChange} />
                     {/* TODO: fix rendering position */}

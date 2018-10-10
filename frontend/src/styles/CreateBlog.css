@@ -4,7 +4,12 @@
     src: url('./fonts/MasterOfBreak.woff');
 }
 
-.create-blog-title {
+.title {
     font-family: 'MasterOfBreak', Georgia, 'Times New Roman', Times, serif;
     text-align: center;
 }
+
+textarea[name=description] {
+    resize: none;
+    max-height: 5em;
+  }
