@@ -16,6 +16,7 @@ class ViewBlogPost extends Component {
             alert: '',
             blogId: '',
             title: '',
+            createdAt: '',
             description: '',
             commentCount: '',
             comments: [],
@@ -32,6 +33,7 @@ class ViewBlogPost extends Component {
         this.comment = this.comment.bind(this);
         this.likeBlog = this.likeBlog.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.formatWhenCreated = this.formatWhenCreated.bind(this);
         this.timer = setInterval(this.startLoading, 500);
     }
 
@@ -71,6 +73,7 @@ class ViewBlogPost extends Component {
                             this.setState({
                                 blogId: blog.id,
                                 title: blog.title,
+                                createdAt: blog.createdAt,
                                 author: blog.user.firstname + ' ' + blog.user.lastname,
                                 description: blog.description,
                                 likes: blog.likesCount,
@@ -206,10 +209,24 @@ class ViewBlogPost extends Component {
             });
     }
 
+    formatWhenCreated(timeCreated) {
+         // Show how long since the blog post was created. If over 24 hours, show date.
+         let timeSince = Moment.duration(Moment(new Date()).diff(timeCreated));
+         if (timeSince.asHours() >= 24) {
+             return (
+                 Moment(timeCreated).format('MMM DD, YYYY')
+             )
+         } else {
+             return (
+                 Moment(timeCreated).fromNow()
+             )
+         }
+    }
+
     eachComment(comment) {
         return (
             <li key={comment.id}>
-                {comment.user.firstname + ' ' + comment.user.lastname} | {comment.content} | {Moment(comment.createdAt).format('Do MMMM YYYY hh:mm A')}
+                {comment.user.firstname + ' ' + comment.user.lastname} | {comment.content} | {this.formatWhenCreated(comment.createdAt)}
             </li>
         )
     }
@@ -243,10 +260,13 @@ class ViewBlogPost extends Component {
                                     ) : ('')}
                                 </div>
 
+                                {/* Only show content if this blog exists (using title to check).
+                                    This avoid an alert that it does not exist with an empty sekelton blog */}
                                 {!(this.state.title === '') ? (
                                     <div>
                                         <h1 className="view-blog-title">{this.state.title}</h1>
                                         <h3 className="view-blog-author" label="By:"> {this.state.author}</h3>
+                                        <p className="view-blog-author">{Moment(this.props.createdAt).format('Do MMMM YYYY')}</p>
                                         <h6 className="view-blog-description">{this.state.description}</h6>
 
                                         <hr className="view-blog-hr"></hr>

@@ -148,12 +148,13 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
+                    author={blog.user.firstname + ' ' + blog.user.lastname}
+                    createdAt={blog.createdAt}
                     description={blog.description}
                     likes={blog.likesCount}
                     comments={blog.commentCount}
                     likeable={true}
                     liked={blogLiked}
-                    author={blog.user.firstname + ' ' + blog.user.lastname}
                     blogsView={this.props.blogsView}
                     updateBlogsView={this.props.updateBlogsView}>
                 </BlogPost>
@@ -164,11 +165,12 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
+                    author={blog.user.firstname + ' ' + blog.user.lastname}
+                    createdAt={blog.createdAt}
                     description={blog.description}
                     likes={blog.likesCount}
                     comments={blog.commentCount}
-                    likeable={false}
-                    author={blog.user.firstname + ' ' + blog.user.lastname}>
+                    likeable={false}>
                 </BlogPost>
             );
         }

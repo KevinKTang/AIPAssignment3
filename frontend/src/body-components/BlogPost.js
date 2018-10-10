@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import '../styles/BlogPost.css';
 import { withRouter } from 'react-router';
+import Moment from 'moment';
+import '../styles/BlogPost.css';
 
 /* 
     Blog Post cards will be displayed on the main page.
@@ -22,6 +23,7 @@ class BlogPost extends Component {
         this.dismissAlert = this.dismissAlert.bind(this);
         this.viewSelectedBlog = this.viewSelectedBlog.bind(this);
         this.deleteBlog = this.deleteBlog.bind(this);
+        this.formatWhenCreated = this.formatWhenCreated.bind(this);
     }
 
     // To update some props when component mounts before parent async call complete
@@ -109,6 +111,20 @@ class BlogPost extends Component {
         });
     }
 
+    formatWhenCreated() {
+        // Show how long since the blog post was created. If over 24 hours, show date.
+        let timeSince = Moment.duration(Moment(new Date()).diff(this.props.createdAt));
+        if (timeSince.asHours() >= 24) {
+            return (
+                Moment(this.props.createdAt).format('Do MMMM YYYY')
+            )
+        } else {
+            return (
+                Moment(this.props.createdAt).fromNow()
+            )
+        }
+    }
+
     // Blog posts that are displayed in the user's blog section can be deleted
     render() {
         return (
@@ -128,6 +144,9 @@ class BlogPost extends Component {
 
                         {/* Show author if not viewing your own blogs */}
                         {this.props.canDelete ? '' : (<h5 className="card-author">{this.props.author}</h5>)}
+
+                        {this.formatWhenCreated()}
+                            
                         <hr></hr>
                         
                         <div className="card-description">{this.props.description}</div>

@@ -117,6 +117,7 @@ class MyBlogs extends Component {
                 key={blog.id}
                 id={blog.id}
                 title={blog.title}
+                createdAt={blog.createdAt}
                 description={blog.description}
                 likes={blog.likesCount}
                 comments={blog.commentCount}
