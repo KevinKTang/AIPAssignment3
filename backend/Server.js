@@ -137,10 +137,11 @@ app.get('/blog/:blogId', (req, res) => {
                     attributes: ['firstname', 'lastname'],
                     required: false
                 }],
-                order: [['createdAt', 'DESC']],
                 required: false
-            }
-        ]
+            }],
+            order: [
+                [Comments, 'createdAt', 'DESC']
+            ]
         })
         .then(blog => {
             if (blog) {
