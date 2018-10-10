@@ -17,6 +17,66 @@ describe('Users', function() {
     let userEmail = 'darcysmith675423@mygmail.com';
     let userPassword = 'myPassword';
 
+    it('Test register firstname input validation', () => {
+        return agent
+            .post('/newUser')
+            .send({
+                firstname: 'f',
+                lastname: 'lastname',
+                email: '5234@gmail.com',
+                password: 'userPassword'
+            })
+            .then((res) => {
+                expect(res).to.have.status(400);
+                expect(res.body.alert).to.equal('Firstname must be 2 or more characters in length.')
+            });
+    });
+
+    it('Test register lastname input validation', () => {
+        return agent
+            .post('/newUser')
+            .send({
+                firstname: 'firstname',
+                lastname: 'l',
+                email: '5234@gmail.com',
+                password: 'userPassword'
+            })
+            .then((res) => {
+                expect(res).to.have.status(400);
+                expect(res.body.alert).to.equal('Lastname must be 2 or more characters in length.')
+            });
+    });
+
+    it('Test register email input validation', () => {
+        return agent
+            .post('/newUser')
+            .send({
+                firstname: 'firstname',
+                lastname: 'lastname',
+                email: '5234@gmail',
+                password: 'userPassword'
+            })
+            .then((res) => {
+                expect(res).to.have.status(400);
+                expect(res.body.alert).to.equal('Email format is incorrect. It must be in a format similar to example@email.com')
+            });
+    });
+
+    it('Test register password input validation', () => {
+        return agent
+            .post('/newUser')
+            .send({
+                firstname: 'firstname',
+                lastname: 'lastname',
+                email: '5234@gmail.com',
+                password: 'pass'
+            })
+            .then((res) => {
+                expect(res).to.have.status(400);
+                expect(res.body.alert).to.equal('Password must be 8 or more characters in length.')
+            });
+    });
+
     it('Register new user', () => {
         return agent
             .post('/newUser')
@@ -175,11 +235,11 @@ describe('Blogs', function() {
     });
 
     let firstBlogTitle = 'First';
-    let firstBlogBlurb = 'This is the description of the blog post.';
+    let firstBlogDesc = 'This is the description of the blog post.';
     let secondBlogTitle = 'Second';
-    let secondBlogBlurb = 'Second description.';
+    let secondBlogDesc = 'Second description.';
     let thirdBlogTitle = 'Third';
-    let thirdBlogBlurb = 'Third description';
+    let thirdBlogDesc = 'Third description';
     let firstBlogId = '';
     let secondBlogId = '';
     let thirdBlogId = '';
@@ -189,7 +249,7 @@ describe('Blogs', function() {
             .post('/createBlog')
             .send({
                 title: firstBlogTitle,
-                description: firstBlogBlurb
+                description: firstBlogDesc
             })
             .then((res) => {
                 expect(res).to.have.status(201);
@@ -198,7 +258,7 @@ describe('Blogs', function() {
                     .post('/createBlog')
                     .send({
                         title: secondBlogTitle,
-                        description: secondBlogBlurb
+                        description: secondBlogDesc
                     })
                     .then((res) => {
                         expect(res).to.have.status(201);
@@ -207,7 +267,7 @@ describe('Blogs', function() {
                             .post('/createBlog')
                             .send({
                                 title: thirdBlogTitle,
-                                description: thirdBlogBlurb
+                                description: thirdBlogDesc
                             })
                             .then((res) => {
                                 expect(res).to.have.status(201);
@@ -224,11 +284,11 @@ describe('Blogs', function() {
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
                 expect(res.body[0].title).to.equal(thirdBlogTitle);
-                expect(res.body[0].description).to.equal(thirdBlogBlurb);
+                expect(res.body[0].description).to.equal(thirdBlogDesc);
                 expect(res.body[1].title).to.equal(secondBlogTitle);
-                expect(res.body[1].description).to.equal(secondBlogBlurb);
+                expect(res.body[1].description).to.equal(secondBlogDesc);
                 expect(res.body[2].title).to.equal(firstBlogTitle);
-                expect(res.body[2].description).to.equal(firstBlogBlurb);
+                expect(res.body[2].description).to.equal(firstBlogDesc);
             })
     });
 
@@ -239,7 +299,7 @@ describe('Blogs', function() {
                 expect(res).to.to.status(200);
                 expect(res).to.be.json;
                 expect(res.body.title).to.equal(thirdBlogTitle);
-                expect(res.body.description).to.equal(thirdBlogBlurb);
+                expect(res.body.description).to.equal(thirdBlogDesc);
                 expect(res.body.user.firstname).to.equal(firstname);
                 expect(res.body.user.lastname).to.equal(lastname);
             });

@@ -376,24 +376,35 @@ app.delete('/deleteBlog', (req, res) => {
 
 // Create a new user, create the session and return the user's firstname
 app.post('/newUser', (req, res) => {
-    User.create({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password
-    })
-    .then(newUser => {
-        if (newUser) {
-            req.session.userId = newUser.id;
-            res.status(200).json(newUser);
-            console.log('New user ' + newUser.firstname + ' created');
-        } else {
-            res.status(500).send();
-        }
-    })
-    .catch(Sequelize.UniqueConstraintError, (err) => {
-        res.status(409).send();
-    });
+    //Validate user input
+    if (req.body.firstname.length < 2) {
+        res.status(400).send({alert: 'Firstname must be 2 or more characters in length.'});
+    } else if (req.body.lastname.length < 2) {
+        res.status(400).send({alert: 'Lastname must be 2 or more characters in length.'});
+    } else if (!(/.{1,}@{1}.{1,}\.{1,}.{1,}/.test(req.body.email))) {
+        res.status(400).send({alert: 'Email format is incorrect. It must be in a format similar to example@email.com'});
+    } else if (req.body.password.length < 8) {
+        res.status(400).send({alert: 'Password must be 8 or more characters in length.'});
+    } else {
+        User.create({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: req.body.password
+        })
+        .then(newUser => {
+            if (newUser) {
+                req.session.userId = newUser.id;
+                res.status(200).json(newUser);
+                console.log('New user ' + newUser.firstname + ' created');
+            } else {
+                res.status(500).send();
+            }
+        })
+        .catch(Sequelize.UniqueConstraintError, (err) => {
+            res.status(409).send();
+        });
+    }
 });
 
 // If user login successful, create the session and return the user's firstname

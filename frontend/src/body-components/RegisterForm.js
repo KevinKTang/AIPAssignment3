@@ -62,7 +62,13 @@ class RegisterForm extends Component {
                     alert: 'An account with that email address is already taken. Try using a different email address.'
                 });
             }
-            else {
+            else if (res.status === 400) {
+                    res.json().then(res => {
+                        this.setState({
+                            alert: res.alert
+                        });
+                    });
+            } else {
                 this.setState({
                     alert: 'Error registering new user.'
                 });
