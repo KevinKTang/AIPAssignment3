@@ -35,13 +35,12 @@ const sequelize = new Sequelize('database', 'username', 'password', {
     //logging: false
 });
 
-// User model
-const User = sequelize.define('user', {
-    firstname: Sequelize.STRING,
-    lastname: Sequelize.STRING,
-    email: {type: Sequelize.STRING, unique: true},
-    password: Sequelize.STRING // Change later
-});
+// Import models
+const User = sequelize.import(__dirname + '/models/User.js');
+const Blog = sequelize.import(__dirname + '/models/Blog.js');
+const Likes = sequelize.import(__dirname + '/models/Likes.js');
+const Comments = sequelize.import(__dirname + '/models/Comments.js');
+
 
 // Hash password before create a new user
 User.beforeCreate((user, options) => {
@@ -50,30 +49,12 @@ User.beforeCreate((user, options) => {
         .catch(err => console.error(err));
 });
 
-// Blog model
-const Blog = sequelize.define('blog', {
-    title: Sequelize.STRING,
-    description: Sequelize.STRING,
-    content: Sequelize.JSON,
-    likesCount: Sequelize.INTEGER,
-    commentCount: Sequelize.INTEGER
-});
-
 // Associated both ways so can get user from blog, and blog from user
 User.hasMany(Blog, {foreignKey: 'userId'});
 Blog.belongsTo(User, {foreignKey: 'userId'});
 
-// Likes model
-const Likes = sequelize.define('likes', {
-
-});
-
 User.hasMany(Likes, {foreignKey: 'userId'});
 Blog.hasMany(Likes, {foreignKey: 'blogId'});
-
-const Comments = sequelize.define('comments', {
-    content: Sequelize.STRING
-});
 
 Blog.hasMany(Comments, {foreignKey: 'blogId'});
 // Associated both ways so can get comments from user, and user from comments
