@@ -138,8 +138,8 @@ class BlogPosts extends Component {
         if (this.props.isLoggedIn) {
             // Check if this user has liked the blog post
             let blogLiked;
-            if (blog.likes) {
-                blogLiked = blog.likes.length !== 0;
+            if (blog.Likes) {
+                blogLiked = blog.Likes.length !== 0;
             } else {
                 blogLiked = false;
             }
@@ -148,7 +148,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    author={blog.user.firstname + ' ' + blog.user.lastname}
+                    author={blog.User.firstname + ' ' + blog.User.lastname}
                     createdAt={blog.createdAt}
                     description={blog.description}
                     likes={blog.likesCount}
@@ -165,7 +165,7 @@ class BlogPosts extends Component {
                     key={blog.id}
                     id={blog.id}
                     title={blog.title}
-                    author={blog.user.firstname + ' ' + blog.user.lastname}
+                    author={blog.User.firstname + ' ' + blog.User.lastname}
                     createdAt={blog.createdAt}
                     description={blog.description}
                     likes={blog.likesCount}

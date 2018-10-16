@@ -65,8 +65,8 @@ class ViewBlogPost extends Component {
                         .then(blog => {
                             // Check if this user has liked the blog post
                             let blogLiked;
-                            if (blog.likes) {
-                                blogLiked = blog.likes.length !== 0;
+                            if (blog.Likes) {
+                                blogLiked = blog.Likes.length !== 0;
                             } else {
                                 blogLiked = false;
                             }
@@ -74,12 +74,12 @@ class ViewBlogPost extends Component {
                                 blogId: blog.id,
                                 title: blog.title,
                                 createdAt: blog.createdAt,
-                                author: blog.user.firstname + ' ' + blog.user.lastname,
+                                author: blog.User.firstname + ' ' + blog.User.lastname,
                                 description: blog.description,
                                 likes: blog.likesCount,
                                 liked: blogLiked,
                                 commentCount: blog.commentCount,
-                                comments: blog.comments
+                                comments: blog.Comments
                             });
                             // Populate blog body with content
                             // If there is an error with displaying, notify the user
@@ -182,7 +182,7 @@ class ViewBlogPost extends Component {
                         comments: [
                             // Since server returns comment and does not perform a join to find user,
                             // get user from app state and add to comment row
-                            { ...res.affectedCommentRow, user: { firstname: this.props.user.firstname, lastname: this.props.user.lastname } },
+                            { ...res.affectedCommentRow, User: { firstname: this.props.user.firstname, lastname: this.props.user.lastname } },
                             ...this.state.comments
                         ]
                     });
@@ -240,7 +240,7 @@ class ViewBlogPost extends Component {
         return (
             <li className="media" key={comment.id}>
                 <div className="comment-content media-body">
-                <h5 className="comment-name mt-0"> {comment.user.firstname + ' ' + comment.user.lastname}</h5> 
+                <h5 className="comment-name mt-0"> {comment.User.firstname + ' ' + comment.User.lastname}</h5> 
                 <p className="comment-time">{this.formatWhenCreated(comment.createdAt)}</p>
                 <p>{comment.content} </p>
                 </div>

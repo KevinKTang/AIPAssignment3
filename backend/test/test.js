@@ -345,8 +345,8 @@ describe('Blogs', function() {
                 expect(res).to.be.json;
                 expect(res.body.title).to.equal(thirdBlogTitle);
                 expect(res.body.description).to.equal(thirdBlogDesc);
-                expect(res.body.user.firstname).to.equal(firstname);
-                expect(res.body.user.lastname).to.equal(lastname);
+                expect(res.body.User.firstname).to.equal(firstname);
+                expect(res.body.User.lastname).to.equal(lastname);
             });
     });
 
@@ -483,10 +483,10 @@ describe('Blogs', function() {
         .then(res => {
             expect(res).to.have.status(200);
             expect(res.body.length).to.equal(2);
-            expect(res.body[0].user.firstname).to.equal(firstname);
-            expect(res.body[0].user.lastname).to.equal(lastname);
-            expect(res.body[1].user.firstname).to.equal(firstname);
-            expect(res.body[1].user.lastname).to.equal(lastname);
+            expect(res.body[0].User.firstname).to.equal(firstname);
+            expect(res.body[0].User.lastname).to.equal(lastname);
+            expect(res.body[1].User.firstname).to.equal(firstname);
+            expect(res.body[1].User.lastname).to.equal(lastname);
         });
     });
 
