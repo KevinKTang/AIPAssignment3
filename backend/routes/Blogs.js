@@ -1,7 +1,6 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
-const { performance } = require('perf_hooks');
 
 var Sequelize = require('sequelize');
 
@@ -253,7 +252,6 @@ router.post('/createBlog', (req, res) => {
 // Delete a blog using its id
 // If there is no user logged in or the user did not create the blog, return forbidden status
 router.delete('/deleteBlog', (req, res) => {
-    let startTime = performance.now();
     if (req.session.userId) {
         models.Blog.findOne({ where: { id: req.body.blogId } })
             .then(blog => {
@@ -271,8 +269,6 @@ router.delete('/deleteBlog', (req, res) => {
                                             .then(affectedRows => {
                                                 if (affectedRows === 1) {
                                                     res.status(200).send();
-                                                    console.log('Time taken: ');
-                                                    console.log(performance.now() - startTime); 
                                                 } else {
                                                     res.status(409).send();
                                                 }

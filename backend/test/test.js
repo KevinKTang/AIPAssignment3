@@ -10,7 +10,7 @@ const server = require('../Server.js');
 var agent = chai.request.agent(server);
 
 describe('Users', function() {
-    this.timeout(10000);
+    this.timeout(2000);
 
     let firstname = 'Darcy';
     let lastname = 'Smith';
@@ -28,7 +28,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.alert).to.equal('Firstname must be 2 or more characters in length.')
+                expect(res.body.alert).to.equal('Validation error: Firstname must be 2 or more characters in length.')
             });
     });
 
@@ -43,7 +43,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.alert).to.equal('Lastname must be 2 or more characters in length.')
+                expect(res.body.alert).to.equal('Validation error: Lastname must be 2 or more characters in length.')
             });
     });
 
@@ -58,7 +58,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.alert).to.equal('Email format is incorrect. It must be in a format similar to example@email.com')
+                expect(res.body.alert).to.equal('Validation error: Email format is incorrect. It must be in a format similar to example@email.com')
             });
     });
 
@@ -73,7 +73,7 @@ describe('Users', function() {
             })
             .then((res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.alert).to.equal('Password must be 8 or more characters in length.')
+                expect(res.body.alert).to.equal('Validation error: Password must be 8 or more characters in length.')
             });
     });
 
@@ -173,7 +173,7 @@ describe('Users', function() {
 });
 
 describe('Blogs', function() {
-    this.timeout(10000);
+    this.timeout(2000);
 
     after(() => {
         agent.close();

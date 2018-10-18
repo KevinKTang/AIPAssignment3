@@ -1,7 +1,6 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
-const { performance } = require('perf_hooks');
 
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
@@ -16,7 +15,6 @@ models.User.beforeCreate((user, options) => {
 
 // Create a new user, create the session and return the user's firstname
 router.post('/newUser', (req, res) => {
-    let startTime = performance.now();
     //Validate user input
   /*  if (!req.body.firstname || req.body.firstname.length < 2) {
         res.status(400).send({ alert: 'Firstname must be 2 or more characters in length.' });
@@ -26,28 +24,26 @@ router.post('/newUser', (req, res) => {
         res.status(400).send({ alert: 'Email format is incorrect. It must be in a format similar to example@email.com' });
     } else if (!req.body.password || req.body.password.length < 8) {
         res.status(400).send({ alert: 'Password must be 8 or more characters in length.' });
-    } else {*/
-        models.User.create({
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            password: req.body.password
-        })
-            .then(newUser => {
-                if (newUser) {
-                    console.log('Time taken');
-                    console.log(performance.now() - startTime);
-                    req.session.userId = newUser.id;
-                    res.status(200).json(newUser);
-                    console.log('New user ' + newUser.firstname + ' created');
-                } else {
-                    res.status(409).send();
-                }
-            })
-            .catch(Sequelize.UniqueConstraintError, (err) => {
-                res.status(409).send();
-            });
-//    }
+    } else { */
+    models.User.create({
+        validate: true,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password
+    })
+    .then((newUser) => {
+        req.session.userId = newUser.id;
+        res.status(200).json(newUser);
+        console.log('New user ' + newUser.firstname + ' created');
+    })
+    .catch(Sequelize.UniqueConstraintError, () => {
+        res.status(409).send();
+    })
+    .catch(Sequelize.ValidationError, (err) => {
+        res.status(400).send({alert: err.message});
+    })
+    .catch();
 });
 
 // If user login successful, create the session and return the user's firstname
