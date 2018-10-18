@@ -4,24 +4,29 @@ A web application for bloggers and writers to share and view content.
 
 ![Home screen of application](HomeScreen.JPG)
 
-## Getting Started
-To run this web application, first install the files and execute the following command within both the frontend and backend folder:
-```
-npm install
-```
-This will install all required dependencies.  
+## Prerequisites
+To run this web application locally, or for development, you will need a text editor of your choice and Node.js installed.
 
-To start the front end, run:
+## Getting Started
+To run this web application, first download or clone this repository.  
+
+This web application is divided into two parts, the frontend and the backend.  
+
+To run the backend, navigate to the repository and execute the following commands:
 ```
+cd backend
+npm install
 npm start
 ```
-in the frontend folder. This will start the application at http://localhost:3000/.  
+This will start the server at http://localhost:5000/.  
 
-To start the backend server run:
+To run the frontend, navigate to the repository and execute the following commands:
 ```
-node Server.js
+cd frontend
+npm install
+npm start
 ```
-in the backend folder. This will start the server at http://localhost:5000/.
+This will start the frontend application at http://localhost:3000/.
 
 ## Running the Tests
 Testing has been provided for our backend using the testing framework Mocha and the assertion library Chai.
@@ -61,3 +66,8 @@ The following coding conventions have been used to provide consistency and impro
 16.	Keep code as simple as possible. For example, use the conditional (ternary) operator instead of an if statement if the whole statement can be expressed on one line, and do not compare x == true.
 17.	Each component in React should have its own css file in the styles folder for its own HTML classes.
 18.	A single blank line should be used to separate code segments.
+
+## Authors
+* [Jason Gilmore](https://github.com/jasongilmore)
+* [Kevin Tang](https://github.com/KevinKTang)
+* [Julian Petkov](https://github.com/JulianPetkov)
