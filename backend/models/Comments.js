@@ -4,11 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Comments.associate = (models) => {
-        models.Blog.hasMany(Comments, {
-            foreignKey: 'blogId',
-            onDelete: 'cascade',
-            hooks: true
-        });
+        models.Blog.hasMany(Comments, {foreignKey: 'blogId'});
         models.User.hasMany(Comments, {foreignKey: 'userId'});
     }
 

@@ -3,11 +3,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Likes.associate = (models) => {
         models.User.hasMany(Likes, {foreignKey: 'userId'});
-        models.Blog.hasMany(Likes, {
-            foreignKey: 'blogId',
-            onDelete: 'cascade',
-            hooks: true
-        });
+        models.Blog.hasMany(Likes, {foreignKey: 'blogId'});
     }
 
     return Likes;

@@ -261,11 +261,11 @@ router.delete('/deleteBlog', (req, res) => {
                     console.log('blog found, userid for this blog is: ' + blog.userId)
                     // Check the user is the one who created this blog
                     if (blog.userId === req.session.userId) {
-                    /*  // First delete likes and comments associated with this blog
+                        // First delete likes and comments associated with this blog
                         models.Likes.destroy({ where: { blogId: req.body.blogId } })
                             .then(() => {
                                 models.Comments.destroy({ where: { blogId: req.body.blogId } })
-                                    .then(() => { */
+                                    .then(() => {
                                         // Delete blog
                                         models.Blog.destroy({ where: { id: req.body.blogId } })
                                             .then(affectedRows => {
@@ -277,8 +277,8 @@ router.delete('/deleteBlog', (req, res) => {
                                                     res.status(409).send();
                                                 }
                                             });
-                                  //  });
-                         //   });
+                                    });
+                            });
                     } else {
                         res.status(403).send();
                     }
