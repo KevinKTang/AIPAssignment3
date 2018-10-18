@@ -1,9 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
-        firstname: DataTypes.STRING,
-        lastname: DataTypes.STRING,
-        email: {type: DataTypes.STRING, unique: true},
-        password: DataTypes.STRING
+        firstname: {
+            type: DataTypes.STRING,
+            notNull: true,
+            len: [2, 200]
+        },
+        lastname: {
+            type: DataTypes.STRING,
+            notNull: true,
+            len: [2, 200]
+        },
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+            isEmail: true
+        },
+        password: {
+            type: DataTypes.STRING,
+            len: [2, 200]
+        }
     });
 
     // Associated both ways so can get user from blog, and blog from user
