@@ -1,6 +1,7 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
+const { performance } = require('perf_hooks');
 
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
@@ -15,6 +16,7 @@ models.User.beforeCreate((user, options) => {
 
 // Create a new user, create the session and return the user's firstname
 router.post('/newUser', (req, res) => {
+    let startTime = performance.now();
     //Validate user input
     if (!req.body.firstname || req.body.firstname.length < 2) {
         res.status(400).send({ alert: 'Firstname must be 2 or more characters in length.' });
@@ -33,6 +35,8 @@ router.post('/newUser', (req, res) => {
         })
             .then(newUser => {
                 if (newUser) {
+                    console.log('Time taken');
+                    console.log(performance.now() - startTime);
                     req.session.userId = newUser.id;
                     res.status(200).json(newUser);
                     console.log('New user ' + newUser.firstname + ' created');
