@@ -14,7 +14,7 @@ class MyBlogs extends Component {
         super();
         this.state = {
             isLoading: true,
-            showLoading: '',
+            showLoading: false,
             blogs: [],
             alert: ''
         }

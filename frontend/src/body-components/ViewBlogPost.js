@@ -17,7 +17,7 @@ class ViewBlogPost extends Component {
         super();
         this.state = {
             isLoading: true,
-            showLoading: '',
+            showLoading: false,
             // Loading state for when submitting a comment
             isLoadingComment: false,
             alert: '',

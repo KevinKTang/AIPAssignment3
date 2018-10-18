@@ -41,7 +41,8 @@ router.get('/blog/:blogId', (req, res) => {
             } else {
                 res.status(404).send();
             }
-        });
+        })
+        .catch(() => res.status(500).send());
 });
 
 // GET / blogs:
@@ -64,7 +65,8 @@ router.get('/blogs', (req, res) => {
             limit: 20,
             order: [['createdAt', 'DESC']]
         })
-        .then(blogs => res.status(200).json(blogs));
+        .then(blogs => res.status(200).json(blogs))
+        .catch(() => res.status(500).send());
 });
 
 // Returns the ordering string for sequelize to orer queries with
@@ -106,7 +108,8 @@ router.post('/blogsCustom', (req, res) => {
                 limit: 20,
                 order: order
             })
-            .then(blogs => res.status(200).json(blogs));
+            .then(blogs => res.status(200).json(blogs))
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }
@@ -121,7 +124,8 @@ router.get('/myBlogs', (req, res) => {
                 attributes: { exclude: ['content'] },
                 order: [['updatedAt', 'DESC']]
             })
-            .then(blogs => res.status(200).json(blogs));
+            .then(blogs => res.status(200).json(blogs))
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }
@@ -159,6 +163,7 @@ router.post('/createBlog', (req, res) => {
                     res.status(403).send();
                 }
             })
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }
@@ -188,15 +193,18 @@ router.delete('/deleteBlog', (req, res) => {
                                                     res.status(409).send();
                                                 }
                                             });
-                                    });
-                            });
+                                    })
+                                    .catch(() => res.status(500).send());
+                            })
+                            .catch(() => res.status(500).send());
                     } else {
                         res.status(403).send();
                     }
                 } else {
                     res.status(404).send();
                 }
-            });
+            })
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }
@@ -227,7 +235,8 @@ router.post('/likeBlog', (req, res) => {
                                                     } else {
                                                         res.status(409).send();
                                                     }
-                                                });
+                                                })
+                                                .catch(() => res.status(500).send());
                                         } else {
                                             res.status(409).send();
                                         }
@@ -253,10 +262,12 @@ router.post('/likeBlog', (req, res) => {
                                     });
                             }
                         })
+                        .catch(() => res.status(500).send());
                 } else {
                     res.status(404).send();
                 }
             })
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }
@@ -285,16 +296,19 @@ router.post('/commentBlog', (req, res) => {
                                             } else {
                                                 res.status(409).send();
                                             }
-                                        });
+                                        })
+                                        .catch(() => res.status(500).send());
                                 } else {
                                     res.status(409).send();
                                 }
-                            });
+                            })
+                            .catch(() => res.status(500).send());
                     }
                 } else {
                     res.status(404).send();
                 }
-            });
+            })
+            .catch(() => res.status(500).send());
     } else {
         res.status(403).send();
     }

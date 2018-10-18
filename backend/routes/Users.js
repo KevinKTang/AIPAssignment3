@@ -61,7 +61,8 @@ router.post('/login', (req, res) => {
                     }
                 });
             }
-        });
+        })
+        .catch(() => res.status(500).send());
 });
 
 // Destroy the session on logout
@@ -82,7 +83,8 @@ router.get('/checkSession', (req, res) => {
                 } else {
                     res.status(404).send();
                 }
-            });
+            })
+            .catch(() => res.status(500).send());
     }
 });
 
