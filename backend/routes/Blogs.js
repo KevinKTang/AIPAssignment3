@@ -214,7 +214,7 @@ router.post('/createBlog', (req, res) => {
             .then(user => {
                 if (user) {
                     // Validate user input
-                    if (!req.body.title || req.body.title === '') {
+                  /*  if (!req.body.title || req.body.title === '') {
                         res.status(400).send({ alert: 'Blog title must not be empty.' });
                     } else if (req.body.title.length > 120) {
                         res.status(400).send({ alert: 'Blog title must be 120 characters or less.' });
@@ -224,8 +224,9 @@ router.post('/createBlog', (req, res) => {
                         res.status(400).send({ alert: 'Blog description must be 250 characters or less.' });
                     } else if (!req.body.content || req.body.content === '') {
                         res.status(400).send({ alert: 'Blog body must not be empty.' });
-                    } else {
+                    } else {*/
                         models.Blog.create({
+                            validate: true,
                             title: req.body.title,
                             description: req.body.description,
                             content: req.body.content,
@@ -237,9 +238,15 @@ router.post('/createBlog', (req, res) => {
                                 } else {
                                     res.status(409).send();
                                 }
+                            })
+                            .catch(Sequelize.ValidationError, (err) => {
+                                res.status(400).send({alert: err.message});
+                            })
+                            .catch(() => {
+                                res.status(500).send()
                             });
                         console.log(user.firstname + ' has created a blog post');
-                    }
+                   //}
                 } else {
                     res.status(403).send();
                 }

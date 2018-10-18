@@ -33,9 +33,13 @@ router.post('/newUser', (req, res) => {
         password: req.body.password
     })
     .then((newUser) => {
-        req.session.userId = newUser.id;
-        res.status(200).json(newUser);
-        console.log('New user ' + newUser.firstname + ' created');
+        if (newUser) {
+            req.session.userId = newUser.id;
+            res.status(200).json(newUser);
+            console.log('New user ' + newUser.firstname + ' created');
+        } else {
+            res.status(500).send();
+        }
     })
     .catch(Sequelize.UniqueConstraintError, () => {
         res.status(409).send();
@@ -43,7 +47,9 @@ router.post('/newUser', (req, res) => {
     .catch(Sequelize.ValidationError, (err) => {
         res.status(400).send({alert: err.message});
     })
-    .catch();
+    .catch(() => {
+        res.status(500).send()
+    });
 });
 
 // If user login successful, create the session and return the user's firstname

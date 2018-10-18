@@ -1,8 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
     const Blog = sequelize.define('Blog', {
-        title: DataTypes.STRING,
-        description: DataTypes.STRING,
-        content: DataTypes.JSON,
+        title: {
+            type: DataTypes.STRING,
+            validate: {
+                len: {
+                    args: [1, 120],
+                    msg: 'Blog title must be between 1 and 120 characters.'
+                }
+            }
+        },
+        description: {
+            type: DataTypes.STRING,
+            validate: {
+                len: {
+                    args: [1, 120],
+                    msg: 'Blog description must be between 1 and 250 characters.'
+                }
+            }
+        },
+        content: {
+            type: DataTypes.JSON,
+            allowNull: false,
+            validate: {
+                len: {
+                    args: [1],
+                    msg: 'Blog body must not be empty.'
+                }
+            }
+        },
         likesCount: DataTypes.INTEGER,
         commentCount: DataTypes.INTEGER
     });

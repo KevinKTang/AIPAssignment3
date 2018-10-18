@@ -254,7 +254,7 @@ describe('Blogs', function() {
         })
         .then((res) => {
             expect(res).to.have.status(400);
-            expect(res.body.alert).to.equal('Blog title must not be empty.');
+            expect(res.body.alert).to.equal('Validation error: Blog title must be between 1 and 120 characters.');
         })
     });
 
@@ -268,7 +268,7 @@ describe('Blogs', function() {
         })
         .then((res) => {
             expect(res).to.have.status(400);
-            expect(res.body.alert).to.equal('Blog description must not be empty.');
+            expect(res.body.alert).to.equal('Validation error: Blog description must be between 1 and 250 characters.');
         })
     });
 
@@ -282,7 +282,7 @@ describe('Blogs', function() {
         })
         .then((res) => {
             expect(res).to.have.status(400);
-            expect(res.body.alert).to.equal('Blog body must not be empty.');
+            expect(res.body.alert).to.equal('Validation error: Blog body must not be empty.');
         })
     });
 
