@@ -25,7 +25,7 @@ router.post('/newUser', (req, res) => {
     .then((newUser) => {
         if (newUser) {
             req.session.userId = newUser.id;
-            res.status(200).json(newUser);
+            res.status(200).json({firstname: newUser.firstname, lastname: newUser.lastname});
             console.log('New user ' + newUser.firstname + ' created');
         } else {
             res.status(500).send();
@@ -78,7 +78,7 @@ router.get('/checkSession', (req, res) => {
             .findOne({ where: { id: req.session.userId } })
             .then(user => {
                 if (user) {
-                    res.status(200).json(user)
+                    res.status(200).json({firstname: user.firstname, lastname: user.lastname})
                 } else {
                     res.status(404).send();
                 }

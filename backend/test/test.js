@@ -508,7 +508,6 @@ describe('Blogs', function() {
                     expect(res).to.have.status(200);
                     expect(res.body.updatedCommentCount).to.equal(1);
                     expect(res.body.affectedCommentRow.content).to.equal('New comment');
-                    expect(res.body.affectedCommentRow.userId).to.equal(userId);
                     expect(res.body.affectedCommentRow.blogId).to.equal(secondBlogId);
                 });
     });
