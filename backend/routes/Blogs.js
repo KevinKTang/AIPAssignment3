@@ -67,131 +67,51 @@ router.get('/blogs', (req, res) => {
         .then(blogs => res.status(200).json(blogs));
 });
 
+// Returns the ordering string for sequelize to orer queries with
+// depending on user input
+function orderString(display) {
+    console.log('Ordering by ' + display)
+    switch (display) {
+        case 'recent':
+            return [['createdAt', 'DESC']]
+        case 'liked':
+            return [['createdAt', 'DESC']]
+        case 'mostLiked':
+            return [['likesCount', 'DESC']]
+        case 'random':
+            return Sequelize.fn( 'RANDOM' )
+        default:
+            return [['createdAt', 'DESC']]
+    }
+}
+
 // Return ordering of blogs specified by the user
 router.post('/blogsCustom', (req, res) => {
     if (req.session.userId) {
-        switch (req.body.display) {
-            case 'recent':
-                console.log('ORDERING BY RECENT');
-                models.Blog
-                    .findAll({
-                        include: [{
-                            model: models.Likes,
-                            where: { userId: req.session.userId },
-                            required: false
-                        },
-                        {
-                            model: models.User,
-                            where: { id: { $col: 'Blog.userId' } },
-                            attributes: ['firstname', 'lastname'],
-                            required: false
-                        }],
-                        attributes: { exclude: ['content'] },
-                        limit: 20,
-                        order: [['createdAt', 'DESC']]
-                    })
-                    .then(blogs => res.status(200).json(blogs));
-                break;
-            case 'liked':
-                console.log('ORDERING BY LIKED');
-                models.Blog
-                    .findAll({
-                        include: [{
-                            model: models.Likes,
-                            where: { userId: req.session.userId },
-                            required: true
-                        },
-                        {
-                            model: models.User,
-                            where: { id: { $col: 'Blog.userId' } },
-                            attributes: ['firstname', 'lastname'],
-                            required: false
-                        }],
-                        attributes: { exclude: ['content'] },
-                        limit: 20,
-                        order: [['createdAt', 'DESC']]
-                    })
-                    .then(blogs => {
-                        res.status(200).json(blogs);
-                    });
-                break;
-            case 'mostLiked':
-                console.log('ORDERING BY MOST LIKED');
-                models.Blog
-                    .findAll({
-                        include: [{
-                            model: models.Likes,
-                            where: { userId: req.session.userId },
-                            required: false
-                        },
-                        {
-                            model: models.User,
-                            where: { id: { $col: 'Blog.userId' } },
-                            attributes: ['firstname', 'lastname'],
-                            required: false
-                        }],
-                        attributes: { exclude: ['content'] },
-                        limit: 20,
-                        order: [['likesCount', 'DESC']]
-                    })
-                    .then(blogs => {
-                        res.status(200).json(blogs);
-                    });
-                break;
-            case 'random':
-                console.log('ORDERING BY RANDOM');
-                models.Blog
-                    .findAll({
-                        include: [{
-                            model: models.Likes,
-                            where: { userId: req.session.userId },
-                            required: false
-                        },
-                        {
-                            model: models.User,
-                            where: { id: { $col: 'Blog.userId' } },
-                            attributes: ['firstname', 'lastname'],
-                            required: false
-                        }],
-                        attributes: { exclude: ['content'] },
-                        limit: 20,
-                        order: Sequelize.fn( 'RANDOM' )
-                    })
-                    .then(blogs => {
-                        res.status(200).json(blogs);
-                    });
-                break;
-            default:
-                console.log('Default selected:');
-                console.log('ORDERING BY RECENT');
-                models.Blog
-                    .findAll({
-                        include: [{
-                            model: models.Likes,
-                            where: { userId: req.session.userId },
-                            required: false
-                        },
-                        {
-                            model: models.User,
-                            where: { id: { $col: 'Blog.userId' } },
-                            attributes: ['firstname', 'lastname'],
-                            required: false
-                        }],
-                        attributes: { exclude: ['content'] },
-                        limit: 20,
-                        order: [['createdAt', 'DESC']]
-                    })
-                    .then(blogs => {
-                        res.status(200).json(blogs);
-                    });
-        }
-        if (req.body.display === 'recent') {
-
-        }
+        let order = orderString(req.body.display);
+        models.Blog
+            .findAll({
+                include: [{
+                    model: models.Likes,
+                    where: { userId: req.session.userId },
+                    required: req.body.display === 'liked'
+                },
+                {
+                    model: models.User,
+                    where: { id: { $col: 'Blog.userId' } },
+                    attributes: ['firstname', 'lastname'],
+                    required: false
+                }],
+                attributes: { exclude: ['content'] },
+                limit: 20,
+                order: order
+            })
+            .then(blogs => res.status(200).json(blogs));
     } else {
         res.status(403).send();
     }
 });
+
 // Returns all the blogs belonging to a certain user
 router.get('/myBlogs', (req, res) => {
     if (req.session.userId) {
@@ -213,18 +133,6 @@ router.post('/createBlog', (req, res) => {
         models.User.findOne({ where: { id: req.session.userId } })
             .then(user => {
                 if (user) {
-                    // Validate user input
-                  /*  if (!req.body.title || req.body.title === '') {
-                        res.status(400).send({ alert: 'Blog title must not be empty.' });
-                    } else if (req.body.title.length > 120) {
-                        res.status(400).send({ alert: 'Blog title must be 120 characters or less.' });
-                    } else if (!req.body.description || req.body.description === '') {
-                        res.status(400).send({ alert: 'Blog description must not be empty.' });
-                    } else if (req.body.description.length > 250) {
-                        res.status(400).send({ alert: 'Blog description must be 250 characters or less.' });
-                    } else if (!req.body.content || req.body.content === '') {
-                        res.status(400).send({ alert: 'Blog body must not be empty.' });
-                    } else {*/
                         models.Blog.create({
                             validate: true,
                             title: req.body.title,

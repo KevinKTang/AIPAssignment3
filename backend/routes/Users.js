@@ -15,16 +15,6 @@ models.User.beforeCreate((user, options) => {
 
 // Create a new user, create the session and return the user's firstname
 router.post('/newUser', (req, res) => {
-    //Validate user input
-  /*  if (!req.body.firstname || req.body.firstname.length < 2) {
-        res.status(400).send({ alert: 'Firstname must be 2 or more characters in length.' });
-    } else if (!req.body.lastname || req.body.lastname.length < 2) {
-        res.status(400).send({ alert: 'Lastname must be 2 or more characters in length.' });
-    } else if (!(/[\w+.]+@((\w[\w-]*)\.)+(\w[\w-]*)/.test(req.body.email))) {
-        res.status(400).send({ alert: 'Email format is incorrect. It must be in a format similar to example@email.com' });
-    } else if (!req.body.password || req.body.password.length < 8) {
-        res.status(400).send({ alert: 'Password must be 8 or more characters in length.' });
-    } else { */
     models.User.create({
         validate: true,
         firstname: req.body.firstname,
