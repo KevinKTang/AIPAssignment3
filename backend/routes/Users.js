@@ -37,9 +37,7 @@ router.post('/newUser', (req, res) => {
     .catch(Sequelize.ValidationError, (err) => {
         res.status(400).send({alert: err.message});
     })
-    .catch(() => {
-        res.status(500).send()
-    });
+    .catch(() => res.status(500).send());
 });
 
 // If user login successful, create the session and return the user's firstname

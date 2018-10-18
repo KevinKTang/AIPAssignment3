@@ -1,6 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
     const Comments = sequelize.define('Comments', {
-        content: DataTypes.STRING
+        content: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: {
+                    args: [1],
+                    msg: 'Comment must be between 1 and 2500 characters.'
+                }
+            }
+        }
     });
 
     Comments.associate = (models) => {

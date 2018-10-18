@@ -496,7 +496,7 @@ describe('Blogs', function() {
             .send({blogId: secondBlogId, comment: ''})
                 .then(res => {
                     expect(res).to.have.status(400);
-                    expect(res.body.alert).to.equal('Comment must not be empty.');
+                    expect(res.body.alert).to.equal('Validation error: Comment must be between 1 and 2500 characters.');
                 });
     });
 

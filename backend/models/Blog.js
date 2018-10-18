@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const Blog = sequelize.define('Blog', {
         title: {
             type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 len: {
                     args: [1, 120],
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         description: {
             type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 len: {
                     args: [1, 120],

@@ -280,30 +280,28 @@ router.post('/commentBlog', (req, res) => {
             .findOne({ where: { id: req.body.blogId } })
             .then(blog => {
                 if (blog) {
-                    if (!req.body.comment || req.body.comment === '') {
-                        res.status(400).send({ alert: 'Comment must not be empty.' });
-                    } else if (req.body.comment.length > 2500) {
-                        res.status(400).send({ alert: 'Comment must be 2500 characters or less.' });
-                    } else {
-                        models.Comments.create({ userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment })
-                            .then(affectedCommentRow => {
-                                if (affectedCommentRow) {
-                                    blog.update({ commentCount: blog.commentCount + 1 })
-                                        .then(affectedBlogRow => {
-                                            if (affectedBlogRow) {
-                                                console.log('Blog post commented')
-                                                res.status(200).json({ "updatedCommentCount": blog.commentCount, affectedCommentRow });
-                                            } else {
-                                                res.status(409).send();
-                                            }
-                                        })
-                                        .catch(() => res.status(500).send());
-                                } else {
-                                    res.status(409).send();
-                                }
-                            })
-                            .catch(() => res.status(500).send());
-                    }
+                    models.Comments.create({ userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment })
+                        .then(affectedCommentRow => {
+                            if (affectedCommentRow) {
+                                blog.update({ commentCount: blog.commentCount + 1 })
+                                    .then(affectedBlogRow => {
+                                        if (affectedBlogRow) {
+                                            console.log('Blog post commented')
+                                            res.status(200).json({ "updatedCommentCount": blog.commentCount, affectedCommentRow });
+                                        } else {
+                                            res.status(409).send();
+                                        }
+                                    })
+                                    .catch(() => res.status(500).send());
+                            } else {
+                                res.status(409).send();
+                            }
+                        })
+                        .catch(Sequelize.ValidationError, (err) => {
+                            res.status(400).send({ alert: err.message });
+                        })
+                        .catch(() => res.status(500).send());
+                    // }
                 } else {
                     res.status(404).send();
                 }
