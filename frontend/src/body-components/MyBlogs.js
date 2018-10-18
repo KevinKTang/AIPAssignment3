@@ -4,8 +4,9 @@ import Loading from '../Loading.js';
 import '../styles/MyBlogs.css';
 
 /* 
-    This component contains a view with all the blogs
-    the logged in user has created, allowing for deletion and viewing.
+    The MyBlogs component contains a view with all the blogs
+    a logged in user has created, allowing for viewing and deletion
+    if necessary.
 */
 
 class MyBlogs extends Component {
@@ -77,7 +78,6 @@ class MyBlogs extends Component {
             alert: ''
         });
     }
-
 
     deleteBlog(id) {
         fetch('/deleteBlog', {

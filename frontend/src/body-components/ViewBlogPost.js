@@ -4,6 +4,13 @@ import Moment from 'moment';
 import Loading from '../Loading'
 import '../styles/ViewBlogPost.css'
 
+/* 
+    The ViewBlogPost component is used to display a blog post in its
+    entirety when a user clicks on View. It also displays the likes and 
+    comments at the bottom of the blog post.
+
+*/
+
 class ViewBlogPost extends Component {
 
     constructor(props) {
@@ -154,7 +161,6 @@ class ViewBlogPost extends Component {
 
     comment(e) {
         e.preventDefault();
-
         // Visually indicate loading on submit button to user
         this.setState({
             isLoadingComment: true
@@ -168,7 +174,6 @@ class ViewBlogPost extends Component {
                 comment: this.state.inputComment
             })
         }).then(res => {
-
             // Restore button to normal state (not loading)
             this.setState({
                 isLoadingComment: false
@@ -277,8 +282,8 @@ class ViewBlogPost extends Component {
                                     ) : ('')}
                                 </div>
 
-                                {/* Only show content if this blog exists (using title to check).
-                                    This avoid an alert that it does not exist with an empty skeleton blog */}
+                                {/* Only display content if this blog exists (using title to check).
+                                    This will avoid an alert that it does not exist with an empty skeleton blog */}
                                 {!(this.state.title === '') ? (
                                     <div>
                                         <h1 className="view-title">{this.state.title}</h1>
@@ -305,14 +310,14 @@ class ViewBlogPost extends Component {
                                         </div>
 
                                         <h2 className="comments-heading">Comments</h2>
-                                        {/* Comment form */}
+                                        {/* Comment submission form */}
                                         {this.props.isLoggedIn ? (
                                             <form className="comments-form form-inline form-row" onSubmit={this.comment}>
                                                 <textarea disabled={this.state.isLoadingComment} className="col-6 form-control input-form" rows="5" placeholder="Comment" value={this.state.inputComment} onChange={this.handleInputChange} required></textarea>
                                                 <button disabled={this.state.isLoadingComment} className="btn btn-primary ml-3" type="submit">{this.state.isLoadingComment ? ('Submitting...') : ('Submit')}</button>
                                             </form>
                                         ) : ('')}
-
+                                        {/* Show paragraph about no comments, or display existing comments */}
                                         <div className="comments-section">
                                             {this.state.comments.length === 0 ? (
                                                 <p>There are no comments yet!</p>

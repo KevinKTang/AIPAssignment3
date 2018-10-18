@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import '../styles/RegisterForm.css';
 
 /*
-    This component contains the register form used to
-    create an account for the website
+    The RegisterForm component contains the register form used to
+    create an account for the website.
 */
 
 class RegisterForm extends Component {

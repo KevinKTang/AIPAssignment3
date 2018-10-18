@@ -5,9 +5,10 @@ import Welcome from './Welcome.js'
 import '../styles/BlogPosts.css';
 
 /*
-    BlogPosts component is simply a container holding
-    the individual BlogPost(s) and divides them up into a card view
-    for the main page of our website.
+    The BlogPosts component is simply a container holding the 
+    individual BlogPost(s) and divides them up into a card view
+    for the main page of our website while also allowing a user
+    to sort them in a number of ways.
 */
 
 class BlogPosts extends Component {
@@ -31,7 +32,7 @@ class BlogPosts extends Component {
     }
 
     // Loading icon will only show after half a second
-    // This avoids it flashing on screen briefly before content loads
+    // This avoids it flashing on screen briefly before content loads.
     startLoading() {
         if (this.state.isLoading) {
             this.setState({showLoading: true});
@@ -43,7 +44,7 @@ class BlogPosts extends Component {
         clearTimeout(this.timer);
     }
 
-    // Get blog posts from database on start
+    // Get blog posts from database on start.
     componentDidMount() {
         this.updateBlogs();
     }
@@ -66,7 +67,7 @@ class BlogPosts extends Component {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     // blogsView is held in the parent (body) state.
-                    // This allows a user to go back and return to the selected blogsView
+                    // This allows a user to go back and return to the selected blogsView.
                     display: this.props.blogsView
                 })
             })
@@ -101,7 +102,7 @@ class BlogPosts extends Component {
             })
             
         } else {
-            // If not logged in, get the 20 most recent blog posts
+            // If a guest user or not logged in, retrieve and show the 20 most recent blog posts.
             fetch('/blogs')
             .then(res => {
                 if (res.status === 200) {
@@ -180,6 +181,7 @@ class BlogPosts extends Component {
         this.props.updateBlogsView(event.target.name);
     }
 
+    // Sorting options of blogs on the main page
     showBlogOptions() {
         return (
             <div className="blog-button-area">
@@ -230,6 +232,7 @@ class BlogPosts extends Component {
                             {this.renderTopComponents()}
                             <p>There are no blogs to display!</p>
                         </div>
+                    // If blogs are found, map and show them
                     ) : (
                             <div>
                                 {this.state.alert ? this.showAlert() : ''}

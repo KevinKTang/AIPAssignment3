@@ -100,6 +100,7 @@
     margin-left: 7.5%;
     font-family: 'Geomanist', Georgia, 'Times New Roman', Times, serif;
     display: inline-block;
+    overflow: hidden;
 }
 
 .comment-time {
@@ -108,4 +109,8 @@
 
 .comment-name {
     font-weight: bold;
+}
+
+.comment-content {
+    margin-right: 7.5%;
 }

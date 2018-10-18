@@ -4,9 +4,8 @@ import Moment from 'moment';
 import '../styles/BlogPost.css';
 
 /* 
-    Blog Post cards will be displayed on the main page.
-    They will display a title, image where it is available
-    and short description of the blog content.
+    The BlogPost component contains the content of a blog
+    and also handles the liking and deletion of a blog by a user.
 */
 
 class BlogPost extends Component {
@@ -26,7 +25,7 @@ class BlogPost extends Component {
         this.formatWhenCreated = this.formatWhenCreated.bind(this);
     }
 
-    // To update some props when component mounts before parent async call complete
+    // To update some props when component mounts before parent async call completes.
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
             this.setState({
@@ -51,7 +50,7 @@ class BlogPost extends Component {
     }
 
     deleteBlog() {
-        // Visually indicate deleting to user
+        // Visually indicates deleting to the user.
         this.setState({
             isDeleting: true
         });
@@ -83,7 +82,7 @@ class BlogPost extends Component {
                                 alert: '',
                                 liked: false
                             });
-                            // If viewing liked posts, refresh to hide this unliked post
+                            // If viewing liked posts, refresh to hide the unliked post
                             if (this.props.blogsView === 'liked') {
                                 this.props.updateBlogsView('liked');
                             }
@@ -164,8 +163,7 @@ class BlogPost extends Component {
                         {/* Comments. If no comments, show 0 */}
                         <p>Comments: {this.props.comments ? this.props.comments : 0}</p>
 
-                        {/* If being viewed as my blogs, show delete option and number of likes 
-                        () => this.props.deleteBlog(this.props.id)*/}
+                        {/* If being viewed as My Blogs, show delete option and number of likes */}
                         {this.props.canDelete ? (
                             <button disabled={this.state.isDeleting} className="btn btn-danger" onClick={() => {if (window.confirm('Are you sure you wish to delete this blog post?')) this.deleteBlog()}}>{this.state.isDeleting ? ('Deleting...') : ('Delete')}</button>
                         ) : ('')}

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import '../styles/LoginForm.css';
 
 /*
-    This component contains the login form used to
-    log in to the website
+    The LoginForm component contains the login form used to
+    enter the website, which is simply e-mail and password input
+    and a submit button.
 */
 
 class LoginForm extends Component {
@@ -21,11 +22,11 @@ class LoginForm extends Component {
     }
 
     componentDidMount() {
-        // Focus on first form input box
+        // Focus on first form input box (i.e. E-mail)
         this._input.focus();
     }
 
-    // Send username and password to server, check if login successful
+    // Send username and password to server and check if the login is successful.
     login(event) {
         event.preventDefault();
 

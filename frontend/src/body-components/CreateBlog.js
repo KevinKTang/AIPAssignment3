@@ -4,8 +4,9 @@ import { EditorState, convertToRaw } from 'draft-js';
 import '../styles/CreateBlog.css';
 
 /*
-    This component contains the form used to create
-    a blog post
+    The CreateBlog component contains the form to create a blog,
+    allowing for users to input a title, a description and blog content
+    utilising DraftJS to provide rich text editing (i.e. Bold, Italic, Headings).
 */
 
 class CreatePost extends Component {
@@ -25,15 +26,14 @@ class CreatePost extends Component {
     }
 
     componentDidMount() {
-        // Focus on first form input box
+        // Focus on first form input box (i.e. Title)
         this._input.focus();
     }
 
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
-            
-            // Visually indicate loading on submit button to user
+            // Visually indicate loading on submit button to user (Submit button is grayed out and text changes to "Submitting...")
             this.setState({
                 isLoading: true
             });
@@ -114,15 +114,13 @@ class CreatePost extends Component {
         return (
             <div>
                 <h1 className="title">Create Blog</h1>
-                {/* Blog post form */}
+                {/* Create blog form */}
                 <form onSubmit={this.newBlog}>
                     <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
                         <input ref={c => this._input = c} className="form-control" name="title" value={this.state.title} onChange={this.handleInputChange} type="text" placeholder="Title" required></input>
                         <textarea className="form-control" name="description" value={this.state.description} onChange={this.handleInputChange} type="text" placeholder="Description" required></textarea>
                     </div>
                     <MyEditor updateParent={this.onEditorChange} />
-                    {/* TODO: fix rendering position */}
-                    {/* Alert for incorrect blog post */}
                     <div className="text-center">
                         {this.state.alert ? (
                             <div className="alert alert-danger alert-dismissible">

@@ -7,6 +7,13 @@ import createRichButtonsPlugin from 'draft-js-richbuttons-plugin';
 import '../styles/MyEditor.css';
 import 'draft-js-emoji-plugin/lib/plugin.css';
 
+/* 
+    The MyEditor component is responsible for rich text editing
+    in the content part of the Create Blog form, it allows for a number of 
+    formatting options such as Bold, Italic and Underline. 
+*/
+
+//Instantiate the rich buttons plugin
 const richButtonsPlugin = createRichButtonsPlugin();
 const {
   // inline buttons
@@ -30,11 +37,6 @@ const plugins = [
 ];
 const text = '';
 
-/* 
-    This component provides a rich text editor for blog creation
-    using draft-js and its plugins functionality.
-*/
-
 class MyEditor extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +56,7 @@ class MyEditor extends Component {
     this.editor.focus();
   };
 
+  // Renders a toolbar containing formatting options and the empty input editor 
   render() {
     return (
       <div className="container">
@@ -77,8 +80,7 @@ class MyEditor extends Component {
             onChange={this.onChange}
             // Pass the plugins to the editor
             plugins={plugins}
-            // Saving a reference to the Editor component to call methods
-            // of that component easily
+            // Saving a reference to the Editor component to call methods of that component easily
             ref={(element) => { this.editor = element; }}
             spellCheck
           />

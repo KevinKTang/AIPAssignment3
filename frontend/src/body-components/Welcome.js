@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Welcome extends Component {
 
     /*
-        A welcome jumbotron to welcome new users to the website.
-        Displayed on the home screen
+        The Welcome component displays a welcome jumbotron to welcome new users 
+        to the website and is displayed on the home screen if not logged in.
     */
 
     render() {
