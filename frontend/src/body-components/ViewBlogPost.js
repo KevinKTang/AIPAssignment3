@@ -269,7 +269,9 @@ class ViewBlogPost extends Component {
                     <button className="btn btn-danger" onClick={this.props.history.goBack}>Back</button>
                 </div>
                 {this.state.showLoading ? (
+                    <div className="text-center">
                     <Loading />
+                    </div>
                 ) : (
                         this.state.isLoading ? ('') : (
                             <div>
