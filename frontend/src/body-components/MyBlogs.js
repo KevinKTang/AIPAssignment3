@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { VIEWBLOG, DELETEBLOG } from '../constants/ErrorMessages';
 import BlogPost from './BlogPost';
 import Loading from '../Loading.js';
 import '../styles/MyBlogs.css';
@@ -53,20 +54,19 @@ class MyBlogs extends Component {
                     }));
             } else if (res.status === 403) {
                 this.setState({
-                    alert: "Access denied. Make sure you're logged in before viewing your blog posts.",
+                    alert: VIEWBLOG.accessDenied,
                     isLoading: false,
                     showLoading: false
                 });
             } else {
                 this.setState({
-                    alert: 'Error retrieving blog posts.'
+                    alert: VIEWBLOG.genericError
                 });
             }
         })
         .catch(err => {
-            console.error('An error occurred: ' + err);
             this.setState({
-                alert: "An error occurred.",
+                alert: VIEWBLOG.errorOccurred + err,
                 isLoading: false,
                 showLoading: false
             });
@@ -91,17 +91,17 @@ class MyBlogs extends Component {
                 this.deleteBlogState(id);
             } else if (res.status === 403) {
                 this.setState({
-                    alert: 'Access denied to delete this blog.'
+                    alert: DELETEBLOG.accessDenied
                 });
             } else {
                 this.setState({
-                    alert: 'Error deleting blog.'
+                    alert: DELETEBLOG.genericError
                 });
             }
         })
         .catch(err => {
             this.setState({
-                alert: 'An error occurred.'
+                alert: DELETEBLOG.errorOccurred + err
             });
         });
     }

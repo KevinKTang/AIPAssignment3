@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { EditorState, convertFromRaw, Editor } from 'draft-js';
+import { COMMENT, LIKE, VIEWBLOG } from '../constants/ErrorMessages';
 import Moment from 'moment';
 import Loading from '../Loading'
 import '../styles/ViewBlogPost.css'
@@ -97,13 +98,13 @@ class ViewBlogPost extends Component {
                             }
                             catch (err) {
                                 this.setState({
-                                    alert: 'Error displaying blog content.'
+                                    alert: VIEWBLOG.errorDisplay
                                 });
                             }
                         });
                 } else {
                     this.setState({
-                        alert: 'Error retrieving blog post.'
+                        alert: VIEWBLOG.genericError
                     });
                 }
             }
@@ -145,15 +146,15 @@ class ViewBlogPost extends Component {
                     })
             } else if (res.status === 404) {
                 this.setState({
-                    alert: 'Error. Blog post not found.'
+                    alert: LIKE.blogNotFound
                 });
             } else if (res.status === 403) {
                 this.setState({
-                    alert: 'Error. You must be logged in to like blog posts.'
+                    alert: LIKE.accessDenied
                 });
             } else {
                 this.setState({
-                    alert: 'Error liking blog post.'
+                    alert: LIKE.genericError
                 });
             }
         });
@@ -194,11 +195,11 @@ class ViewBlogPost extends Component {
                 });
             } else if (res.status === 403) {
                 this.setState({
-                    alert: 'Error. You must be logged in to comment on blog posts.'
+                    alert: COMMENT.accessDenied
                 });
             } else if (res.status === 404) {
                 this.setState({
-                    alert: 'Error. Blog post not found.'
+                    alert: COMMENT.blogNotFound
                 });
             } else if (res.status === 400) {
                 res.json().then(res => {
@@ -208,7 +209,7 @@ class ViewBlogPost extends Component {
                 });
             } else {
                 this.setState({
-                    alert: 'Error commenting on blog post.'
+                    alert: COMMENT.genericError
                 });
             }
         })

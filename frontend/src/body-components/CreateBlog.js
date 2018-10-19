@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MyEditor from './MyEditor.js';
 import { EditorState, convertToRaw } from 'draft-js';
+import { CREATE_BLOG } from '../constants/ErrorMessages.js'
 import '../styles/CreateBlog.css';
 
 /*
@@ -62,7 +63,7 @@ class CreatePost extends Component {
                     this.props.history.push("/myBlogs");
                 } else if (res.status === 403) {
                     this.setState({
-                        alert: "Access denied. Make sure you're logged in before creating a blog post."
+                        alert: CREATE_BLOG.accessDenied
                     });
                 } else if (res.status === 400) {
                     res.json().then(res => {
@@ -72,19 +73,19 @@ class CreatePost extends Component {
                     });
                 } else {
                     this.setState({
-                        alert: 'Error creating new blog post.'
+                        alert: CREATE_BLOG.genericError
                     });
                 }
             })
             .catch(err => {
-                console.error('An error occurred: ' + err);
+                console.error(CREATE_BLOG.errorOccurred + err);
                 // Restore button to normal state (not loading)
                 this.setState({
                     isLoading: false
                 });
             });
         } else {
-            this.setState({ alert: 'There is no content in your blog!' })
+            this.setState({ alert: CREATE_BLOG.noBlogContent })
         }
     }
 

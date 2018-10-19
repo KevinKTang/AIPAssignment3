@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LOGIN } from '../constants/ErrorMessages.js';
 import '../styles/LoginForm.css';
 
 /*
@@ -57,17 +58,17 @@ class LoginForm extends Component {
                 if (res.status === 401) {
                     this.setState({
                         password: '',
-                        alert: 'Incorrect username or password.'
+                        alert: LOGIN.incorrectLogin
                     });
                 } else {
                     this.setState({
-                        alert: 'Error logging in.'
+                        alert: LOGIN.genericError
                     });
                 }
             } 
         })
         .catch(err => {
-            console.error('An error occured: ' + err);
+            console.error(LOGIN.errorOccurred + err);
             // Restore button to normal state (not loading)
             this.setState({
                 isLoading: false

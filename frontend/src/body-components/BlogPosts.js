@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { VIEWBLOG } from '../constants/ErrorMessages';
 import BlogPost from './BlogPost.js';
 import Loading from '../Loading.js';
 import Welcome from './Welcome.js'
@@ -85,11 +86,11 @@ class BlogPosts extends Component {
                     });
                     if (res.status === 403) {
                         this.setState({
-                            alert: 'An error occurred. You must be logged in to use this feature.'
+                            alert: VIEWBLOG.accessDenied
                         });
                     } else {
                         this.setState({
-                            alert: 'Error retrieving blog posts.'
+                            alert: VIEWBLOG.genericError
                         })
                     }
                 }
@@ -115,13 +116,13 @@ class BlogPosts extends Component {
                 }
                 else {
                     this.setState({
-                        alert: 'Error retrieving blog posts.'
+                        alert: VIEWBLOG.genericError
                     });
                 }
             })
             .catch(err => {
                 this.setState({
-                    alert: 'An error occured: ' + err
+                    alert: VIEWBLOG.errorOccurred + err
                 });
             });
         }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { REGISTER } from '../constants/ErrorMessages.js';
 import '../styles/RegisterForm.css';
 
 /*
@@ -59,7 +60,7 @@ class RegisterForm extends Component {
                 });
             } else if (res.status === 409) {
                 this.setState({
-                    alert: 'An account with that email address is already taken. Try using a different email address.'
+                    alert: REGISTER.duplicateEmail
                 });
             }
             else if (res.status === 400) {
@@ -70,12 +71,12 @@ class RegisterForm extends Component {
                     });
             } else {
                 this.setState({
-                    alert: 'Error registering new user.'
+                    alert: REGISTER.genericError
                 });
             }
         })
         .catch(err => {
-            console.error('An error occurred: ' + err);
+            console.error(REGISTER.errorOccurred + err);
             // Restore button to normal state (not loading)
             this.setState({
                 isLoading: false

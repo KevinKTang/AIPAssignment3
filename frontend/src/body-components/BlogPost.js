@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { COMMENT } from '../constants/ErrorMessages';
 import Moment from 'moment';
 import '../styles/BlogPost.css';
 
@@ -90,15 +91,15 @@ class BlogPost extends Component {
                     })
             } else if (res.status === 404) {
                 this.setState({
-                    alert: 'Error. Blog post not found.'
+                    alert: COMMENT.blogNotFound
                 });
             } else if (res.status === 403) {
                 this.setState({
-                    alert: 'Error. You must be logged in to like blog posts.'
+                    alert: COMMENT.accessDenied
                 });
             } else {
                 this.setState({
-                    alert: 'Error liking blog post.'
+                    alert: COMMENT.genericError
                 });
             }
         });
