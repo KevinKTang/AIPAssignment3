@@ -6,14 +6,14 @@ const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-// Hash password before create a new user
+// Hash password before creating a new user
 models.User.beforeCreate((user, options) => {
     return bcrypt.hash(user.password, saltRounds)
         .then(hash => user.password = hash)
         .catch(err => console.error(err));
 });
 
-// Create a new user, create the session and return the user's firstname
+// Create a new user, create the session and return the user information
 router.post('/newUser', (req, res) => {
     models.User.create({
         validate: true,
@@ -40,7 +40,7 @@ router.post('/newUser', (req, res) => {
     .catch(() => res.status(500).send());
 });
 
-// If user login successful, create the session and return the user's firstname
+// If user login successful, create the session and return the user information
 router.post('/login', (req, res) => {
     models.User.findOne({ where: { email: req.body.email } })
         .then(user => {
@@ -55,7 +55,7 @@ router.post('/login', (req, res) => {
                     } else {
                         req.session.userId = user.id;
                         console.log(user.firstname + ' has logged in successfully');
-                        res.status(200).json(user);
+                        res.status(200).json({firstname: user.firstname, lastname: user.lastname});
                     }
                 });
             }
@@ -70,7 +70,7 @@ router.get('/logout', (req, res) => {
     res.status(200).send();
 });
 
-// Returns the user firstname if there is a session
+// Returns the user information if there is a session
 router.get('/checkSession', (req, res) => {
     if (req.session.userId) {
         models.User

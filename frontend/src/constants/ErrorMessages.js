@@ -6,7 +6,7 @@ export const CREATE_BLOG = {
 }
 
 export const LOGIN = {
-    incorrectLogin: 'Incorrect username or password.',
+    incorrectLogin: 'Incorrect email or password.',
     errorOccurred: 'An error occurred: ',
     genericError: 'Error logging in.'
 }

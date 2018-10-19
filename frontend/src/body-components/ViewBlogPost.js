@@ -70,7 +70,7 @@ class ViewBlogPost extends Component {
                 if (res.status === 200) {
                     res.json()
                         .then(blog => {
-                            // Check if this user has liked the blog post
+                            // Check if user has liked the blog post
                             let blogLiked;
                             if (blog.Likes) {
                                 blogLiked = blog.Likes.length !== 0;

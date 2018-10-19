@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         commentCount: DataTypes.INTEGER
     });
 
-    // Associated both ways so can get user from blog, and blog from user
     Blog.associate = (models) => {
         models.User.hasMany(Blog, {foreignKey: 'userId'});
     }

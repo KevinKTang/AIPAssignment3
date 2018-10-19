@@ -14,6 +14,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
     storage: 'website.db'
 });
 
+// Add all models and set up associations
 fs
   .readdirSync(__dirname)
   .filter(file => {

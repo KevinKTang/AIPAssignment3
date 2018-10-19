@@ -45,7 +45,6 @@ router.get('/blog/:blogId', (req, res) => {
         .catch(() => res.status(500).send());
 });
 
-// GET / blogs:
 // Retrieve a list of the 20 most recent blog posts
 router.get('/blogs', (req, res) => {
     models.Blog
@@ -282,6 +281,7 @@ router.post('/commentBlog', (req, res) => {
                 if (blog) {
                     models.Comments.create({ userId: req.session.userId, blogId: req.body.blogId, content: req.body.comment })
                         .then(affectedCommentRow => {
+                            // If comment was created, update comment count on the blog
                             if (affectedCommentRow) {
                                 blog.update({ commentCount: blog.commentCount + 1 })
                                     .then(affectedBlogRow => {
@@ -301,7 +301,6 @@ router.post('/commentBlog', (req, res) => {
                             res.status(400).send({ alert: err.message });
                         })
                         .catch(() => res.status(500).send());
-                    // }
                 } else {
                     res.status(404).send();
                 }
