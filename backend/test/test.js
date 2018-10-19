@@ -12,6 +12,20 @@ var agent = chai.request.agent(server);
 describe('Users', function() {
     this.timeout(2000);
 
+    after(() => {
+        // Delete the user
+        return agent
+            .post('/login')
+            .send({
+                email: userEmail,
+                password: userPassword
+            })
+            .then(() => {
+                return agent
+                .delete('/deleteUser');
+            });
+    });
+
     let firstname = 'Darcy';
     let lastname = 'Smith';
     let userEmail = 'darcysmith675423@mygmail.com';
@@ -176,7 +190,20 @@ describe('Blogs', function() {
     this.timeout(2000);
 
     after(() => {
-        agent.close();
+        // Delete the user
+        return agent
+            .post('/login')
+            .send({
+                email: userEmail,
+                password: userPassword
+            })
+            .then(() => {
+                return agent
+                .delete('/deleteUser')
+                .then(() => {
+                    agent.close();
+                })
+            });
     });
 
     it('Try to create blog while logged out', () => {

@@ -40,6 +40,40 @@ router.post('/newUser', (req, res) => {
     .catch(() => res.status(500).send());
 });
 
+router.delete('/deleteUser', (req, res) => {
+    if (req.session.userId) {
+        console.log('Deleting user with id ' + req.session.userId);
+        // First delete associated blogs, comments and likes
+        models.Likes.destroy({ where: { userId: req.session.userId } })
+        .then(() => {
+            models.Comments.destroy({ where: {userId: req.session.userId } })
+            .then(() => {
+                models.Blog.destroy({ where: {userId : req.session.userId } })
+                .then(() => {
+                    // Delete user
+                    models.User.destroy({ where: {id: req.session.userId} })
+                    .then((affectedRows) => {
+                        if (affectedRows === 1) {
+                            // Delete current user session
+                            req.session.destroy();
+                            console.log('User deleted')
+                            res.status(200).send();
+                        } else {
+                            res.status(409).send();
+                        }
+                    })
+                    .catch(() => res.status(500).send());
+                })
+                .catch(() => res.status(500).send());
+            })
+            .catch(() => res.status(500).send());
+        })
+        .catch(() => res.status(500).send());
+    } else {
+        res.status(401).send();
+    }
+});
+
 // If user login successful, create the session and return the user information
 router.post('/login', (req, res) => {
     models.User.findOne({ where: { email: req.body.email } })
@@ -65,8 +99,8 @@ router.post('/login', (req, res) => {
 
 // Destroy the session on logout
 router.get('/logout', (req, res) => {
-    req.session.destroy()
-    console.log('User has logged out successfully')
+    req.session.destroy();
+    console.log('User has logged out successfully');
     res.status(200).send();
 });
 
