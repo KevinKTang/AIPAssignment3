@@ -4,6 +4,8 @@ A web application for bloggers and writers to share and view content.
 
 ![Home screen of application](HomeScreen.JPG)
 
+This application is live! You can view it [here](http://13.54.97.95:3000/).
+
 ## Prerequisites
 To run this web application locally, or for development, you will need a text editor of your choice and Node.js installed.
 
@@ -36,6 +38,59 @@ npm test
 ```
 These tests have been designed to test all aspects of our backend server.
 
+## API Endpoints
+### User endpoints
+
+* /newUser  
+POST  
+Creates a new user if the input fields pass validation.
+
+* /login  
+POST  
+Logs in a user by creating a session.
+
+* /logout  
+GET  
+Logs out a user by destroying the session.
+
+* /checkSession  
+GET  
+Used when the web application is accessed to check if a user session is still active, and if so, to populate the frontend with user information.
+
+### Blog endpoints
+
+* /blog/:blogId  
+GET  
+Retrieves a blog and all associated information such as likes and comments.
+
+* /blogs  
+GET  
+Retrieves 20 of the most recent blog posts.
+
+* /blogsCustom  
+POST  
+Retrieves 20 blog posts in a particular sorting depending on the user's selection. The options are: recent, liked, mostLiked and random.
+
+* /myBlogs  
+GET  
+Retrieves a user's blog posts.
+
+* /createBlog  
+POST  
+Creates a new blog if the input fields pass validation.
+
+* /deleteBlog  
+DELETE  
+Deletes the specified blog created by the user, also deletes all associated likes and comments.
+
+* /likeBlog  
+POST  
+Likes a blog if the user is logged in. If blog is already liked, blog is unliked.
+
+* /commentBlog  
+POST  
+Comments a blog if the user is logged in.
+
 ## Key Principles of Code Style and Design
 The following coding conventions have been used to provide consistency and improve readability of code.
 
@@ -64,7 +119,7 @@ The following coding conventions have been used to provide consistency and impro
 15.	Self-closing tags use a single space. For example:
     - \<Component />
 16.	Keep code as simple as possible. For example, use the conditional (ternary) operator instead of an if statement if the whole statement can be expressed on one line, and do not compare x == true.
-17.	Each component in React should have its own css file in the styles folder for its own HTML classes.
+17.	Each component in React should have its own css file if needed in the styles folder for its own HTML classes.
 18.	A single blank line should be used to separate code segments.
 
 ## Authors
