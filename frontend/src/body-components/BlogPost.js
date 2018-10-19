@@ -135,7 +135,7 @@ class BlogPost extends Component {
     // Blog posts that are displayed in the user's blog section can be deleted
     render() {
         return (
-            <div>
+            <div className="text-center">
                 {/* Alert for error liking post */}
                 {this.state.alert ? (
                     <div className="alert alert-danger alert-dismissible">
