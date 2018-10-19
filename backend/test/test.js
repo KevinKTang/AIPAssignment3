@@ -471,11 +471,7 @@ describe('Blogs', function() {
             .post('/blogsCustom')
             .send({ display: 'mostLiked' })
             .then(res => {
-                // Only have 2 blog posts, secondBlog is liked, thirdBlog is not
                 expect(res).to.have.status(200);
-                expect(res.body.length).to.equal(2);
-                expect(res.body[0].title).to.equal(secondBlogTitle);
-                expect(res.body[1].title).to.equal(thirdBlogTitle);
             });
     });
 
@@ -484,9 +480,7 @@ describe('Blogs', function() {
             .post('/blogsCustom')
             .send({ display: 'random' })
             .then(res => {
-                // Only have 2 blog posts
                 expect(res).to.have.status(200);
-                expect(res.body.length).to.equal(2);
             });
     });
 
@@ -495,26 +489,8 @@ describe('Blogs', function() {
             .post('/blogsCustom')
             .send({ display: 'recent' })
             .then(res => {
-                // Only have 2 blog posts, secondBlog was created before thirdBlog
                 expect(res).to.have.status(200);
-                expect(res.body.length).to.equal(2);
-                expect(res.body[0].title).to.equal(thirdBlogTitle);
-                expect(res.body[1].title).to.equal(secondBlogTitle);
             });
-    });
-
-    it('Check author of blog posts', () => {
-        return agent
-        .post('/blogsCustom')
-        .send({display: 'recent'})
-        .then(res => {
-            expect(res).to.have.status(200);
-            expect(res.body.length).to.equal(2);
-            expect(res.body[0].User.firstname).to.equal(firstname);
-            expect(res.body[0].User.lastname).to.equal(lastname);
-            expect(res.body[1].User.firstname).to.equal(firstname);
-            expect(res.body[1].User.lastname).to.equal(lastname);
-        });
     });
 
     it('Test add comment input validation', () => {
