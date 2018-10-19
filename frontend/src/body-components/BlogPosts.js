@@ -7,9 +7,9 @@ import '../styles/BlogPosts.css';
 
 /*
     The BlogPosts component is simply a container holding the 
-    individual BlogPost(s) and divides them up into a card view
-    for the main page of our website while also allowing a user
-    to sort them in a number of ways.
+    individual BlogPost(s). They are divided into a card view
+     sorted by recent while also allowing a user to sort them
+     in a number of ways.
 */
 
 class BlogPosts extends Component {
@@ -68,7 +68,7 @@ class BlogPosts extends Component {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     // blogsView is held in the parent (body) state.
-                    // This allows a user to go back and return to the selected blogsView.
+                    // This allows a user to go back and return to the previously selected blogsView.
                     display: this.props.blogsView
                 })
             })
@@ -134,17 +134,17 @@ class BlogPosts extends Component {
         });
     }
 
-    // Function to loop through and render the blogs
     eachBlog(blog) {
         // If logged in, allow ability to like a blog post and indicate if blog post is already liked
         if (this.props.isLoggedIn) {
-            // Check if this user has liked the blog post
+            // Check if user has liked the blog post
             let blogLiked;
             if (blog.Likes) {
                 blogLiked = blog.Likes.length !== 0;
             } else {
                 blogLiked = false;
             }
+
             return (
                 <BlogPost
                     key={blog.id}
@@ -204,7 +204,7 @@ class BlogPosts extends Component {
     }
 
     renderTopComponents() {
-        // If logged in show home text and sorting buttons
+        // If logged in, show home text and sorting buttons
         // If not logged in, show welcome jumbotron
         return (
             this.props.isLoggedIn ? (
@@ -226,7 +226,7 @@ class BlogPosts extends Component {
                     <Loading />
                 </div>
             ) : (
-                    // If not loading and no blogs were found
+                    // If not loading and no blogs were found, indicate this to user
                     !this.state.isLoading && this.state.blogs.length === 0 ? (
                         <div className="text-center">
                             {this.state.alert ? this.showAlert() : ''}

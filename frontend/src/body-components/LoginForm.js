@@ -4,8 +4,7 @@ import '../styles/LoginForm.css';
 
 /*
     The LoginForm component contains the login form used to
-    enter the website, which is simply e-mail and password input
-    and a submit button.
+    enter the website, which is simply required an email and password.
 */
 
 class LoginForm extends Component {
@@ -23,11 +22,10 @@ class LoginForm extends Component {
     }
 
     componentDidMount() {
-        // Focus on first form input box (i.e. E-mail)
+        // Focus on first form input box (email)
         this._input.focus();
     }
 
-    // Send username and password to server and check if the login is successful.
     login(event) {
         event.preventDefault();
 
@@ -68,10 +66,10 @@ class LoginForm extends Component {
             } 
         })
         .catch(err => {
-            console.error(LOGIN.errorOccurred + err);
             // Restore button to normal state (not loading)
             this.setState({
-                isLoading: false
+                isLoading: false,
+                alert: LOGIN.errorOccurred + err
             });
         });
     }

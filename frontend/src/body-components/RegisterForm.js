@@ -24,7 +24,7 @@ class RegisterForm extends Component {
     }
 
     componentDidMount() {
-        // Focus on first form input box
+        // Focus on first form input box (firstname)
         this._input.focus();
     }
 
@@ -48,7 +48,7 @@ class RegisterForm extends Component {
         })
         .then(res => {
 
-            // Restore button to normal state (not loading)
+            // Restore submit button to normal state (not loading)
             this.setState({
                 isLoading: false
             });
@@ -76,10 +76,10 @@ class RegisterForm extends Component {
             }
         })
         .catch(err => {
-            console.error(REGISTER.errorOccurred + err);
-            // Restore button to normal state (not loading)
+            // Restore submit button to normal state (not loading)
             this.setState({
-                isLoading: false
+                isLoading: false,
+                alert: REGISTER.errorOccurred + err
             });
         });
     }

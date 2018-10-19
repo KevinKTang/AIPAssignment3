@@ -27,14 +27,14 @@ class CreatePost extends Component {
     }
 
     componentDidMount() {
-        // Focus on first form input box (i.e. Title)
+        // Focus on first form input box (title)
         this._input.focus();
     }
 
     newBlog(event) {
         event.preventDefault();
         if (convertToRaw(this.state.editorState.getCurrentContent()).blocks[0].text !== '') {
-            // Visually indicate loading on submit button to user (Submit button is grayed out and text changes to "Submitting...")
+            // Visually indicate loading on submit button to user
             this.setState({
                 isLoading: true
             });
@@ -78,10 +78,10 @@ class CreatePost extends Component {
                 }
             })
             .catch(err => {
-                console.error(CREATE_BLOG.errorOccurred + err);
-                // Restore button to normal state (not loading)
                 this.setState({
-                    isLoading: false
+                    // Restore button to normal state (not loading)
+                    isLoading: false,
+                    alert: CREATE_BLOG.errorOccurred + err
                 });
             });
         } else {
@@ -95,6 +95,7 @@ class CreatePost extends Component {
         });
     }
 
+    // Update the state to reflect user input
     handleInputChange(event) {
         const target = event.target;
         const name = target.name;
