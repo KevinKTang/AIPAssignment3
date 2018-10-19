@@ -45,6 +45,10 @@ These tests have been designed to test all aspects of our backend server.
 POST  
 Creates a new user if the input fields pass validation.
 
+* /deleteUser  
+DELETE  
+Deletes a user and all associated likes, comments and blogs.
+
 * /login  
 POST  
 Logs in a user by creating a session.
