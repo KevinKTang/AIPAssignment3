@@ -5,8 +5,7 @@ import './styles/Header.css';
 
 /*
     This header component displays our website name
-    and relevant buttons to press relative to the user's
-    state.
+    and relevant buttons for user navigation.
 */
 
 class Header extends Component {
@@ -66,6 +65,6 @@ class Header extends Component {
         )
     }
 
-                }
+}
                 
-                export default withRouter(Header);
+export default withRouter(Header);

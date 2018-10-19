@@ -51,7 +51,7 @@ class BlogPost extends Component {
     }
 
     deleteBlog() {
-        // Visually indicates deleting to the user.
+        // Visually indicate deleting to the user.
         this.setState({
             isDeleting: true
         });
@@ -111,12 +111,12 @@ class BlogPost extends Component {
         });
     }
 
+    // Show how long since the blog post was created. If over 24 hours, show date.
     formatWhenCreated() {
-        // Show how long since the blog post was created. If over 24 hours, show date.
         let timeSince = Moment.duration(Moment(new Date()).diff(this.props.createdAt));
         let hoursSince = timeSince.asHours();
         // First check in case local system time is slightly ahead of server time
-        // This avoids a creation date that is pointing to the future (such as in 1 minute)
+        // This avoids a creation date that is pointing to the future (such as 'created in 1 minute')
         if (hoursSince < 0) {
             return (
                 'a few seconds ago'

@@ -10,26 +10,26 @@ import 'draft-js-emoji-plugin/lib/plugin.css';
 /* 
     The MyEditor component is responsible for rich text editing
     in the content part of the Create Blog form, it allows for a number of 
-    formatting options such as Bold, Italic and Underline. 
+    formatting options such as bold, headings and emojis.
 */
 
 //Instantiate the rich buttons plugin
 const richButtonsPlugin = createRichButtonsPlugin();
 const {
-  // inline buttons
+  // Inline buttons
   ItalicButton, BoldButton, UnderlineButton,
-  // block buttons
+  // Block buttons
   CodeButton,BlockquoteButton, OLButton, ULButton, H1Button, H2Button, H3Button,
 } = richButtonsPlugin;
 
-//Instantiate emoji plugin
+// Instantiate emoji plugin
 const emojiPlugin = createEmojiPlugin();
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
-//Instantiate the autolist plugin
+// Instantiate the autolist plugin
 const autoListPlugin = createAutoListPlugin();
 
-//Instantiate all plugins
+// Instantiate all plugins
 const plugins = [
   richButtonsPlugin,
   autoListPlugin,

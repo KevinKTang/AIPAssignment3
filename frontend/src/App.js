@@ -20,7 +20,6 @@ class App extends Component {
     }
 
     // If there is still a user session, populate the user state
-    // This function produces a console 404 error if there is no current session. This may be confusing
     componentDidMount() {
         fetch('/checkSession')
             .then(res => {
@@ -48,7 +47,7 @@ class App extends Component {
         }
     }
 
-    // Simply renders the header and body
+    // Render the header and body
     render() {
         return (
             <div className="app">

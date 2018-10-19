@@ -6,8 +6,7 @@ import '../styles/MyBlogs.css';
 
 /* 
     The MyBlogs component contains a view with all the blogs
-    a logged in user has created, allowing for viewing and deletion
-    if necessary.
+    a logged in user has created, allowing for viewing and deletion.
 */
 
 class MyBlogs extends Component {
@@ -141,6 +140,7 @@ class MyBlogs extends Component {
                     </div>
                 ) : ('')}
 
+                {/* Show loading if needed, or display blogs */}
                 {this.state.showLoading ? (
                     <div>
                         <h1 className="my-blogs-title">My Blogs</h1>
